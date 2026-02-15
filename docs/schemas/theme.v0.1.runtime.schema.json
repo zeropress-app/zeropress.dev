@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zeropress.dev/schemas/theme.v0.1.runtime.schema.json",
+  "title": "ZeroPress Theme Manifest (Runtime v0.1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "version",
+    "author"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "settings": {
+      "type": "object"
+    }
+  },
+  "examples": [
+    {
+      "name": "ZeroPress Starter Theme",
+      "version": "0.0.2",
+      "author": "Lael",
+      "description": "Starter theme"
+    }
+  ]
+}
