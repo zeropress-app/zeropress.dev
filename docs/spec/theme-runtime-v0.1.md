@@ -100,6 +100,8 @@ Recommended field:
 - Only simple variable substitution is supported.
 - Rendering is designed for server-prepared data injection.
 - JavaScript is for progressive enhancement, not core rendering.
+- Runtime data may include richer HTML-ready fields on post objects.
+- `{{post.comments_html}}` is supported as an optional rendered HTML fragment for post comment sections.
 
 ## 6. Security and Packaging Rules
 
@@ -131,6 +133,8 @@ Errors:
 Warnings:
 
 - Missing optional templates: `archive.html`, `category.html`, `tag.html`
+- `post.html` missing `{{post.comments_html}}` (recommended comments placeholder)
+- `{{post.comments_html}}` used outside `post.html`
 
 ## 8. CLI Alignment
 
@@ -166,6 +170,7 @@ Initial package versions:
 | Path/symlink root escape forbidden | Normative (Required) | Validation error |
 | `archive.html`, `category.html`, `tag.html` | Informative (Recommended) | Missing files produce warnings, not errors |
 | `theme.json.description` | Informative (Recommended) | Recommended metadata for better theme clarity |
+| `post.comments_html` variable | Informative (Optional) | Optional post-level rendered HTML fragment for comments |
 | `partials/` directory | Informative (Optional) | Supported but not required by runtime contract |
 | `assets/theme.js` | Informative (Optional) | Optional file; not auto-executed by runtime contract |
 | Devtools files (`package.json`, scripts, lockfiles) | Informative (Local tooling layer) | Useful for local workflows; excluded from packaging |
