@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zeropress.dev/schemas/theme.v0.2.runtime.schema.json",
+  "title": "ZeroPress Theme Manifest (Runtime v0.2)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "namespace",
+    "slug",
+    "version",
+    "license",
+    "runtime"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 24
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 32
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "MIT",
+        "Apache-2.0",
+        "BSD-3-Clause",
+        "GPL-3.0-only",
+        "GPL-3.0-or-later"
+      ]
+    },
+    "runtime": {
+      "type": "string",
+      "const": "0.2"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 280
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "settings": {
+      "type": "object"
+    }
+  },
+  "examples": [
+    {
+      "name": "ZeroPress Starter Theme",
+      "namespace": "official",
+      "slug": "starter-theme",
+      "version": "0.2.0",
+      "license": "MIT",
+      "runtime": "0.2",
+      "description": "Starter theme"
+    }
+  ]
+}

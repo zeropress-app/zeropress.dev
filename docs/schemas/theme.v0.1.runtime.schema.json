@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zeropress.dev/schemas/theme.v0.1.runtime.schema.json",
   "title": "ZeroPress Theme Manifest (Runtime v0.1)",
+  "description": "Historical ZeroPress Theme Runtime v0.1 schema. New validation and upload flows must use theme.v0.2.runtime.schema.json.",
   "type": "object",
   "additionalProperties": true,
   "required": [

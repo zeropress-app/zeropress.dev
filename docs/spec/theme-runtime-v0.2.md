@@ -1,10 +1,6 @@
-# ZeroPress Theme Runtime Spec v0.1
+# ZeroPress Theme Runtime Spec v0.2
 
-> Status: Superseded by v0.2
->
-> This document is kept for historical reference only.
-> New validation, upload, and submission flows must use v0.2:
-> [Theme Runtime v0.2](/spec/theme-runtime-v0.2.md)
+> Status: Active (current manifest contract for validation and uploads)
 
 ## 0. Core Philosophy
 
@@ -27,7 +23,7 @@ Out of scope:
 - Client-side routing-dependent app architecture
 - Runtime logic-centric application behavior
 
-## 2. Runtime Contract (Current)
+## 2. Runtime Contract
 
 Baseline structure compatible with current build/upload pipelines:
 
@@ -53,43 +49,53 @@ Key points:
 
 - Template files are expected as root-level `.html` files.
 - `partials/` is optional.
-- `assets/style.css` is effectively required.
+- `assets/style.css` is required.
 - `assets/theme.js` is optional and is not auto-executed by the runtime contract.
-- Upload ZIPs may be root-flat or wrapped in one top-level folder (`basePrefix`).
+- Upload ZIPs may be root-flat or wrapped in one top-level folder.
 
-## 2.1 Optional Devtools Layer
-
-Using `create-zeropress-theme --with-devtools` may add local development files (for example, `package.json`) to the theme directory.
-
-Important:
-
-- This is a local convenience layer and does not change the runtime contract.
-- Final upload ZIP validation is based on pure theme files.
-- `node_modules` and lockfiles are excluded from packaging.
-- Devtools scripts are thin wrappers around `zeropress-theme` commands (no extra local dependencies required by default).
-
-## 3. `theme.json` (Current)
+## 3. `theme.json` v0.2
 
 Minimal example:
 
 ```json
 {
-  "name": "my-theme",
-  "version": "0.1.0",
-  "author": "Author Name",
-  "description": "Theme description"
+  "name": "My Theme",
+  "namespace": "your-namespace",
+  "slug": "my-theme",
+  "version": "0.2.0",
+  "license": "MIT",
+  "description": "A ZeroPress theme.",
+  "runtime": "0.2"
 }
 ```
 
 Required fields:
 
-- `name` (string)
+- `name` (string, 1-80 chars)
+- `namespace` (string, 3-24 chars)
+- `slug` (string, 3-32 chars)
 - `version` (semver)
-- `author` (string)
+- `license` (enum)
+- `runtime` (must be `"0.2"`)
 
-Recommended field:
+Optional fields:
 
-- `description` (string)
+- `author` (string, 1-80 chars if present)
+- `description` (string, up to 280 chars)
+
+License enum:
+
+- `MIT`
+- `Apache-2.0`
+- `BSD-3-Clause`
+- `GPL-3.0-only`
+- `GPL-3.0-or-later`
+
+Identity rules:
+
+- `namespace` and `slug` must follow the ZeroPress package naming rules
+- `namespace` must match the registered publisher namespace in directory-backed submission flows
+- `slug` is the canonical theme identifier within a namespace
 
 ## 4. Template Rules
 
@@ -110,7 +116,7 @@ Recommended field:
 ## 6. Security and Packaging Rules
 
 - Tooling does not execute theme code.
-- Path escape is forbidden (for example, `../` or absolute path traversal).
+- Path escape is forbidden.
 - Symlink-based root escape is forbidden.
 - Distribution unit is a ZIP archive.
 
@@ -130,14 +136,18 @@ Errors:
 - Missing `theme.json` or invalid JSON
 - Missing required templates (`layout.html`, `index.html`, `post.html`, `page.html`)
 - Missing `assets/style.css`
+- Missing required manifest fields
 - Invalid `version` semver
+- Invalid `license`
+- `runtime` not equal to `"0.2"`
+- Invalid `namespace` or `slug`
 - `layout.html` slot rule violations
-- Disallowed template syntax patterns (for example, `{{#...}}`, `{{/...}}`)
+- Disallowed template syntax patterns
 
 Warnings:
 
 - Missing optional templates: `archive.html`, `category.html`, `tag.html`
-- `post.html` missing `{{post.comments_html}}` (recommended comments placeholder)
+- `post.html` missing `{{post.comments_html}}`
 - `{{post.comments_html}}` used outside `post.html`
 
 ## 8. CLI Alignment
@@ -146,35 +156,28 @@ Warnings:
 
 ## 9. Compatibility Notes
 
-- `pack` generates root-flat ZIP output by default.
-- Upload validation also accepts a single-folder wrapped root for user convenience.
+- `v0.2` is the only accepted manifest contract for new validation and upload flows.
+- `v0.1` manifests are no longer accepted by validator-backed upload/submission paths.
 
 ## 10. Toolkit Baseline
 
 - Node.js: `>= 18.18.0`
 - ESM only
 - CommonJS is not supported
-- No compatibility polyfills for lower Node versions
-
-Initial package versions:
-
-- `create-zeropress-theme@0.1.0`
-- `zeropress-theme@0.1.0`
 
 ## 11. Normative vs Informative Summary
 
 | Item | Classification | Notes |
 | --- | --- | --- |
 | `theme.json`, `layout.html`, `index.html`, `post.html`, `page.html`, `assets/style.css` | Normative (Required) | Missing files produce validation errors |
-| `theme.json.name`, `theme.json.version`, `theme.json.author` | Normative (Required) | Must be non-empty strings; `version` must be semver |
+| `theme.json.name`, `theme.json.namespace`, `theme.json.slug`, `theme.json.version`, `theme.json.license`, `theme.json.runtime` | Normative (Required) | Must be present and valid |
+| `theme.json.author` | Informative (Optional) | Optional package display metadata |
+| `theme.json.description` | Informative (Optional) | Recommended metadata for theme clarity |
 | `layout.html` must contain exactly one `{{slot:content}}` | Normative (Required) | Validation error if violated |
 | Allowed slots: `content`, `header`, `footer`, `meta` | Normative (Required) | Unknown slots are invalid |
-| No `<script>` in `layout.html` | Normative (Required) | Validation error in standard checks |
+| No `<script>` in `layout.html` | Normative (Required) | Validation error |
 | Mustache block syntax forbidden (`{{#...}}`, `{{/...}}`) | Normative (Required) | Validation error |
 | Path/symlink root escape forbidden | Normative (Required) | Validation error |
-| `archive.html`, `category.html`, `tag.html` | Informative (Recommended) | Missing files produce warnings, not errors |
-| `theme.json.description` | Informative (Recommended) | Recommended metadata for better theme clarity |
-| `post.comments_html` variable | Informative (Optional) | Optional post-level rendered HTML fragment for comments |
-| `partials/` directory | Informative (Optional) | Supported but not required by runtime contract |
-| `assets/theme.js` | Informative (Optional) | Optional file; not auto-executed by runtime contract |
-| Devtools files (`package.json`, scripts, lockfiles) | Informative (Local tooling layer) | Useful for local workflows; excluded from packaging |
+| `archive.html`, `category.html`, `tag.html` | Informative (Recommended) | Missing files produce warnings |
+| `partials/` directory | Informative (Optional) | Supported but not required |
+| `assets/theme.js` | Informative (Optional) | Optional file; not auto-executed |
