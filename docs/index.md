@@ -13,6 +13,7 @@ Versioned:
 
 - [Theme Manifest Runtime v0.2](/schemas/theme.v0.2.runtime.schema.json)
 - [Theme Manifest Runtime v0.1](/schemas/theme.v0.1.runtime.schema.json)
+- [Preview Data v0.2](/schemas/preview-data.v0.2.schema.json)
 - [Preview Data v0.1](/schemas/preview-data.v0.1.schema.json)
 
 Stable aliases:
