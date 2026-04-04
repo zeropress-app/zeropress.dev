@@ -51,6 +51,8 @@ Key points:
 - `partials/` is optional.
 - `assets/style.css` is required.
 - `assets/theme.js` is optional and is not auto-executed by the runtime contract.
+- `archive.html`, `category.html`, and `tag.html` are optional capabilities. If a theme omits them, related route outputs are omitted even when preview-data still contains those route arrays.
+- `404.html` is optional. When present, build tooling may emit a `404.html` artifact; when absent, that artifact is omitted.
 - Upload ZIPs may be root-flat or wrapped in one top-level folder.
 
 ## 3. `theme.json` v0.2
@@ -149,6 +151,12 @@ Warnings:
 - Missing optional templates: `archive.html`, `category.html`, `tag.html`
 - `post.html` missing `{{post.comments_html}}`
 - `{{post.comments_html}}` used outside `post.html`
+
+Runtime behavior:
+
+- Required preview-data route arrays do not guarantee emitted artifacts for optional route kinds.
+- `archive`, `category`, and `tag` pages are emitted only when both renderable route data exists and the matching template exists.
+- `404.html` is emitted only when the theme provides a `404.html` template.
 
 ## 8. CLI Alignment
 
