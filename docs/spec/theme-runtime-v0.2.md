@@ -110,8 +110,9 @@ Identity rules:
 ## 5. Variables and Rendering
 
 - Only simple variable substitution is supported.
-- Rendering is designed for server-prepared data injection.
+- Rendering is designed for build-generated data injection.
 - JavaScript is for progressive enhancement, not core rendering.
+- Preview-data stays canonical and data-only; build tooling computes theme-facing render data immediately before template rendering.
 - Runtime data may include richer HTML-ready fields on post objects.
 - `{{post.comments_html}}` is supported as an optional rendered HTML fragment for post comment sections.
 
