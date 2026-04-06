@@ -30,3 +30,5 @@ Stable aliases:
 ## Notes
 
 - When a new version is released, aliases can be updated without changing client URLs.
+- `preview-data v0.4` is an alpha-era contract and may be overwritten in place while ZeroPress is still pre-release.
+- The current `preview-data v0.4` contract includes site-level comment policy and post-level `allow_comments`.
