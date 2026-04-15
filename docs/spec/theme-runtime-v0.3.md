@@ -94,7 +94,7 @@ Optional fields:
 
 - `author` (string, 1-80 chars if present)
 - `description` (string, up to 280 chars)
-- `menuSlots` (object map of supported menu slots)
+- `menuSlots` (object map of recommended `menu_id` values)
 
 License enum:
 
@@ -112,18 +112,19 @@ Identity rules:
 
 ### 3.1 `menuSlots`
 
-`menuSlots` is an optional object that declares which menu locations a theme supports.
+`menuSlots` is an optional object that declares which `menu_id` values a theme commonly expects.
 
-- Keys are stable menu slot identifiers such as `primary`, `footer`, or `sidebar`
-- Values contain admin-facing metadata for slot selection UIs
+- Keys are stable identifiers such as `primary`, `footer`, or `docs-sidebar`
+- Values contain admin-facing helper metadata for menu creation guidance
 - `menuSlots` does not assign a menu to a slot
-- Menu assignment is site-level state and is outside the theme runtime manifest
+- `menuSlots` does not filter or control build behavior
+- Themes may still read any `menus.<menu_id>` present in preview-data, whether or not that id is declared here
 
 Recommended slot ids:
 
 - `primary`
 - `footer`
-- `sidebar`
+- `docs-sidebar`
 
 Validation rules:
 
@@ -141,7 +142,7 @@ Validation rules:
 Menu slots are distinct from template slots.
 
 - Template slots are placeholders inside HTML templates, such as `{{slot:content}}`
-- Menu slots are metadata declarations inside `theme.json`
+- Menu slots are helper metadata declarations inside `theme.json`
 
 Defining `menuSlots` does not change template rendering rules or allowed template slot names.
 
@@ -161,6 +162,7 @@ Defining `menuSlots` does not change template rendering rules or allowed templat
 - Preview-data stays canonical and data-only; build tooling computes theme-facing render data immediately before template rendering.
 - Runtime data may include richer HTML-ready fields on post objects.
 - `{{post.comments_html}}` is supported as an optional rendered HTML fragment for post comment sections.
+- `{{menu:<menu_id>}}` is supported as an optional rendered HTML fragment for menu trees, for example `{{menu:primary}}`.
 
 ## 6. Security and Packaging Rules
 
