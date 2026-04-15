@@ -1,10 +1,10 @@
 # ZeroPress Theme Runtime Spec v0.1
 
-> Status: Superseded by v0.2
+> Status: Superseded by v0.3
 >
 > This document is kept for historical reference only.
-> New validation, upload, and submission flows must use v0.2:
-> [Theme Runtime v0.2](/spec/theme-runtime-v0.2.md)
+> New validation, upload, and submission flows must use v0.3:
+> [Theme Runtime v0.3](/spec/theme-runtime-v0.3.md)
 
 ## 0. Core Philosophy
 

@@ -1,10 +1,6 @@
-# ZeroPress Theme Runtime Spec v0.2
+# ZeroPress Theme Runtime Spec v0.3
 
-> Status: Superseded by v0.3
->
-> This document is kept for historical reference only.
-> New validation, upload, and submission flows must use v0.3:
-> [Theme Runtime v0.3](/spec/theme-runtime-v0.3.md)
+> Status: Active (current manifest contract for validation and uploads)
 
 ## 0. Core Philosophy
 
@@ -26,6 +22,7 @@ Out of scope:
 - Backend APIs, authentication, and admin features
 - Client-side routing-dependent app architecture
 - Runtime logic-centric application behavior
+- Site-level menu assignment state
 
 ## 2. Runtime Contract
 
@@ -59,7 +56,7 @@ Key points:
 - `404.html` is optional. When present, build tooling may emit a `404.html` artifact; when absent, that artifact is omitted.
 - Upload ZIPs may be root-flat or wrapped in one top-level folder.
 
-## 3. `theme.json` v0.2
+## 3. `theme.json` v0.3
 
 Minimal example:
 
@@ -68,10 +65,19 @@ Minimal example:
   "name": "My Theme",
   "namespace": "your-namespace",
   "slug": "my-theme",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "description": "A ZeroPress theme.",
-  "runtime": "0.2"
+  "runtime": "0.3",
+  "menuSlots": {
+    "primary": {
+      "title": "Primary Menu",
+      "description": "Main header navigation"
+    },
+    "sidebar": {
+      "title": "Sidebar Menu"
+    }
+  }
 }
 ```
 
@@ -82,12 +88,13 @@ Required fields:
 - `slug` (string, 3-32 chars)
 - `version` (semver)
 - `license` (enum)
-- `runtime` (must be `"0.2"`)
+- `runtime` (must be `"0.3"`)
 
 Optional fields:
 
 - `author` (string, 1-80 chars if present)
 - `description` (string, up to 280 chars)
+- `menuSlots` (object map of supported menu slots)
 
 License enum:
 
@@ -102,6 +109,41 @@ Identity rules:
 - `namespace` and `slug` must follow the ZeroPress package naming rules
 - `namespace` must match the registered publisher namespace in directory-backed submission flows
 - `slug` is the canonical theme identifier within a namespace
+
+### 3.1 `menuSlots`
+
+`menuSlots` is an optional object that declares which menu locations a theme supports.
+
+- Keys are stable menu slot identifiers such as `primary`, `footer`, or `sidebar`
+- Values contain admin-facing metadata for slot selection UIs
+- `menuSlots` does not assign a menu to a slot
+- Menu assignment is site-level state and is outside the theme runtime manifest
+
+Recommended slot ids:
+
+- `primary`
+- `footer`
+- `sidebar`
+
+Validation rules:
+
+- `menuSlots` must be an object if present
+- it must contain at least one slot when present
+- each slot id must use lowercase letters, digits, and internal hyphens only
+- each slot id must be 1-32 characters
+- reserved ids `content`, `header`, `footer`, and `meta` are not allowed as menu slot ids
+- each slot definition must contain `title`
+- slot definitions may optionally include `description`
+- unknown properties inside a slot definition are invalid
+
+### 3.2 Menu Slots vs Template Slots
+
+Menu slots are distinct from template slots.
+
+- Template slots are placeholders inside HTML templates, such as `{{slot:content}}`
+- Menu slots are metadata declarations inside `theme.json`
+
+Defining `menuSlots` does not change template rendering rules or allowed template slot names.
 
 ## 4. Template Rules
 
@@ -146,8 +188,13 @@ Errors:
 - Missing required manifest fields
 - Invalid `version` semver
 - Invalid `license`
-- `runtime` not equal to `"0.2"`
+- `runtime` not equal to `"0.3"`
 - Invalid `namespace` or `slug`
+- Invalid `menuSlots` type or empty object
+- Invalid menu slot identifiers
+- Reserved menu slot identifiers
+- Invalid menu slot definition shape
+- Unknown properties inside a menu slot definition
 - `layout.html` slot rule violations
 - Disallowed template syntax patterns
 
@@ -169,8 +216,8 @@ Runtime behavior:
 
 ## 9. Compatibility Notes
 
-- `v0.2` is kept for historical reference only.
-- New validation and upload flows must use `v0.3`.
+- `v0.3` is the only accepted manifest contract for new validation and upload flows.
+- `v0.2` manifests are historical and are no longer accepted by validator-backed upload/submission paths.
 
 ## 10. Toolkit Baseline
 
@@ -186,8 +233,9 @@ Runtime behavior:
 | `theme.json.name`, `theme.json.namespace`, `theme.json.slug`, `theme.json.version`, `theme.json.license`, `theme.json.runtime` | Normative (Required) | Must be present and valid |
 | `theme.json.author` | Informative (Optional) | Optional package display metadata |
 | `theme.json.description` | Informative (Optional) | Recommended metadata for theme clarity |
+| `theme.json.menuSlots` | Informative (Optional) | If present, it must satisfy the runtime schema |
 | `layout.html` must contain exactly one `{{slot:content}}` | Normative (Required) | Validation error if violated |
-| Allowed slots: `content`, `header`, `footer`, `meta` | Normative (Required) | Unknown slots are invalid |
+| Allowed template slots: `content`, `header`, `footer`, `meta` | Normative (Required) | Unknown slots are invalid |
 | No `<script>` in `layout.html` | Normative (Required) | Validation error |
 | Mustache block syntax forbidden (`{{#...}}`, `{{/...}}`) | Normative (Required) | Validation error |
 | Path/symlink root escape forbidden | Normative (Required) | Validation error |
