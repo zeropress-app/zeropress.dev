@@ -132,7 +132,6 @@ Validation rules:
 - it must contain at least one slot when present
 - each slot id must use lowercase letters, digits, and internal hyphens only
 - each slot id must be 1-32 characters
-- reserved ids `content`, `header`, `footer`, and `meta` are not allowed as menu slot ids
 - each slot definition must contain `title`
 - slot definitions may optionally include `description`
 - unknown properties inside a slot definition are invalid
@@ -143,6 +142,7 @@ Menu slots are distinct from template slots.
 
 - Template slots are placeholders inside HTML templates, such as `{{slot:content}}`
 - Menu slots are helper metadata declarations inside `theme.json`
+- Template slot names and `menu_id` values are separate namespaces, so values like `footer` may appear in both without conflict
 
 Defining `menuSlots` does not change template rendering rules or allowed template slot names.
 
