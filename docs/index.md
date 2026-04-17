@@ -12,6 +12,10 @@ Current contract highlights:
 - [Theme Runtime v0.2](/spec/theme-runtime-v0.2.md)
 - [Theme Runtime v0.1](/spec/theme-runtime-v0.1.md)
 
+## Preview Data Spec
+
+- [Preview Data v0.5](/spec/preview-data-v0.5.md)
+
 ## JSON Schemas
 
 Versioned:
