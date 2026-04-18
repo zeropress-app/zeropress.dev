@@ -23,6 +23,7 @@ Out of scope:
 - Client-side routing-dependent app architecture
 - Runtime logic-centric application behavior
 - Site-level menu assignment state
+- Site-level widget assignment state
 
 ## 2. Runtime Contract
 
@@ -77,6 +78,15 @@ Minimal example:
     "sidebar": {
       "title": "Sidebar Menu"
     }
+  },
+  "widgetAreas": {
+    "sidebar": {
+      "title": "Sidebar Widgets",
+      "description": "Widgets shown next to article and page content"
+    },
+    "header": {
+      "title": "Header Widgets"
+    }
   }
 }
 ```
@@ -95,6 +105,7 @@ Optional fields:
 - `author` (string, 1-80 chars if present)
 - `description` (string, up to 280 chars)
 - `menuSlots` (object map of recommended `menu_id` values)
+- `widgetAreas` (object map of recommended `widget_area_id` values)
 
 License enum:
 
@@ -146,6 +157,42 @@ Menu slots are distinct from template slots.
 
 Defining `menuSlots` does not change template rendering rules or allowed template slot names.
 
+### 3.2 `widgetAreas`
+
+`widgetAreas` is an optional object that declares which `widget_area_id` values a theme commonly expects.
+
+- Keys are stable identifiers such as `sidebar`, `header`, or `docs-sidebar`
+- Values contain admin-facing helper metadata for widget area creation guidance
+- `widgetAreas` does not assign widgets to an area
+- `widgetAreas` does not filter or control build behavior
+- Themes may still read any `widgets.<widget_area_id>` present in preview-data, whether or not that id is declared here
+
+Recommended area ids:
+
+- `sidebar`
+- `header`
+- `docs-sidebar`
+
+Validation rules:
+
+- `widgetAreas` must be an object if present
+- it must contain at least one area when present
+- each area id must use lowercase letters, digits, and internal hyphens only
+- each area id must be 1-32 characters
+- each area definition must contain `title`
+- area definitions may optionally include `description`
+- unknown properties inside an area definition are invalid
+
+### 3.3 Theme Helper Metadata vs Template Slots
+
+Theme helper metadata is distinct from template slots.
+
+- Template slots are placeholders inside HTML templates, such as `{{slot:content}}`
+- `menuSlots` and `widgetAreas` are helper metadata declarations inside `theme.json`
+- Template slot names, `menu_id` values, and `widget_area_id` values are separate namespaces, so values like `header` or `footer` may appear in multiple places without conflict
+
+Defining `menuSlots` or `widgetAreas` does not change template rendering rules or allowed template slot names.
+
 ## 4. Template Rules
 
 - `layout.html` must include exactly one `{{slot:content}}`.
@@ -193,10 +240,13 @@ Errors:
 - `runtime` not equal to `"0.3"`
 - Invalid `namespace` or `slug`
 - Invalid `menuSlots` type or empty object
+- Invalid `widgetAreas` type or empty object
 - Invalid menu slot identifiers
-- Reserved menu slot identifiers
 - Invalid menu slot definition shape
+- Invalid widget area identifiers
+- Invalid widget area definition shape
 - Unknown properties inside a menu slot definition
+- Unknown properties inside a widget area definition
 - `layout.html` slot rule violations
 - Disallowed template syntax patterns
 
@@ -236,6 +286,7 @@ Runtime behavior:
 | `theme.json.author` | Informative (Optional) | Optional package display metadata |
 | `theme.json.description` | Informative (Optional) | Recommended metadata for theme clarity |
 | `theme.json.menuSlots` | Informative (Optional) | If present, it must satisfy the runtime schema |
+| `theme.json.widgetAreas` | Informative (Optional) | If present, it must satisfy the runtime schema |
 | `layout.html` must contain exactly one `{{slot:content}}` | Normative (Required) | Validation error if violated |
 | Allowed template slots: `content`, `header`, `footer`, `meta` | Normative (Required) | Unknown slots are invalid |
 | No `<script>` in `layout.html` | Normative (Required) | Validation error |

@@ -37,7 +37,7 @@ Stable aliases:
 ## Notes
 
 - When a new version is released, aliases can be updated without changing client URLs.
-- `theme runtime v0.3` adds optional `theme.json.menuSlots` declarations for theme-defined menu locations.
+- `theme runtime v0.3` adds optional `theme.json.menuSlots` and `theme.json.widgetAreas` helper metadata declarations for theme-defined menu ids and widget area ids.
 - `preview-data v0.5` keeps the site-level comment policy and post-level `allow_comments`.
 - `preview-data v0.5` moves post/page bodies to raw `content` plus `document_type` and normalizes authors into `content.authors[]`.
 - `preview-data v0.5` keeps `post.id`, but pages/categories/tags do not carry internal ids.
