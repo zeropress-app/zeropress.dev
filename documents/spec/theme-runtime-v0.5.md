@@ -74,6 +74,7 @@ Notable metadata supported in `v0.5`:
 
 - `features.comments`
 - `features.newsletter`
+- `features.postIndex`
 - `menuSlots`
 - `widgetAreas`
 
@@ -101,6 +102,8 @@ Rules:
 - `slot` tags are reserved for layout composition.
 - `partial` tags resolve to `partials/<name>.html`.
 - Partials share the current render context.
+- Variable path segments may contain letters, digits, underscores, and internal hyphens, such as `menus.docs-sidebar.items`.
+- Hyphens cannot start or end a path segment, and consecutive hyphens are invalid.
 - Missing or circular partial references fail validation.
 - Unsupported tags such as `if_neq`, `unless`, or custom expressions are invalid.
 
@@ -110,17 +113,83 @@ Rules:
 - Raw HTML is only allowed through explicit `html` / `_html` fields.
 - Safe URL fields may use `_url` suffixes prepared by build tooling.
 - Structured theme data is preferred over render-ready HTML fragments.
+- Every HTML route receives `route` metadata with `type`, `is_front_page`, `is_post_index`, `path`, and `url`.
 
 Examples of structured contract patterns:
 
 - `posts.items[]`
 - `pagination.pages[]`
+- `pagination.enabled`
 - `archive.groups[]`
 - `post.author`
 - `post.categories[]`
 - `post.tags[]`
+- `taxonomies.categories[]`
+- `taxonomies.tags[]`
 - `post.prev`
 - `post.next`
+
+### 5.1 Markdown Rendering
+
+For `document_type: "markdown"`, build renders common Markdown authoring conventions as part of the v0.5 presentation contract:
+
+- tables as `<table>` markup
+- strikethrough as `<s>`
+- task lists as disabled checkbox inputs with `contains-task-list`, `task-list-item`, and `task-list-item-checkbox` classes
+- GitHub alerts for `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION` as `zp-alert` aside blocks
+- fenced code blocks with `language-*` classes
+
+Markdown headings receive stable `id` attributes and generate `page.toc[]` or `post.toc[]` entries for `h2` through `h4`. Build does not add visible heading permalink UI. Mermaid fences remain code blocks such as `pre code.language-mermaid`; rendering diagrams is theme-owned progressive enhancement.
+
+### 5.2 Post Index Capability
+
+`features.postIndex` declares whether a theme supports rendering the post index with `index.html`.
+
+Default:
+
+```json
+{
+  "features": {
+    "postIndex": true
+  }
+}
+```
+
+If `features.postIndex` is `false`, build treats the post index as effectively disabled even when preview-data requests `site.post_index.enabled: true`. This is a capability hint, not a validation error.
+
+`index.html` may be rendered as:
+
+- a front page (`route.type: "front_page"`)
+- a post index (`route.type: "post_index"`)
+- the legacy combined root route when the default front page and post index both use `/`
+
+Themes should check `route.is_post_index` and `pagination.enabled` before rendering pagination UI.
+
+When `site.front_page.type` is `page`, the root route renders `page.html` with `route.type: "front_page"` and `route.is_front_page: true`. The selected page's normal route is not emitted, so themes should treat the root render as the canonical page render. If `page.html` renders both `page.title` and `page.html`, use `route.is_front_page` or a single heading source to avoid duplicate H1 output on Markdown front pages.
+
+Example:
+
+```html
+{{#if route.is_front_page}}
+  <div class="prose">{{page.html}}</div>
+{{#else}}
+  <header>
+    <h1>{{page.title}}</h1>
+  </header>
+  <div class="prose">{{page.html}}</div>
+{{/if}}
+```
+
+Route types currently include:
+
+- `front_page`
+- `post_index`
+- `page`
+- `post`
+- `category`
+- `tag`
+- `archive`
+- `not_found`
 
 ## 6. Progressive Enhancement
 

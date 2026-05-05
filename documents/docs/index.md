@@ -1,11 +1,16 @@
 # ZeroPress Public Docs
 
-This site publishes public ZeroPress runtime documentation and JSON schemas.
+This site publishes public ZeroPress theme authoring guides, runtime documentation, CLI guides, and JSON schemas.
 
 Current contract highlights:
 
 - Theme runtime current spec: `v0.5`
 - Preview-data current schema: `v0.5`
+
+## Theme Authoring
+
+- [Theme Authoring Guide](/theme-authoring/index.md)
+
 ## Theme Runtime Spec
 
 - [Theme Runtime v0.5](/spec/theme-runtime-v0.5.md)
@@ -14,12 +19,24 @@ Current contract highlights:
 
 - [Preview Data v0.5](/spec/preview-data-v0.5.md)
 
+## CLI Tools
+
+- [CLI Tools Overview](/cli/index.md)
+
+## Build Pages Config
+
+- [ZeroPress Build Pages Config](/build-pages-config/index.md)
+
 ## JSON Schemas
 
-Versioned:
+Current v0.5 schemas:
 
 - [Theme Manifest Runtime v0.5](/schemas/theme.v0.5.runtime.schema.json)
 - [Preview Data v0.5](/schemas/preview-data.v0.5.schema.json)
+- [ZeroPress Build Pages Config v0.1](/schemas/zeropress-build-pages.config.v0.1.schema.json)
+
+Historical preview-data schemas:
+
 - [Preview Data v0.4](/schemas/preview-data.v0.4.schema.json)
 - [Preview Data v0.3](/schemas/preview-data.v0.3.schema.json)
 - [Preview Data v0.2](/schemas/preview-data.v0.2.schema.json)
@@ -29,6 +46,7 @@ Stable aliases:
 
 - [Theme Manifest (stable alias)](/schemas/theme.schema.json)
 - [Preview Data (stable alias)](/schemas/preview-data.schema.json)
+- [ZeroPress Build Pages Config (stable alias)](/schemas/zeropress-build-pages.config.schema.json)
 
 ## Notes
 
