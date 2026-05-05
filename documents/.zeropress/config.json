@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/zeropress-build-pages.config.v0.1.schema.json",
+  "version": "0.1",
+  "site": {
+    "title": "ZeroPress Public Docs",
+    "description": "Public ZeroPress theme authoring guides, runtime documentation, CLI guides, and JSON schemas.",
+    "url": "https://zeropress.dev",
+    "footer": {
+      "copyright_text": "ZeroPress Public Docs",
+      "attribution": {
+        "enabled": true
+      }
+    }
+  },
+  "front_page": {
+    "type": "markdown"
+  },
+  "custom_html": {
+    "head_end": {
+      "file": ".zeropress/head-end.html"
+    },
+    "body_end": {
+      "file": ".zeropress/body-end.html"
+    }
+  },
+  "menus": {
+    "primary": {
+      "name": "Primary Menu",
+      "items": [
+        { "title": "Home", "url": "/" },
+        { "title": "Docs", "url": "/docs/" },
+        { "title": "Theme Authoring", "url": "/theme-authoring/" },
+        { "title": "CLI Tools", "url": "/cli/" },
+        { "title": "Theme Runtime v0.5", "url": "/spec/theme-runtime-v0.5" },
+        { "title": "Preview Data v0.5", "url": "/spec/preview-data-v0.5" }
+      ]
+    }
+  }
+}
