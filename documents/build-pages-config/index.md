@@ -22,7 +22,7 @@ my-site/
       index.md
 ```
 
-For `@zeropress/build-pages`, the source root is controlled by `--source` or `ZEROPRESS_PUBLIC_DIR`. If neither is set, the package uses the current directory.
+For `@zeropress/build-pages`, the source root is controlled by the GitHub Action `source` input, CLI `--source`, or `ZEROPRESS_PUBLIC_DIR`. The GitHub Action defaults to `./docs`; CLI usage requires an explicit `--source` or `ZEROPRESS_PUBLIC_DIR`.
 
 `zeropress.dev` uses:
 
@@ -30,7 +30,7 @@ For `@zeropress/build-pages`, the source root is controlled by `--source` or `ZE
 ZEROPRESS_PUBLIC_DIR=documents
 ```
 
-The `.zeropress/` directory is for prebuild-only source files. It is not copied to the final output as public passthrough content.
+The `.zeropress/` directory is for Build Pages-only source files. It is not copied to the final output as public passthrough content.
 
 ## Schema
 
@@ -48,7 +48,7 @@ Schema URLs:
 - [ZeroPress Build Pages Config v0.1](/schemas/zeropress-build-pages.config.v0.1.schema.json)
 - [ZeroPress Build Pages Config stable alias](/schemas/zeropress-build-pages.config.schema.json)
 
-The version string belongs to the build-pages config format. It does not change the preview-data version emitted by prebuild, which is still preview-data v0.5.
+The version string belongs to the build-pages config format. It does not change the internal preview-data version emitted by Build Pages.
 
 ## Minimal Config
 
@@ -73,20 +73,18 @@ The version string belongs to the build-pages config format. It does not change 
 }
 ```
 
-With this config, prebuild reads `index.md`, emits it as the front page, and disables the post index because this workflow is Markdown-docs oriented.
+With this config, Build Pages reads `index.md`, emits it as the front page, and disables the post index because this workflow is Markdown-docs oriented.
 
 ## Site Metadata
 
-`site` provides defaults copied into generated preview-data:
+`site` provides user-facing site metadata:
 
 ```json
 {
   "site": {
     "title": "My Docs",
     "description": "Documentation for my project.",
-    "url": "https://example.com",
-    "locale": "en-US",
-    "timezone": "UTC"
+    "url": "https://example.com"
   }
 }
 ```
@@ -96,10 +94,9 @@ Common fields:
 - `title`
 - `description`
 - `url`
-- `locale`
-- `timezone`
-- `permalinks`
 - `footer`
+
+Renderer-only preview-data fields such as locale, date/time formats, permalink policy, comments policy, and posts-per-page are not accepted in Build Pages config. Build Pages supplies those internal defaults while generating preview-data.
 
 ## Footer
 
@@ -246,7 +243,7 @@ Use `custom_html` when the site needs trusted HTML injected before `</head>` or 
 }
 ```
 
-The prebuild step reads those files and emits preview-data:
+Build Pages reads those files and emits internal preview-data:
 
 ```json
 {
@@ -276,14 +273,17 @@ Build Pages writes:
 
 ```txt
 .zeropress/
+  build-pages-config.json
   preview-data.json
-  prebuild-report.json
-  build-pages-public/
+  build-report.json
+  public-assets/
 ```
 
-`preview-data.json` is passed to `@zeropress/build`.
+`build-pages-config.json` records the resolved user-facing Build Pages config for the current run.
 
-`prebuild-report.json` records discovered Markdown counts, skipped Markdown files, front page resolution, and custom HTML slots. It is useful when testing larger documentation corpora. `build-pages-public/` is a temporary staged public root used before `@zeropress/build` writes generated output.
+`preview-data.json` is the internal generated build input passed to the ZeroPress renderer.
+
+`build-report.json` records discovered Markdown counts, skipped Markdown files, front page resolution, and custom HTML slots. It is useful when testing larger documentation corpora. `public-assets/` is a temporary staged public root used before `@zeropress/build` writes generated output.
 
 ## Environment Variables
 
@@ -291,18 +291,18 @@ Common environment variables:
 
 | Name | Default | Purpose |
 | --- | --- | --- |
-| `ZEROPRESS_PUBLIC_DIR` | `.` | Source root for Markdown discovery and public passthrough |
+| `ZEROPRESS_PUBLIC_DIR` | none | Source root for Markdown discovery and public passthrough |
 | `ZEROPRESS_THEME_DIR` | bundled `docs` theme | Custom theme directory |
 | `ZEROPRESS_OUT_DIR` | `_site` | Output directory used by local scripts |
 | `ZEROPRESS_SITE_URL` | config `site.url` | Canonical URL override |
-| `ZEROPRESS_SKIP_UNTITLED_MARKDOWN` | `false` | Skip Markdown without an H1 instead of failing prebuild |
+| `ZEROPRESS_SKIP_UNTITLED_MARKDOWN` | `false` | Skip Markdown without an H1 instead of failing Build Pages |
 | `ZEROPRESS_BUILD_PAGES_CONFIG` | `<source>/.zeropress/config.json` | Config path override |
 
 `zeropress.dev` additionally supports `PRETTIER_FORMAT=false` as a site-local formatting option after Build Pages completes.
 
 ## Failure Policy
 
-Prebuild fails when:
+Build Pages fails when:
 
 - `config.json` is malformed JSON.
 - `front_page.file` points outside the public root.
@@ -310,7 +310,7 @@ Prebuild fails when:
 - A referenced `.zeropress/*.html` file is missing or empty.
 - Markdown selected as a page has no top-level heading, unless `ZEROPRESS_SKIP_UNTITLED_MARKDOWN=true`.
 
-If `config.json` is missing, prebuild falls back to defaults. This keeps the workflow usable for simple Markdown directories.
+If `config.json` is missing, Build Pages falls back to defaults. This keeps the workflow usable for simple Markdown directories.
 
 ## Related Docs
 
