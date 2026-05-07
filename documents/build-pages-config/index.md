@@ -2,13 +2,13 @@
 
 ZeroPress Build Pages config is the site-local configuration format used by `@zeropress/build-pages` GitHub Pages style Markdown workflows.
 
-It is not the same thing as preview-data or a theme manifest. The config file is read before `@zeropress/build` runs, then converted into preview-data v0.5.
+It is not the same thing as preview-data or a theme manifest. The config file is read before `@zeropress/build` runs, then converted into internal preview-data.
 
 This page is a public mirror for the active schema and the options used by this docs site. The `@zeropress/build-pages` package README and schemas are the canonical source of truth for CLI and GitHub Action behavior.
 
 ## File Location
 
-Place the config file inside the configured public root:
+Place the config file inside the configured source root:
 
 ```txt
 my-site/
@@ -22,13 +22,15 @@ my-site/
       index.md
 ```
 
-For `@zeropress/build-pages`, the source root is controlled by the GitHub Action `source` input, CLI `--source`, or `ZEROPRESS_PUBLIC_DIR`. The GitHub Action defaults to `./docs`; CLI usage requires an explicit `--source` or `ZEROPRESS_PUBLIC_DIR`.
+For `@zeropress/build-pages`, the source root is controlled by the GitHub Action `source` input or CLI `--source`. The GitHub Action defaults to `./docs`; CLI usage requires an explicit `--source`.
 
 `zeropress.dev` uses:
 
 ```bash
-ZEROPRESS_PUBLIC_DIR=documents
+zeropress-build-pages --source documents --destination _site
 ```
+
+Use a dedicated source directory such as `docs/` or `documents/`. Repository root source (`--source ./`) is not supported.
 
 The `.zeropress/` directory is for Build Pages-only source files. It is not copied to the final output as public passthrough content.
 
@@ -38,7 +40,7 @@ Use the versioned schema while editing config:
 
 ```json
 {
-  "$schema": "../schemas/zeropress-build-pages.config.v0.1.schema.json",
+  "$schema": "https://zeropress.dev/schemas/zeropress-build-pages.config.v0.1.schema.json",
   "version": "0.1"
 }
 ```
@@ -54,7 +56,7 @@ The version string belongs to the build-pages config format. It does not change 
 
 ```json
 {
-  "$schema": "../schemas/zeropress-build-pages.config.v0.1.schema.json",
+  "$schema": "https://zeropress.dev/schemas/zeropress-build-pages.config.v0.1.schema.json",
   "version": "0.1",
   "site": {
     "title": "My Docs",
@@ -267,9 +269,9 @@ CSS, JavaScript, fonts, images, and third-party packages should remain normal pu
 <script defer src="/vendor/app.js"></script>
 ```
 
-## Generated Files
+## Internal `.zeropress/` Files
 
-Build Pages writes:
+Build Pages writes internal working files to `.zeropress/` in the current working directory. These files are not the final deploy output.
 
 ```txt
 .zeropress/
@@ -285,30 +287,15 @@ Build Pages writes:
 
 `build-report.json` records discovered Markdown counts, skipped Markdown files, front page resolution, and custom HTML slots. It is useful when testing larger documentation corpora. `public-assets/` is a temporary staged public root used before `@zeropress/build` writes generated output.
 
-## Environment Variables
-
-Common environment variables:
-
-| Name | Default | Purpose |
-| --- | --- | --- |
-| `ZEROPRESS_PUBLIC_DIR` | none | Source root for Markdown discovery and public passthrough |
-| `ZEROPRESS_THEME_DIR` | bundled `docs` theme | Custom theme directory |
-| `ZEROPRESS_OUT_DIR` | `_site` | Output directory used by local scripts |
-| `ZEROPRESS_SITE_URL` | config `site.url` | Canonical URL override |
-| `ZEROPRESS_SKIP_UNTITLED_MARKDOWN` | `false` | Skip Markdown without an H1 instead of failing Build Pages |
-| `ZEROPRESS_BUILD_PAGES_CONFIG` | `<source>/.zeropress/config.json` | Config path override |
-
-`zeropress.dev` additionally supports `PRETTIER_FORMAT=false` as a site-local formatting option after Build Pages completes.
-
 ## Failure Policy
 
 Build Pages fails when:
 
 - `config.json` is malformed JSON.
-- `front_page.file` points outside the public root.
+- `front_page.file` points outside the source root.
 - `front_page.type: "html"` points outside `.zeropress/`.
 - A referenced `.zeropress/*.html` file is missing or empty.
-- Markdown selected as a page has no top-level heading, unless `ZEROPRESS_SKIP_UNTITLED_MARKDOWN=true`.
+- Markdown selected as a page has no title, unless `--skip-untitled-markdown` or the GitHub Action `skip-untitled-markdown` input is used.
 
 If `config.json` is missing, Build Pages falls back to defaults. This keeps the workflow usable for simple Markdown directories.
 
