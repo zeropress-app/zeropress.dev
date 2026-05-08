@@ -240,6 +240,14 @@ Pages should render from fields such as:
 - `page.html`
 - `page.toc[]`
 
+Media fields such as `post.featured_image`, `page.featured_image`, and
+`post.author.avatar` may be absolute URLs, root-relative paths, or relative
+paths. When `site.mediaBaseUrl` is non-empty, relative media paths are resolved
+against it. When `site.mediaBaseUrl` is empty, relative media paths are
+preserved as written so themes can use site-local `public/` assets.
+Generated SEO fields such as `og:image` are still emitted only for absolute
+media URLs.
+
 For Markdown-first document pages, remember that `page.html` is the rendered Markdown body. If the source Markdown starts with `# Title`, then `page.html` already contains that H1. In that case, do not render a second `<h1>{{page.title}}</h1>` in `page.html`; use the body HTML as the document heading source.
 
 Front pages often use Markdown that already starts with an H1. A simple pattern is:

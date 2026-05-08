@@ -373,6 +373,14 @@ Slug fields and URL-like fields have different roles.
 - Slugs are safe single path segments.
 - URL-like fields such as `featured_image`, `avatar`, or menu item `url` may represent either absolute URLs or safe relative paths, depending on the field contract.
 
+Media fields such as `featured_image` and author `avatar` are normalized by the renderer:
+
+- absolute URLs are preserved after protocol validation
+- relative or root-relative paths are resolved against `site.mediaBaseUrl` when `mediaBaseUrl` is non-empty
+- relative or root-relative paths are preserved as written when `site.mediaBaseUrl` is empty
+
+Generated SEO fields such as `og:image` are emitted only when the resolved media value is absolute. Set `site.mediaBaseUrl` when relative media should also appear in social preview metadata.
+
 A value that is valid for a URL-like field is not automatically valid for a slug field.
 
 ## 8. Validation and Enforcement Layers
