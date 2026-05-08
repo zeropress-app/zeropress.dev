@@ -71,6 +71,8 @@ my-site/
 - `theme/assets/` contains theme-owned CSS and JavaScript referenced by the theme.
 - `public/` contains site-owned passthrough files such as favicons, PDFs, source files, and third-party vendor assets.
 
+Files under `theme/assets/` are copied to output `/assets/`. When asset hashing is enabled, output filenames may include a content hash and references such as `/assets/style.css` are rewritten to the emitted hashed path. Use that directory for reusable theme CSS, JavaScript, icons, and decorative images. Use `public/` for site content media, vendor bundles, and files the site owner controls directly.
+
 Reusable themes should avoid hard-coding site-specific analytics tokens, vendor URLs, or product copy. Prefer a documented partial or `public/` integration point that a site owner can fill.
 
 ## `theme.json`
@@ -140,6 +142,8 @@ Common helpers:
 
 Template syntax supports variables, `if`, `if_eq`, `else_if`, `else_if_eq`, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.5](../spec/theme-runtime-v0.5.md) for the full contract.
 
+Templates are path-only and do not evaluate JavaScript expressions. `if_eq` is strict and compares against a string literal without type coercion. `loop.index` is a zero-based number, so `{{#if_eq loop.index "4"}}` does not match. Use `loop.first`, `loop.last`, CSS selectors, or build-prepared data for positional layout.
+
 If a theme needs to iterate a menu manually, use `menus.<slot>.items` with the same slot id declared in `theme.json`. Both plain ids such as `primary` and hyphenated ids such as `docs-sidebar` are valid:
 
 ```html
@@ -206,6 +210,8 @@ The `route` object identifies the current render target:
 - `route.url`
 
 Use `route.is_post_index` before rendering post-index-only UI. Use `pagination.enabled` before rendering page navigation. A site may request a non-paginated post index, and a theme may declare `"postIndex": false` to opt out of post index rendering entirely.
+
+There is no `route.is_post` shortcut. For post-specific branching outside `post.html`, use `{{#if_eq route.type "post"}}`.
 
 When a site uses a page as the front page, the selected page is rendered at `/` through `page.html`, and its normal page route is not emitted. The root render has `route.type: "front_page"` and `route.is_front_page: true`. Use that flag when front-page markup should differ from normal document pages.
 
@@ -437,6 +443,18 @@ Comments are gated by both `features.comments` in `theme.json` and `post.comment
 
 Newsletter support currently means the theme may expose static newsletter UI. Storage and third-party integrations are not part of the v0.5 runtime contract.
 
+## Common Pitfalls For AI And Theme Authors
+
+- Do not duplicate Markdown H1 headings. When `page.html` or `post.html` already contains the rendered Markdown H1, avoid adding another `<h1>{{page.title}}</h1>` or `<h1>{{post.title}}</h1>` in the surrounding template.
+- Do not assume `if_eq` coerces values. `loop.index` is numeric, so checks such as `{{#if_eq loop.index "4"}}` do not match.
+- Use the declared menu slot id directly when manually iterating menu data. For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid.
+- Keep selector names aligned across template, CSS, and JS. If a partial emits `class="docs-sidebar"` and `data-docs-sidebar`, CSS and JS should use the same names.
+- Use `page.toc[]` for page TOC UI and `post.toc[]` for post TOC UI. A shared TOC partial should handle both contexts explicitly.
+- Treat `page.meta.source_markdown_url` as optional. Only render source Markdown links inside `{{#if page.meta.source_markdown_url}}`.
+- Keep product-specific copy out of reusable themes. Prefer `{{site.title}}`, `{{site.description}}`, `{{site.footer.copyright_text}}`, menus, and build-provided URLs over hard-coded demo names.
+- Keep reusable theme images/icons in `theme/assets/`, but keep site content media and vendor bundles in `public/`.
+- Treat ZeroPress attribution as optional theme UI. If a theme includes `Published with ZeroPress.`, hide it when `site.footer.attribution.enabled` is `false`.
+
 ## Recommended Workflow
 
 Start with the ZeroPress CLI tools:
@@ -457,6 +475,7 @@ See [CLI Tools](../cli/index.md) for package roles and npm references.
 - Render global taxonomy filters from `taxonomies.categories[]` and `taxonomies.tags[]`.
 - Render Markdown TOC from `page.toc[]` or `post.toc[]` when the theme includes TOC UI.
 - Avoid duplicate page headings when `page.html` already contains a Markdown H1.
+- Avoid type-juggling assumptions such as `{{#if_eq loop.index "4"}}`.
 - Keep class names, data attributes, CSS selectors, and JS selectors aligned across templates and assets.
 - Keep common analytics and content enhancement scripts in named partials instead of writing them directly in `layout.html`.
 - Put site-owned third-party assets in `public/` and reference them from root paths such as `/vendor/...`.

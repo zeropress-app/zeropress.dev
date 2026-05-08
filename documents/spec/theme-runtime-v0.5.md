@@ -106,6 +106,8 @@ Rules:
 - Hyphens cannot start or end a path segment, and consecutive hyphens are invalid.
 - Missing or circular partial references fail validation.
 - Unsupported tags such as `if_neq`, `unless`, or custom expressions are invalid.
+- `if_eq` compares strictly against a string literal and does not coerce types.
+- `loop.index` is a zero-based number. `{{#if_eq loop.index "4"}}` does not match; use `loop.first`, `loop.last`, CSS `:nth-child()`, or prepared data for positional layout.
 
 ## 5. Rendering Semantics
 
@@ -164,6 +166,8 @@ If `features.postIndex` is `false`, build treats the post index as effectively d
 - the legacy combined root route when the default front page and post index both use `/`
 
 Themes should check `route.is_post_index` and `pagination.enabled` before rendering pagination UI.
+
+There is no `route.is_post` shortcut. For post-specific branching outside `post.html`, use `{{#if_eq route.type "post"}}`.
 
 When `site.front_page.type` is `page`, the root route renders `page.html` with `route.type: "front_page"` and `route.is_front_page: true`. The selected page's normal route is not emitted, so themes should treat the root render as the canonical page render. If `page.html` renders both `page.title` and `page.html`, use `route.is_front_page` or a single heading source to avoid duplicate H1 output on Markdown front pages.
 
