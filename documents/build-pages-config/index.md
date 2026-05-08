@@ -269,6 +269,23 @@ CSS, JavaScript, fonts, images, and third-party packages should remain normal pu
 <script defer src="/vendor/app.js"></script>
 ```
 
+## Markdown Source Copy
+
+Build Pages copies original Markdown files to the generated output by default. The bundled docs theme uses this to show `View this page as Markdown` links.
+
+This is a CLI and GitHub Action option, not a config field:
+
+```bash
+zeropress-build-pages --source docs --destination _site --no-copy-markdown-source
+```
+
+```yaml
+with:
+  copy-markdown-source: false
+```
+
+When disabled, `.md` files are not copied as public passthrough files and generated pages do not receive `page.meta.source_markdown_url`.
+
 ## Internal `.zeropress/` Files
 
 Build Pages writes internal working files to `.zeropress/` in the current working directory. These files are not the final deploy output.
@@ -285,7 +302,7 @@ Build Pages writes internal working files to `.zeropress/` in the current workin
 
 `preview-data.json` is the internal generated build input passed to the ZeroPress renderer.
 
-`build-report.json` records discovered Markdown counts, skipped Markdown files, front page resolution, and custom HTML slots. It is useful when testing larger documentation corpora. `public-assets/` is a temporary staged public root used before `@zeropress/build` writes generated output.
+`build-report.json` records discovered Markdown counts, skipped Markdown files, front page resolution, source Markdown copy policy, and custom HTML slots. It is useful when testing larger documentation corpora. `public-assets/` is a temporary staged public root used before `@zeropress/build` writes generated output.
 
 ## Failure Policy
 
