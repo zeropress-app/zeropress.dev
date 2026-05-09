@@ -62,6 +62,7 @@ The version string belongs to the build-pages config format. It does not change 
     "title": "My Docs",
     "description": "Documentation for my project.",
     "url": "https://example.com",
+    "indexing": true,
     "footer": {
       "copyright_text": "Copyright 2026 Example Corp.",
       "attribution": {
@@ -86,7 +87,8 @@ With this config, Build Pages reads `index.md`, emits it as the front page, and 
   "site": {
     "title": "My Docs",
     "description": "Documentation for my project.",
-    "url": "https://example.com"
+    "url": "https://example.com",
+    "indexing": true
   }
 }
 ```
@@ -96,9 +98,12 @@ Common fields:
 - `title`
 - `description`
 - `url`
+- `indexing`
 - `footer`
 
 Renderer-only preview-data fields such as locale, date/time formats, permalink policy, comments policy, and posts-per-page are not accepted in Build Pages config. Build Pages supplies those internal defaults while generating preview-data.
+
+`site.indexing` controls only the generated fallback `robots.txt`. Missing or `true` allows indexing; `false` writes a fallback `robots.txt` that disallows all agents. If the source directory contains `robots.txt`, that file is copied as-is and takes priority over `site.indexing`. ZeroPress does not append a `Sitemap` directive to a source-provided `robots.txt`; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
 ## Footer
 

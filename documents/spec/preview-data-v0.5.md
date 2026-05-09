@@ -74,6 +74,7 @@ The machine-readable schema is:
 - `timeFormat`
 - `timezone`
 - `disallowComments`
+- `indexing`
 - `permalinks`
 - `front_page`
 - `post_index`
@@ -81,6 +82,8 @@ The machine-readable schema is:
 - `meta`
 
 `site` is a closed object in v0.5. Generator-defined site-level extension values belong under `site.meta`.
+
+`site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
 `site.meta` is optional scalar metadata for site/theme conventions:
 
