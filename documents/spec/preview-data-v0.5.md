@@ -18,7 +18,9 @@ In scope:
 - Top-level preview-data payload structure
 - Site metadata exposed to themes
 - Content collections for authors, posts, pages, categories, and tags
-- Enabled menus keyed by `menu_id`
+- Optional enabled menus keyed by `menu_id`
+- Optional enabled widget areas keyed by `widget_area_id`
+- Optional named collections keyed by collection id
 - Optional site permalink policy
 - Optional front page and post index policy
 - Optional nested page path overrides
@@ -41,16 +43,15 @@ Preview-data v0.5 is a JSON object with the following required top-level fields:
 - `generated_at`
 - `site`
 - `content`
-- `menus`
-- `widgets`
 
 Key points:
 
 - `version` must be `"0.5"`.
 - `generated_at` is a UTC date-time string.
 - `content` is data-only and does not include pre-rendered archive/category/tag route arrays.
-- `menus` is always present and keyed by enabled `menu_id` values.
-- `widgets` is always present and keyed by enabled `widget_area_id` values.
+- `menus` is optional and keyed by enabled `menu_id` values when present.
+- `widgets` is optional and keyed by enabled `widget_area_id` values when present.
+- `collections` is optional and keyed by collection id values when present.
 - `custom_css` and `custom_html` are optional site customization fields.
 
 The machine-readable schema is:
@@ -77,8 +78,24 @@ The machine-readable schema is:
 - `front_page`
 - `post_index`
 - `footer`
+- `meta`
 
-`site` may include additional future-facing fields unless otherwise restricted by the schema version.
+`site` is a closed object in v0.5. Generator-defined site-level extension values belong under `site.meta`.
+
+`site.meta` is optional scalar metadata for site/theme conventions:
+
+```json
+{
+  "meta": {
+    "issue": "Spring 2026",
+    "show_sponsor_banner": true,
+    "featured_count": 4,
+    "empty_value": null
+  }
+}
+```
+
+ZeroPress core does not interpret `site.meta` keys. Values are passed to templates as provided. Template interpolation renders scalar values, and template conditionals use native truthiness; for example, the string `"0"` is truthy and is not coerced to `false`.
 
 `site.permalinks` is optional. When omitted, build tooling must use the default permalink policy.
 
@@ -133,7 +150,7 @@ Important v0.5 notes:
 
 ### 3.3 `menus`
 
-`menus` is an object map keyed by `menu_id`.
+`menus` is an optional object map keyed by `menu_id`.
 
 Each menu contains:
 
@@ -148,7 +165,36 @@ Each menu item contains:
 - `target`
 - `children`
 
-### 3.4 Site Customization Fields
+When `menus` is omitted, build tooling provides an empty menu map to theme render contexts.
+
+### 3.4 `widgets`
+
+`widgets` is an optional object map keyed by `widget_area_id`.
+
+When `widgets` is omitted, build tooling provides an empty widget map to theme render contexts.
+
+### 3.5 `collections`
+
+`collections` is an optional object map keyed by collection id. A collection is a curated list of page and post references for theme-specific layouts such as cover stories, issue sections, portfolio highlights, or landing page groups.
+
+```json
+{
+  "collections": {
+    "cover-story": {
+      "title": "Cover Story",
+      "description": "Primary feature",
+      "items": [
+        { "type": "post", "slug": "honest-weight-of-concrete" },
+        { "type": "page", "slug": "about" }
+      ]
+    }
+  }
+}
+```
+
+Collection ids use the same id style as menu and widget maps. Collection items support `type: "post"` and `type: "page"`. Build tooling resolves each item to summary data before rendering. Missing referenced slugs are build errors.
+
+### 3.6 Site Customization Fields
 
 `custom_css` is optional site-level stylesheet input:
 
@@ -439,7 +485,8 @@ Notes:
 
 | Item | Classification | Notes |
 | --- | --- | --- |
-| top-level `version`, `generator`, `generated_at`, `site`, `content`, `menus`, `widgets` | Normative (Required) | Missing fields are contract-invalid |
+| top-level `version`, `generator`, `generated_at`, `site`, `content` | Normative (Required) | Missing fields are contract-invalid |
+| top-level `menus`, `widgets`, `collections` | Normative (Optional) | Missing fields are treated as empty maps by build tooling |
 | `content.posts[].slug`, `content.pages[].slug`, `content.categories[].slug`, `content.tags[].slug` | Normative (Required) | Must be safe single path segments |
 | `content.posts[].public_id` | Normative (Required) | Must be a positive unique integer |
 | `site.permalinks` | Normative (Optional) | Defines build-time URL/output policy when present |

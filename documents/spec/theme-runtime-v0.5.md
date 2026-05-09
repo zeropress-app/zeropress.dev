@@ -77,8 +77,42 @@ Notable metadata supported in `v0.5`:
 - `features.postIndex`
 - `menuSlots`
 - `widgetAreas`
+- `siteMeta`
+- `collectionSlots`
 
 `runtime` does not have a fallback. Missing or non-`0.5` values fail validation.
+
+The `theme.json` root object is closed in v0.5. Unknown root fields are invalid. The previous placeholder `settings` field is not part of the active runtime contract; site-level custom values should use preview-data `site.meta`, with optional theme hints declared through `siteMeta`.
+
+`siteMeta` documents site-level scalar metadata keys that a theme understands. It is a hint for authoring tools and admin UIs, not a build-time compatibility check:
+
+```json
+{
+  "siteMeta": {
+    "show_sponsor_banner": {
+      "title": "Show Sponsor Banner",
+      "description": "Whether to display the sponsor banner.",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
+```
+
+`collectionSlots` documents recommended named collection ids for curated content areas:
+
+```json
+{
+  "collectionSlots": {
+    "cover-story": {
+      "title": "Cover Story",
+      "description": "Primary featured content area."
+    }
+  }
+}
+```
+
+Missing `site.meta` values, missing collections, and type mismatches between `siteMeta` hints and preview-data values do not fail validation or build.
 
 ## 4. Template Syntax
 
@@ -128,6 +162,7 @@ Examples of structured contract patterns:
 - `post.tags[]`
 - `taxonomies.categories[]`
 - `taxonomies.tags[]`
+- `collections.<id>.items[]`
 - `post.prev`
 - `post.next`
 
