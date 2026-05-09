@@ -69,6 +69,7 @@ The machine-readable schema is:
 - `url`
 - `mediaBaseUrl`
 - `mediaDeliveryMode`
+- `favicon`
 - `locale`
 - `postsPerPage`
 - `dateFormat`
@@ -90,6 +91,21 @@ The machine-readable schema is:
 | --- | --- |
 | `none` | Preserve media URLs and do not derive responsive variant URLs |
 | `media_domain` | Treat `site.mediaBaseUrl` as a ZeroPress media host and allow build tooling to derive variant URLs for managed raster media |
+
+`site.favicon` is optional site-level HTML head metadata. It does not replace public file passthrough. Values are emitted as favicon link tags exactly as provided, so R2/media-host favicons should use absolute URLs:
+
+```json
+{
+  "favicon": {
+    "icon": "/favicon.ico",
+    "svg": "/favicon.svg",
+    "png": "/favicon.png",
+    "apple_touch_icon": "/apple-touch-icon.png"
+  }
+}
+```
+
+Build wrappers may auto-discover root-level public files such as `favicon.ico`, `favicon.svg`, `favicon.png`, and `apple-touch-icon.png` when `site.favicon` is omitted. Explicit `site.favicon` values take priority over auto-discovered public files.
 
 `site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
