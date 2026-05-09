@@ -314,6 +314,40 @@ preserved as written so themes can use site-local `public/` assets.
 Generated SEO fields such as `og:image` are still emitted only for absolute
 media URLs.
 
+Generators that know media dimensions may also provide a managed media registry.
+`content.media[]` does not replace existing media string fields. The original
+fields remain available as-is. When ZeroPress can match a normalized media
+string to a registry entry, it adds a derived companion object:
+
+- posts receive `post.featured_media`
+- pages receive `page.featured_media`
+- post authors receive `post.author.avatar_media`
+
+Themes can use these companion objects for stable dimensions and optional
+responsive variants:
+
+```html
+{{#if post.featured_media.srcset}}
+  <img
+    src="{{post.featured_image}}"
+    srcset="{{post.featured_media.srcset}}"
+    sizes="(min-width: 900px) 720px, 100vw"
+    width="{{post.featured_media.width}}"
+    height="{{post.featured_media.height}}"
+    alt="{{post.featured_media.alt}}"
+    loading="lazy"
+    decoding="async"
+  >
+{{#else_if post.featured_image}}
+  <img src="{{post.featured_image}}" alt="{{post.featured_media.alt}}" loading="lazy" decoding="async">
+{{/if}}
+```
+
+`srcset` is available only when preview-data uses `site.mediaDeliveryMode:
+"media_domain"` with a non-empty `site.mediaBaseUrl` and the matched image is a
+managed raster media file under that media host. The original media URL fields
+remain available either way.
+
 For Markdown-first document pages, remember that `page.html` is the rendered Markdown body. If the source Markdown starts with `# Title`, then `page.html` already contains that H1. In that case, do not render a second `<h1>{{page.title}}</h1>` in `page.html`; use the body HTML as the document heading source.
 
 Front pages often use Markdown that already starts with an H1. A simple pattern is:

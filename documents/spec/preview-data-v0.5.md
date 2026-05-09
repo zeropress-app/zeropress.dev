@@ -68,6 +68,7 @@ The machine-readable schema is:
 - `description`
 - `url`
 - `mediaBaseUrl`
+- `mediaDeliveryMode`
 - `locale`
 - `postsPerPage`
 - `dateFormat`
@@ -82,6 +83,13 @@ The machine-readable schema is:
 - `meta`
 
 `site` is a closed object in v0.5. Generator-defined site-level extension values belong under `site.meta`.
+
+`site.mediaDeliveryMode` is optional and defaults to `"none"`. Supported values are:
+
+| Value | Meaning |
+| --- | --- |
+| `none` | Preserve media URLs and do not derive responsive variant URLs |
+| `media_domain` | Treat `site.mediaBaseUrl` as a ZeroPress media host and allow build tooling to derive variant URLs for managed raster media |
 
 `site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
@@ -141,6 +149,33 @@ ZeroPress core does not interpret `site.meta` keys. Values are passed to templat
 - `pages`
 - `categories`
 - `tags`
+- `media`
+
+`content.media` is optional managed media metadata. It is intended for generators that know image dimensions, such as admin/import pipelines:
+
+```json
+{
+  "media": [
+    {
+      "src": "/originals/2026/05/concrete.jpg",
+      "width": 1600,
+      "height": 900,
+      "alt": "A concrete structure in afternoon light"
+    }
+  ]
+}
+```
+
+Each item uses:
+
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `src` | Yes | URL-like media source matching a post/page featured image or author avatar |
+| `width` | Yes | Positive integer source image width in pixels |
+| `height` | Yes | Positive integer source image height in pixels |
+| `alt` | No | Plain alternate text hint |
+
+Exact duplicate `src` values are invalid.
 
 Important v0.5 notes:
 
@@ -429,6 +464,27 @@ Media fields such as `featured_image` and author `avatar` are normalized by the 
 - relative or root-relative paths are preserved as written when `site.mediaBaseUrl` is empty
 
 Generated SEO fields such as `og:image` are emitted only when the resolved media value is absolute. Set `site.mediaBaseUrl` when relative media should also appear in social preview metadata.
+
+Managed media registry matching is exact after renderer media normalization. `content.media[]` does not replace existing media string fields. The original fields remain available as-is. When ZeroPress can match a normalized media string to a registry entry, build tooling exposes a derived companion object:
+
+- posts receive `post.featured_media`
+- pages receive `page.featured_media`
+- post authors receive `post.author.avatar_media`
+
+The derived object has:
+
+```js
+{ src, width, height, alt, srcset }
+```
+
+`srcset` is generated only when all of these are true:
+
+- `site.mediaDeliveryMode` is `"media_domain"`
+- `site.mediaBaseUrl` is non-empty
+- the matched media URL is under `site.mediaBaseUrl`
+- the media source is a raster image path such as `.jpg`, `.jpeg`, `.png`, `.webp`, or `.avif`
+
+Responsive candidates are clipped to the original image width. Variant URLs use `w=<width>&fit=scale-down&format=auto`. Body Markdown or HTML `<img>` tags are not rewritten by this contract.
 
 A value that is valid for a URL-like field is not automatically valid for a slug field.
 

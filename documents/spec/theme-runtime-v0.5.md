@@ -158,6 +158,9 @@ Examples of structured contract patterns:
 - `pagination.enabled`
 - `archive.groups[]`
 - `post.author`
+- `post.featured_media`
+- `page.featured_media`
+- `post.author.avatar_media`
 - `post.categories[]`
 - `post.tags[]`
 - `taxonomies.categories[]`

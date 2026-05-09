@@ -2,3 +2,4 @@
 .zeropress
 !/documents/.zeropress
 _site
+localbuild.sh
