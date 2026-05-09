@@ -42,15 +42,9 @@ Historical preview-data schemas:
 - [Preview Data v0.2](/schemas/preview-data.v0.2.schema.json)
 - [Preview Data v0.1](/schemas/preview-data.v0.1.schema.json)
 
-Stable aliases:
-
-- [Theme Manifest (stable alias)](/schemas/theme.schema.json)
-- [Preview Data (stable alias)](/schemas/preview-data.schema.json)
-- [ZeroPress Build Pages Config (stable alias)](/schemas/zeropress-build-pages.config.schema.json)
-
 ## Notes
 
-- When a new version is released, aliases can be updated without changing client URLs.
+- Schema documents are published as versioned historical files.
 - `theme runtime v0.5` adds loop metadata, pagination windows, partial arguments, and branch-reduction tags on top of the structured `v0.4` contract.
 - `preview-data v0.5` keeps the site-level comment policy and post-level `allow_comments`.
 - `preview-data v0.5` moves post/page bodies to raw `content` plus `document_type` and normalizes authors into `content.authors[]`.

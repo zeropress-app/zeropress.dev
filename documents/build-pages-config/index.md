@@ -48,7 +48,6 @@ Use the versioned schema while editing config:
 Schema URLs:
 
 - [ZeroPress Build Pages Config v0.1](/schemas/zeropress-build-pages.config.v0.1.schema.json)
-- [ZeroPress Build Pages Config stable alias](/schemas/zeropress-build-pages.config.schema.json)
 
 The version string belongs to the build-pages config format. It does not change the internal preview-data version emitted by Build Pages.
 

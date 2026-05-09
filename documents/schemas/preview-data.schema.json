@@ -1,5 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zeropress.dev/schemas/preview-data.schema.json",
-  "$ref": "https://zeropress.dev/schemas/preview-data.v0.5.schema.json"
-}
