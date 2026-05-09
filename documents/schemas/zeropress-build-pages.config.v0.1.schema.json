@@ -279,7 +279,7 @@
   },
   "examples": [
     {
-      "$schema": "../schemas/zeropress-build-pages.config.v0.1.schema.json",
+      "$schema": "https://zeropress.dev/schemas/zeropress-build-pages.config.v0.1.schema.json",
       "version": "0.1",
       "site": {
         "title": "ZeroPress Public Docs",
