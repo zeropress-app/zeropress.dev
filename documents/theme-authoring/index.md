@@ -519,6 +519,17 @@ cdnjs Mermaid example:
 
 `/assets/mermaid-renderer.js` can scan rendered code blocks such as `pre code.language-mermaid`, replace them with Mermaid containers, and call Mermaid after load. Without JavaScript, the original code block remains readable.
 
+Rendered Mermaid example:
+
+On this site, the diagram below is rendered by the site-level Mermaid integration loaded from `custom_html.body_end`. Without JavaScript, it remains readable as a fenced code block.
+
+```mermaid
+flowchart LR
+  Markdown["Markdown source"] --> Build["ZeroPress build"]
+  Build --> HTML["Static HTML"]
+  HTML --> Theme["Theme progressive enhancement"]
+```
+
 Third-party files that belong to a site rather than a reusable theme should live in `public/`:
 
 ```txt
