@@ -106,11 +106,21 @@ The `theme.json` root object is closed in v0.5. Unknown root fields are invalid.
   "collectionSlots": {
     "cover-story": {
       "title": "Cover Story",
-      "description": "Primary featured content area."
+      "description": "Primary story shown as the large home-page feature."
+    },
+    "hero-rail": {
+      "title": "Hero Rail",
+      "description": "Secondary stories shown beside the cover story."
+    },
+    "latest-grid": {
+      "title": "Latest Grid",
+      "description": "Curated story grid shown below the hero area."
     }
   }
 }
 ```
+
+`collectionSlots` is informational helper metadata. It does not require preview-data to provide those collections and it does not change build behavior. Themes can read matching resolved collection items through `collections.<id>.items[]`.
 
 Missing `site.meta` values, missing collections, and type mismatches between `siteMeta` hints and preview-data values do not fail validation or build.
 

@@ -158,16 +158,57 @@ If a theme needs to iterate a menu manually, use `menus.<slot>.items` with the s
 
 For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid. Hyphens must stay inside a path segment, so `menus.-docs.items`, `menus.docs-.items`, and `menus.docs--sidebar.items` are invalid.
 
-Named collections work the same way for curated content groups. A theme may declare optional `collectionSlots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Missing collections should be treated as empty optional data:
+Named collections work the same way for curated content groups. A theme may declare optional `collectionSlots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Use collection slots for hand-picked editorial areas such as magazine cover stories, hero rails, portfolio highlights, landing page feature groups, and docs quick links. Missing collections should be treated as empty optional data:
 
 ```html
-{{#if collections.cover-story.items}}
-  {{#for item in collections.cover-story.items}}
-    <article>
-      <a href="{{item.url}}">{{item.title}}</a>
+{{#if collections.hero-rail.items}}
+  {{#for post in collections.hero-rail.items}}
+    <article class="hero-rail-card">
+      <a href="{{post.url}}">{{post.title}}</a>
     </article>
   {{/for}}
 {{/if}}
+```
+
+Declare the expected collection ids in `theme.json` so site authors, admin tools, and AI theme generators can discover the intended content slots:
+
+```json
+{
+  "collectionSlots": {
+    "cover-story": {
+      "title": "Cover Story",
+      "description": "Primary story shown as the large home-page feature."
+    },
+    "hero-rail": {
+      "title": "Hero Rail",
+      "description": "Secondary stories shown beside the cover story."
+    },
+    "latest-grid": {
+      "title": "Latest Grid",
+      "description": "Curated story grid shown below the hero area."
+    }
+  }
+}
+```
+
+Matching preview-data can then provide those groups explicitly:
+
+```json
+{
+  "collections": {
+    "cover-story": {
+      "title": "Cover Story",
+      "items": [{ "type": "post", "slug": "quiet-return-long-lunch" }]
+    },
+    "hero-rail": {
+      "title": "Hero Rail",
+      "items": [
+        { "type": "post", "slug": "reading-in-hotel-lobbies" },
+        { "type": "post", "slug": "last-bookbinder-lisbon" }
+      ]
+    }
+  }
+}
 ```
 
 ## Common Render Context
