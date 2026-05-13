@@ -27,6 +27,10 @@ Current contract highlights:
 
 - [ZeroPress Build Pages Config](/build-pages-config/index.md)
 
+## Licensing
+
+- [ZeroPress Licensing](/license/index.md)
+
 ## JSON Schemas
 
 Current v0.5 schemas:

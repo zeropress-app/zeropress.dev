@@ -8,6 +8,7 @@ ZeroPress public documentation collects the current v0.5 contracts, theme author
 - [Theme Authoring](theme-authoring/index.md)
 - [CLI Tools](cli/index.md)
 - [Build Pages Config](build-pages-config/index.md)
+- [Licensing](license/index.md)
 - [Theme Runtime v0.5](spec/theme-runtime-v0.5.md)
 - [Preview Data v0.5](spec/preview-data-v0.5.md)
 
