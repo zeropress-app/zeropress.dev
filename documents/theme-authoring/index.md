@@ -115,6 +115,21 @@ The current runtime accepts only `runtime: "0.6"`. There is no fallback to older
 
 Use the [Theme Manifest Runtime v0.6 schema](/schemas/theme.v0.6.runtime.schema.json) as the source of truth for manifest fields.
 
+`license` is the theme distribution license identifier. Use a supported SPDX id such as `MIT` for open-source themes. Use `LicenseRef-*` for commercial, marketplace, proprietary, or otherwise non-SPDX theme licenses:
+
+```json
+{
+  "license": "LicenseRef-ThemeForest-Regular",
+  "links": {
+    "marketplace": "https://themeforest.net/item/theme/123",
+    "support": "mailto:support@example.com",
+    "license": "https://themeforest.net/licenses/standard"
+  }
+}
+```
+
+`links` is optional theme metadata for public URLs. Supported keys are `homepage`, `repository`, `documentation`, `support`, `marketplace`, and `license`. Values must be absolute `http`, `https`, or `mailto` URLs. ZeroPress does not require themes to be open source.
+
 ## Templates And Partials
 
 ZeroPress renders one route template inside `layout.html`.

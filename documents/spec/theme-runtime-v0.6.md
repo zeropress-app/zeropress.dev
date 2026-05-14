@@ -84,6 +84,31 @@ Notable metadata supported in `v0.6`:
 
 The `theme.json` root object is closed in v0.6. Unknown root fields are invalid. The previous placeholder `settings` field is not part of the active runtime contract; site-level custom values should use preview-data `site.meta`, with optional theme hints declared through `site_meta`.
 
+`license` describes the terms under which the theme itself is distributed. Open-source themes should use one of the supported SPDX identifiers. Commercial, marketplace, proprietary, or otherwise non-SPDX themes may use a `LicenseRef-*` identifier:
+
+```json
+{
+  "license": "LicenseRef-ThemeForest-Regular"
+}
+```
+
+`license` is a short identifier for validation, search, and listing metadata. Human-readable license terms belong in `links.license`, not in the `license` field:
+
+```json
+{
+  "license": "LicenseRef-Commercial",
+  "links": {
+    "homepage": "https://example.com/theme",
+    "marketplace": "https://themeforest.net/item/theme/123",
+    "support": "mailto:support@example.com",
+    "documentation": "https://example.com/theme/docs",
+    "license": "https://example.com/theme/license"
+  }
+}
+```
+
+`links` is optional and closed. Supported keys are `homepage`, `repository`, `documentation`, `support`, `marketplace`, and `license`. Values must be absolute `http`, `https`, or `mailto` URLs. ZeroPress does not require themes to be open source.
+
 `site_meta` documents site-level scalar metadata keys that a theme understands. It is a hint for authoring tools and admin UIs, not a build-time compatibility check:
 
 ```json

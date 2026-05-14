@@ -134,15 +134,22 @@
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
     },
     "license": {
-      "description": "SPDX license identifier for the theme.",
-      "markdownDescription": "SPDX license identifier for the theme.",
+      "description": "License identifier for the theme. Use an SPDX id from the allowlist or a LicenseRef-* identifier for commercial, marketplace, proprietary, or otherwise non-SPDX terms.",
+      "markdownDescription": "License identifier for the theme. Use an SPDX id from the allowlist or a `LicenseRef-*` identifier for commercial, marketplace, proprietary, or otherwise non-SPDX terms.",
       "type": "string",
-      "enum": [
-        "MIT",
-        "Apache-2.0",
-        "BSD-3-Clause",
-        "GPL-3.0-only",
-        "GPL-3.0-or-later"
+      "anyOf": [
+        {
+          "enum": [
+            "MIT",
+            "Apache-2.0",
+            "BSD-3-Clause",
+            "GPL-3.0-only",
+            "GPL-3.0-or-later"
+          ]
+        },
+        {
+          "pattern": "^LicenseRef-[A-Za-z0-9][A-Za-z0-9.-]*$"
+        }
       ]
     },
     "runtime": {
@@ -168,6 +175,50 @@
       "description": "Optional thumbnail URL or asset path used for previews.",
       "markdownDescription": "Optional thumbnail URL or asset path used for previews.",
       "type": "string"
+    },
+    "links": {
+      "description": "Optional public links for theme information, support, marketplace listings, and license terms.",
+      "markdownDescription": "Optional public links for theme information, support, marketplace listings, and license terms. Values must be absolute `http`, `https`, or `mailto` URLs.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "homepage": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        },
+        "documentation": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        },
+        "support": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        },
+        "marketplace": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri",
+          "pattern": "^(https?:\\/\\/|mailto:)"
+        }
+      }
     },
     "features": {
       "description": "Optional theme capability flags exposed to the runtime and tooling.",
@@ -274,6 +325,13 @@
       "license": "MIT",
       "runtime": "0.6",
       "description": "Starter theme",
+      "links": {
+        "homepage": "https://zeropress.app",
+        "documentation": "https://zeropress.dev/theme-authoring/",
+        "repository": "https://github.com/zeropress-app",
+        "support": "mailto:support@example.com",
+        "license": "https://opensource.org/license/mit"
+      },
       "features": {
         "comments": true,
         "newsletter": false,
