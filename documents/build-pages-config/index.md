@@ -107,6 +107,8 @@ Renderer-only preview-data fields such as locale, date/time formats, permalink p
 
 `site.indexing` controls only the generated fallback `robots.txt`. Missing or `true` allows indexing; `false` writes a fallback `robots.txt` that disallows all agents. If the source directory contains `robots.txt`, that file is copied as-is and takes priority over `site.indexing`. ZeroPress does not append a `Sitemap` directive to a source-provided `robots.txt`; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
+A root-level source `sitemap.xsl` is copied as a public passthrough file. When ZeroPress generates `sitemap.xml`, it auto-discovers that file and adds an XML stylesheet processing instruction for `/sitemap.xsl`.
+
 ## Footer
 
 `site.footer` provides theme-facing footer text and attribution display policy:

@@ -118,6 +118,8 @@ Set `site.expose_generator` to `false` for white-label sites or when the site ow
 
 `site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
+Build wrappers may auto-discover a root-level public `sitemap.xsl`. When discovered and `sitemap.xml` is generated, ZeroPress links it with an XML stylesheet processing instruction. This is a file emission convenience, not a preview-data field.
+
 `site.meta` is optional scalar metadata for site/theme conventions:
 
 ```json
