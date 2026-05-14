@@ -1,6 +1,6 @@
 # ZeroPress Theme Authoring
 
-ZeroPress themes are static template packages for the current `runtime: "0.5"` contract.
+ZeroPress themes are static template packages for the current `runtime: "0.6"` contract.
 
 A theme decides how ZeroPress content looks and behaves in the browser. The build pipeline prepares structured data, renders Markdown content, resolves widgets, copies theme assets, and emits static output. The theme owns the HTML templates, CSS, and optional client-side enhancement.
 
@@ -33,7 +33,7 @@ my-theme/
     theme.js
 ```
 
-Required files for a usable v0.5 theme:
+Required files for a usable v0.6 theme:
 
 - `theme.json`
 - `layout.html`
@@ -67,7 +67,7 @@ my-site/
 ```
 
 - `preview-data.json` defines site data, content, menus, widgets, and permalink policy.
-- `theme/` defines deterministic rendering through the v0.5 theme runtime.
+- `theme/` defines deterministic rendering through the v0.6 theme runtime.
 - `theme/assets/` contains theme-owned CSS and JavaScript referenced by the theme.
 - `public/` contains site-owned passthrough files such as favicons, PDFs, source files, and third-party vendor assets.
 
@@ -79,30 +79,30 @@ Reusable themes should avoid hard-coding site-specific analytics tokens, vendor 
 
 ## `theme.json`
 
-The theme manifest identifies the package and declares the v0.5 runtime.
+The theme manifest identifies the package and declares the v0.6 runtime.
 
 ```json
 {
-  "$schema": "./theme.v0.5.runtime.schema.json",
+  "$schema": "./theme.v0.6.runtime.schema.json",
   "name": "My Theme",
   "namespace": "your-namespace",
   "slug": "my-theme",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
-  "runtime": "0.5",
+  "runtime": "0.6",
   "description": "Short summary of the theme.",
   "features": {
     "comments": true,
     "newsletter": true,
-    "postIndex": true
+    "post_index": true
   },
-  "menuSlots": {
+  "menu_slots": {
     "primary": {
       "title": "Primary Menu",
       "description": "Main navigation menu"
     }
   },
-  "widgetAreas": {
+  "widget_areas": {
     "sidebar": {
       "title": "Sidebar Widgets",
       "description": "Sidebar widget area"
@@ -111,9 +111,9 @@ The theme manifest identifies the package and declares the v0.5 runtime.
 }
 ```
 
-The current runtime accepts only `runtime: "0.5"`. There is no fallback to older theme runtimes.
+The current runtime accepts only `runtime: "0.6"`. There is no fallback to older theme runtimes.
 
-Use the [Theme Manifest Runtime v0.5 schema](/schemas/theme.v0.5.runtime.schema.json) as the source of truth for manifest fields.
+Use the [Theme Manifest Runtime v0.6 schema](/schemas/theme.v0.6.runtime.schema.json) as the source of truth for manifest fields.
 
 ## Templates And Partials
 
@@ -142,7 +142,7 @@ Common helpers:
 {{partial:post-card variant="compact" show_excerpt=true}}
 ```
 
-Template syntax supports variables, `if`, `if_eq`, `else_if`, `else_if_eq`, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.5](../spec/theme-runtime-v0.5.md) for the full contract.
+Template syntax supports variables, `if`, `if_eq`, `else_if`, `else_if_eq`, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md) for the full contract.
 
 Templates are path-only and do not evaluate JavaScript expressions. `if_eq` is strict and compares against a string literal without type coercion. `loop.index` is a zero-based number, so `{{#if_eq loop.index "4"}}` does not match. Use `loop.first`, `loop.last`, CSS selectors, or build-prepared data for positional layout.
 
@@ -158,7 +158,7 @@ If a theme needs to iterate a menu manually, use `menus.<slot>.items` with the s
 
 For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid. Hyphens must stay inside a path segment, so `menus.-docs.items`, `menus.docs-.items`, and `menus.docs--sidebar.items` are invalid.
 
-Named collections work the same way for curated content groups. A theme may declare optional `collectionSlots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Use collection slots for hand-picked editorial areas such as magazine cover stories, hero rails, portfolio highlights, landing page feature groups, and docs quick links. Missing collections should be treated as empty optional data:
+Named collections work the same way for curated content groups. A theme may declare optional `collection_slots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Use collection slots for hand-picked editorial areas such as magazine cover stories, hero rails, portfolio highlights, landing page feature groups, and docs quick links. Missing collections should be treated as empty optional data:
 
 ```html
 {{#if collections.hero-rail.items}}
@@ -174,7 +174,7 @@ Declare the expected collection ids in `theme.json` so site authors, admin tools
 
 ```json
 {
-  "collectionSlots": {
+  "collection_slots": {
     "cover-story": {
       "title": "Cover Story",
       "description": "Primary story shown as the large home-page feature."
@@ -228,7 +228,7 @@ Every rendered template receives common build data:
 
 Global taxonomy items are generated by build for theme rendering. They are useful for home filters, sidebars, tag clouds, and navigation chips without scanning post card attributes in client JavaScript.
 
-`site.meta` is the site-level extension area for scalar custom values. ZeroPress does not coerce these values to match theme hints. String `"0"` is truthy in `{{#if site.meta.some_key}}`, while boolean `false`, `null`, and an empty string are falsy. Use `theme.json.siteMeta` to document expected keys for authoring tools.
+`site.meta` is the site-level extension area for scalar custom values. ZeroPress does not coerce these values to match theme hints. String `"0"` is truthy in `{{#if site.meta.some_key}}`, while boolean `false`, `null`, and an empty string are falsy. Use `theme.json.site_meta` to document expected keys for authoring tools.
 
 For example, preview-data may provide site-level values:
 
@@ -247,7 +247,7 @@ A reusable theme can document those optional keys in `theme.json`:
 
 ```json
 {
-  "siteMeta": {
+  "site_meta": {
     "issue": {
       "title": "Issue",
       "description": "Short label shown near magazine-style content.",
@@ -312,7 +312,7 @@ The `route` object identifies the current render target:
 - `route.path`
 - `route.url`
 
-Use `route.is_post_index` before rendering post-index-only UI. Use `pagination.enabled` before rendering page navigation. A site may request a non-paginated post index, and a theme may declare `"postIndex": false` to opt out of post index rendering entirely.
+Use `route.is_post_index` before rendering post-index-only UI. Use `pagination.enabled` before rendering page navigation. A site may request a non-paginated post index, and a theme may declare `"post_index": false` to opt out of post index rendering entirely.
 
 There is no `route.is_post` shortcut. For post-specific branching outside `post.html`, use `{{#if_eq route.type "post"}}`.
 
@@ -351,8 +351,8 @@ Pages should render from fields such as:
 
 Media fields such as `post.featured_image`, `page.featured_image`, and
 `post.author.avatar` may be absolute URLs, root-relative paths, or relative
-paths. When `site.mediaBaseUrl` is non-empty, relative media paths are resolved
-against it. When `site.mediaBaseUrl` is empty, relative media paths are
+paths. When `site.media_base_url` is non-empty, relative media paths are resolved
+against it. When `site.media_base_url` is empty, relative media paths are
 preserved as written so themes can use site-local `public/` assets.
 Generated SEO fields such as `og:image` are still emitted only for absolute
 media URLs.
@@ -386,8 +386,8 @@ responsive variants:
 {{/if}}
 ```
 
-`srcset` is available only when preview-data uses `site.mediaDeliveryMode:
-"media_domain"` with a non-empty `site.mediaBaseUrl` and the matched image is a
+`srcset` is available only when preview-data uses `site.media_delivery_mode:
+"media_domain"` with a non-empty `site.media_base_url` and the matched image is a
 managed raster media file under that media host. The original media URL fields
 remain available either way.
 
@@ -540,7 +540,7 @@ Cloudflare Web Analytics example:
 ></script>
 ```
 
-For Markdown body enhancement, load the integration only on post and page routes. The v0.5 template syntax does not support `or`, so use `else_if`:
+For Markdown body enhancement, load the integration only on post and page routes. The v0.6 template syntax does not support `or`, so use `else_if`:
 
 ```html
 {{#if post}}
@@ -591,7 +591,7 @@ Use this pattern for analytics, Mermaid, highlight.js, code-copy buttons, headin
 
 Preview data may also provide `custom_html` for trusted site/admin customization. Use partials when the theme wants a named template integration point; use `custom_html` when trusted preview-data generation should inject final site snippets before `</head>` or `</body>` without editing the theme.
 
-For reusable themes, footer branding should be driven by preview-data rather than hard-coded site names. `site.footer.copyright_text` is optional footer text, and supporting themes should hide `Published with ZeroPress.` style attribution when `site.footer.attribution.enabled` is `false`.
+For reusable themes, footer branding should be driven by preview-data rather than hard-coded site names. `site.footer.copyright_text` is optional footer text, and supporting themes should hide `Published with ZeroPress.` style attribution when `site.footer.attribution` is `false`.
 
 Comments are gated by both `features.comments` in `theme.json` and `post.comments_enabled` in the render context.
 
@@ -601,7 +601,7 @@ Comments are gated by both `features.comments` in `theme.json` and `post.comment
 {{/if}}
 ```
 
-Newsletter support currently means the theme may expose static newsletter UI. Storage and third-party integrations are not part of the v0.5 runtime contract.
+Newsletter support currently means the theme may expose static newsletter UI. Storage and third-party integrations are not part of the v0.6 runtime contract.
 
 ## Common Pitfalls For AI And Theme Authors
 
@@ -613,7 +613,7 @@ Newsletter support currently means the theme may expose static newsletter UI. St
 - Treat `page.meta.source_markdown_url` as optional. Only render source Markdown links inside `{{#if page.meta.source_markdown_url}}`.
 - Keep product-specific copy out of reusable themes. Prefer `{{site.title}}`, `{{site.description}}`, `{{site.footer.copyright_text}}`, menus, and build-provided URLs over hard-coded demo names.
 - Keep reusable theme images/icons in `theme/assets/`, but keep site content media and vendor bundles in `public/`.
-- Treat ZeroPress attribution as optional theme UI. If a theme includes `Published with ZeroPress.`, hide it when `site.footer.attribution.enabled` is `false`.
+- Treat ZeroPress attribution as optional theme UI. If a theme includes `Published with ZeroPress.`, hide it when `site.footer.attribution` is `false`.
 
 ## Recommended Workflow
 
@@ -627,8 +627,8 @@ See [CLI Tools](../cli/index.md) for package roles and npm references.
 
 ## Checklist
 
-- Use `runtime: "0.5"`.
-- Keep `theme.json` valid against the v0.5 theme schema.
+- Use `runtime: "0.6"`.
+- Keep `theme.json` valid against the v0.6 theme schema.
 - Render post lists from `posts.items[]`.
 - Render pagination from structured `pagination` data when `pagination.enabled` is true.
 - Render taxonomy from `post.categories[]`, `post.tags[]`, and route `taxonomy`.
@@ -644,8 +644,8 @@ See [CLI Tools](../cli/index.md) for package roles and npm references.
 
 ## Related Contracts
 
-- [Theme Runtime v0.5](../spec/theme-runtime-v0.5.md)
-- [Preview Data v0.5](../spec/preview-data-v0.5.md)
+- [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md)
+- [Preview Data v0.6](../spec/preview-data-v0.6.md)
 - [CLI Tools](../cli/index.md)
-- [Theme Manifest Runtime v0.5 Schema](/schemas/theme.v0.5.runtime.schema.json)
-- [Preview Data v0.5 Schema](/schemas/preview-data.v0.5.schema.json)
+- [Theme Manifest Runtime v0.6 Schema](/schemas/theme.v0.6.runtime.schema.json)
+- [Preview Data v0.6 Schema](/schemas/preview-data.v0.6.schema.json)

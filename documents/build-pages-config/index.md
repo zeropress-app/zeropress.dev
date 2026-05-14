@@ -64,9 +64,7 @@ The version string belongs to the build-pages config format. It does not change 
     "indexing": true,
     "footer": {
       "copyright_text": "Copyright 2026 Example Corp.",
-      "attribution": {
-        "enabled": true
-      }
+      "attribution": true
     }
   },
   "front_page": {
@@ -113,9 +111,7 @@ Renderer-only preview-data fields such as locale, date/time formats, permalink p
   "site": {
     "footer": {
       "copyright_text": "Copyright 2026 Example Corp.",
-      "attribution": {
-        "enabled": false
-      }
+      "attribution": false
     }
   }
 }
@@ -123,7 +119,7 @@ Renderer-only preview-data fields such as locale, date/time formats, permalink p
 
 The bundled docs theme renders `copyright_text` when present. If it is omitted, the theme falls back to `site.title`. ZeroPress does not add a copyright symbol automatically.
 
-The bundled docs theme shows `Published with ZeroPress.` by default. Set `site.footer.attribution.enabled` to `false` to hide it.
+The bundled docs theme shows `Published with ZeroPress.` by default. Set `site.footer.attribution` to `false` to hide it.
 
 The generated preview-data always sets:
 
@@ -323,5 +319,5 @@ If `config.json` is missing, Build Pages falls back to defaults. This keeps the 
 ## Related Docs
 
 - [CLI Tools](../cli/index.md)
-- [Preview Data v0.5](../spec/preview-data-v0.5.md)
-- [Theme Runtime v0.5](../spec/theme-runtime-v0.5.md)
+- [Preview Data v0.6](../spec/preview-data-v0.6.md)
+- [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md)

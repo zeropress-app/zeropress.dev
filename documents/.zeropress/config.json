@@ -6,10 +6,7 @@
     "description": "Public ZeroPress theme authoring guides, runtime documentation, CLI guides, and JSON schemas.",
     "url": "https://zeropress.dev",
     "footer": {
-      "copyright_text": "ZeroPress Public Docs",
-      "attribution": {
-        "enabled": true
-      }
+      "copyright_text": "ZeroPress Public Docs"
     }
   },
   "front_page": {
@@ -31,8 +28,8 @@
         { "title": "Docs", "url": "/docs/" },
         { "title": "Theme Authoring", "url": "/theme-authoring/" },
         { "title": "CLI Tools", "url": "/cli/" },
-        { "title": "Theme Runtime v0.5", "url": "/spec/theme-runtime-v0.5" },
-        { "title": "Preview Data v0.5", "url": "/spec/preview-data-v0.5" }
+        { "title": "Theme Runtime v0.6", "url": "/spec/theme-runtime-v0.6" },
+        { "title": "Preview Data v0.6", "url": "/spec/preview-data-v0.6" }
       ]
     }
   }

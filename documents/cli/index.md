@@ -2,7 +2,7 @@
 
 ZeroPress provides a small set of command line tools for creating themes, checking theme packages, previewing local work, building static site output, and turning GitHub Pages style Markdown trees into ZeroPress sites.
 
-These tools support the v0.5 publishing workflow. They are not runtime contracts themselves, but they are the recommended way to work with the v0.5 theme runtime and preview-data contracts.
+These tools support the v0.6 publishing workflow. They are not runtime contracts themselves, but they are the recommended way to work with the v0.6 theme runtime and preview-data contracts.
 
 ## Recommended Flow
 
@@ -18,7 +18,7 @@ These tools support the v0.5 publishing workflow. They are not runtime contracts
 Use this when starting a new theme from one of the official starter templates.
 
 - Creates one of the five starter themes: `minimal`, `blog`, `docs`, `portfolio`, or `magazine`.
-- Writes a theme directory with v0.5-compatible template files.
+- Writes a theme directory with v0.6-compatible template files.
 - Runs validation after generation.
 
 ### `@zeropress/theme`
@@ -34,7 +34,7 @@ Use this while developing and preparing a theme package.
 Use this when turning a theme and preview-data into a static site output directory.
 
 - Reads a local theme directory.
-- Reads a preview-data v0.5 JSON file.
+- Reads a preview-data v0.6 JSON file.
 - Writes static output such as HTML routes, assets, and special files.
 
 ### `@zeropress/build-pages`
@@ -44,7 +44,7 @@ Use this when a repository is mostly Markdown files and public passthrough asset
 - Discovers Markdown under a source directory.
 - Reads optional `.zeropress/config.json`.
 - Preserves original Markdown and public files as passthrough output.
-- Generates preview-data v0.5 and delegates the static build to `@zeropress/build`.
+- Generates preview-data v0.6 and delegates the static build to `@zeropress/build`.
 
 ## Package References
 
@@ -53,7 +53,7 @@ The npm package pages are the canonical source for command options and package r
 ## Related Contracts
 
 - [ZeroPress Build Pages Config](../build-pages-config/index.md)
-- [Theme Runtime v0.5](../spec/theme-runtime-v0.5.md)
-- [Preview Data v0.5](../spec/preview-data-v0.5.md)
-- [Theme Manifest Runtime v0.5 Schema](/schemas/theme.v0.5.runtime.schema.json)
-- [Preview Data v0.5 Schema](/schemas/preview-data.v0.5.schema.json)
+- [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md)
+- [Preview Data v0.6](../spec/preview-data-v0.6.md)
+- [Theme Manifest Runtime v0.6 Schema](/schemas/theme.v0.6.runtime.schema.json)
+- [Preview Data v0.6 Schema](/schemas/preview-data.v0.6.schema.json)
