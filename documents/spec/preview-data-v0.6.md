@@ -70,6 +70,7 @@ The machine-readable schema is:
 - `media_base_url`
 - `media_delivery_mode`
 - `favicon`
+- `expose_generator`
 - `locale`
 - `posts_per_page`
 - `date_format`
@@ -106,6 +107,14 @@ The machine-readable schema is:
 ```
 
 Build wrappers may auto-discover root-level public files such as `favicon.ico`, `favicon.svg`, `favicon.png`, and `apple-touch-icon.png` when `site.favicon` is omitted. Explicit `site.favicon` values take priority over auto-discovered public files.
+
+`site.expose_generator` is optional site-level HTML metadata policy. Missing or `true` means generated HTML pages include:
+
+```html
+<meta name="generator" content="ZeroPress">
+```
+
+Set `site.expose_generator` to `false` for white-label sites or when the site owner does not want to expose the generator in page metadata. This field is separate from footer attribution, which is visible theme UI.
 
 `site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 

@@ -61,6 +61,7 @@ The version string belongs to the build-pages config format. It does not change 
     "title": "My Docs",
     "description": "Documentation for my project.",
     "url": "https://example.com",
+    "expose_generator": true,
     "indexing": true,
     "footer": {
       "copyright_text": "Copyright 2026 Example Corp.",
@@ -85,6 +86,7 @@ With this config, Build Pages reads `index.md`, emits it as the front page, and 
     "title": "My Docs",
     "description": "Documentation for my project.",
     "url": "https://example.com",
+    "expose_generator": true,
     "indexing": true
   }
 }
@@ -95,10 +97,13 @@ Common fields:
 - `title`
 - `description`
 - `url`
+- `expose_generator`
 - `indexing`
 - `footer`
 
 Renderer-only preview-data fields such as locale, date/time formats, permalink policy, comments policy, and posts-per-page are not accepted in Build Pages config. Build Pages supplies those internal defaults while generating preview-data.
+
+`site.expose_generator` controls the HTML generator meta tag. Missing or `true` emits `<meta name="generator" content="ZeroPress">`; set it to `false` for white-label sites.
 
 `site.indexing` controls only the generated fallback `robots.txt`. Missing or `true` allows indexing; `false` writes a fallback `robots.txt` that disallows all agents. If the source directory contains `robots.txt`, that file is copied as-is and takes priority over `site.indexing`. ZeroPress does not append a `Sitemap` directive to a source-provided `robots.txt`; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
@@ -251,7 +256,7 @@ Build Pages reads those files and emits internal preview-data:
 {
   "custom_html": {
     "head_end": {
-      "content": "<meta name=\"generator\" content=\"ZeroPress\">"
+      "content": "<meta name=\"theme-color\" content=\"#ffffff\">"
     },
     "body_end": {
       "content": "<script defer src=\"/vendor/app.js\"></script>"

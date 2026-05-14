@@ -606,6 +606,8 @@ Use this pattern for analytics, Mermaid, highlight.js, code-copy buttons, headin
 
 Preview data may also provide `custom_html` for trusted site/admin customization. Use partials when the theme wants a named template integration point; use `custom_html` when trusted preview-data generation should inject final site snippets before `</head>` or `</body>` without editing the theme.
 
+Generator metadata is a site/build concern, not a theme responsibility. Themes should not hard-code `<meta name="generator">`; use preview-data `site.expose_generator` to control whether ZeroPress emits the generator tag.
+
 For reusable themes, footer branding should be driven by preview-data rather than hard-coded site names. `site.footer.copyright_text` is optional footer text, and supporting themes should hide `Published with ZeroPress.` style attribution when `site.footer.attribution` is `false`.
 
 Comments are gated by both `features.comments` in `theme.json` and `post.comments_enabled` in the render context.
