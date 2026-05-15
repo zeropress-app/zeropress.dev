@@ -178,7 +178,7 @@ For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid
 Named collections work the same way for curated content groups. A theme may declare optional `collection_slots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Use collection slots for hand-picked editorial areas such as magazine cover stories, hero rails, portfolio highlights, landing page feature groups, and docs quick links. Missing collections should be treated as empty optional data:
 
 ```html
-{{#if collections.hero-rail.items}}
+{{#if collections.hero-rail.count}}
   {{#for post in collections.hero-rail.items}}
     <article class="hero-rail-card">
       <a href="{{post.url}}">{{post.title}}</a>
@@ -227,6 +227,36 @@ Matching preview-data can then provide those groups explicitly:
   }
 }
 ```
+
+Build also exposes the resolved item count on each collection:
+
+```html
+{{#if collections.hero-rail.count}}
+  <p>{{collections.hero-rail.count}} featured stories</p>
+{{/if}}
+```
+
+On post and page detail routes, build provides collection cursors when the current item belongs to a collection. Use these for docs series, portfolio case studies, magazine features, and other curated reading orders:
+
+```html
+{{#if page.collection_cursors.work.next}}
+  <a href="{{page.collection_cursors.work.next.url}}">
+    Next: {{page.collection_cursors.work.next.title}}
+  </a>
+{{/if}}
+```
+
+The same pattern is available on posts:
+
+```html
+{{#if post.collection_cursors.cover-story.prev}}
+  <a href="{{post.collection_cursors.cover-story.prev.url}}">
+    Previous: {{post.collection_cursors.cover-story.prev.title}}
+  </a>
+{{/if}}
+```
+
+Cursor data includes `collection_id`, `collection_title`, `index`, `position`, `count`, `first`, `last`, `prev`, and `next`. `prev` and `next` are summary objects with `type`, `title`, `slug`, `url`, `excerpt`, `featured_image`, and `meta`, or `null` at the collection boundaries.
 
 ## Common Render Context
 
@@ -470,7 +500,7 @@ Example:
 Collections are optional curated page/post lists. They are not taxonomy filters and do not render automatically. Themes own the markup:
 
 ```html
-{{#if collections.features.items}}
+{{#if collections.features.count}}
   <section>
     {{#for item in collections.features.items}}
       <a href="{{item.url}}">{{item.title}}</a>
@@ -478,6 +508,8 @@ Collections are optional curated page/post lists. They are not taxonomy filters 
   </section>
 {{/if}}
 ```
+
+On detail routes, use `post.collection_cursors.<id>` or `page.collection_cursors.<id>` when a collection-specific previous/next link is needed.
 
 ## Markdown Content And TOC
 

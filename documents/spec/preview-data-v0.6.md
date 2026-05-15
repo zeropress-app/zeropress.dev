@@ -281,6 +281,24 @@ When `widgets` is omitted, build tooling provides an empty widget map to theme r
 
 Collection ids use the same id style as menu and widget maps. Collection items support `type: "post"` and `type: "page"`. Build tooling resolves each item to summary data before rendering. Missing referenced slugs are build errors.
 
+In theme render context, each resolved collection also includes a build-derived `count` field:
+
+```txt
+collections.cover-story.count
+collections.cover-story.items
+```
+
+When the current post or page appears in one or more collections, build tooling also adds collection cursors to the current route object:
+
+```txt
+post.collection_cursors.cover-story.prev
+post.collection_cursors.cover-story.next
+page.collection_cursors.cover-story.prev
+page.collection_cursors.cover-story.next
+```
+
+These cursor fields are render-context data only. They are not preview-data input fields.
+
 ### 3.6 Site Customization Fields
 
 `custom_css` is optional site-level stylesheet input:
