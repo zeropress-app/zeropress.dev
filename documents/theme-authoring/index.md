@@ -360,6 +360,23 @@ Posts should render from fields such as:
 - `post.comments_enabled`
 - `post.toc[]`
 
+Use `<time datetime="...">` for post dates so the ISO timestamp remains
+machine-readable:
+
+```html
+<time
+  datetime="{{post.published_at_iso}}"
+  {{#if_eq site.datetime_display "client"}}data-zp-local-time{{/if_eq}}
+>
+  {{post.published_at}}
+</time>
+```
+
+`site.datetime_display` is a display preference, not a build capability flag.
+When it is `"client"`, a theme may progressively enhance matching time elements
+from its own JavaScript. Themes that do not implement client-side formatting
+should render the build-generated `post.published_at` fallback as usual.
+
 Pages should render from fields such as:
 
 - `page.title`

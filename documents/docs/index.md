@@ -59,6 +59,6 @@ Historical theme runtime schemas:
 
 - Schema documents are published as versioned historical files.
 - `theme runtime v0.6` uses snake_case manifest keys such as `menu_slots`, `widget_areas`, `site_meta`, `collection_slots`, and `features.post_index`.
-- `preview-data v0.6` uses snake_case site keys such as `media_base_url`, `media_delivery_mode`, `posts_per_page`, `date_format`, `time_format`, and `disallow_comments`.
+- `preview-data v0.6` uses snake_case site keys such as `media_base_url`, `media_delivery_mode`, `posts_per_page`, `datetime_display`, `date_style`, `time_style`, and `disallow_comments`.
 - `site.footer.attribution` is a boolean in v0.6. ZeroPress still does not add a copyright symbol automatically.
 - `preview-data v0.6` keeps post/page bodies as raw `content` plus `document_type`, and named collections remain optional theme-facing data.

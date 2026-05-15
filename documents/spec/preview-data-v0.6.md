@@ -73,8 +73,9 @@ The machine-readable schema is:
 - `expose_generator`
 - `locale`
 - `posts_per_page`
-- `date_format`
-- `time_format`
+- `datetime_display`
+- `date_style`
+- `time_style`
 - `timezone`
 - `disallow_comments`
 - `indexing`
@@ -115,6 +116,29 @@ Build wrappers may auto-discover root-level public files such as `favicon.ico`, 
 ```
 
 Set `site.expose_generator` to `false` for white-label sites or when the site owner does not want to expose the generator in page metadata. This field is separate from footer attribution, which is visible theme UI.
+
+`site.datetime_display` is a required theme-facing datetime display preference:
+
+| Value | Meaning |
+| --- | --- |
+| `static` | Themes should normally render build-generated fallback strings such as `post.published_at` |
+| `client` | Themes may progressively enhance `<time datetime="...">` elements in client JavaScript |
+
+Build-core always generates static fallback strings. A theme that does not implement client-side datetime enhancement should keep rendering the fallback.
+
+`site.date_style` and `site.time_style` are required `Intl.DateTimeFormat` style presets used for build-generated fallback strings. Supported values are `none`, `short`, `medium`, `long`, and `full`. `none` omits that portion. If both are `none`, formatted fields such as `post.published_at` are empty strings while `post.published_at_iso` remains available for machine-readable timestamps.
+
+Example for `locale: "en-US"`, `timezone: "Asia/Seoul"`, and `published_at_iso: "2026-05-15T13:12:34Z"`:
+
+| `date_style` | `time_style` | Example fallback |
+| --- | --- | --- |
+| `short` | `short` | `5/15/26, 10:12 PM` |
+| `medium` | `medium` | `May 15, 2026, 10:12:34 PM` |
+| `long` | `long` | `May 15, 2026 at 10:12:34 PM GMT+9` |
+| `full` | `full` | `Friday, May 15, 2026 at 10:12:34 PM Korean Standard Time` |
+| `none` | `none` | empty string |
+
+Exact punctuation may vary slightly by JavaScript runtime and ICU data. The style enum, locale, and timezone are the contract; exact localized wording is delegated to `Intl.DateTimeFormat`.
 
 `site.indexing` is an optional fallback `robots.txt` policy. Missing or `true` means the generated fallback `robots.txt` allows indexing. `false` means the generated fallback `robots.txt` disallows all agents. This field does not stop route generation, sitemap generation, feed generation, or HTML rendering. Site-owned `public/robots.txt` files should be used for custom crawler rules and take priority over the fallback file. When a site-owned `robots.txt` exists, ZeroPress copies it as-is and does not append a `Sitemap` directive; add `Sitemap: https://example.com/sitemap.xml` manually when needed.
 
