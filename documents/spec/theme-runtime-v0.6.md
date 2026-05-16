@@ -151,7 +151,7 @@ Missing `site.meta` values, missing collections, and type mismatches between `si
 
 ## 4. Template Syntax
 
-`v0.6` supports simple control-flow, partial includes with literal args, and branch reduction:
+`v0.6` supports simple control-flow, partial includes with literal or path args, and branch reduction:
 
 ```html
 {{#if path}}...{{#else}}...{{/if}}
@@ -166,6 +166,7 @@ Missing `site.meta` values, missing collections, and type mismatches between `si
 {{loop.index}}
 {{partial:sidebar-widgets}}
 {{partial:post-list-item variant="compact" show_excerpt=true}}
+{{partial:project-card project=post limit=3 fallback=null}}
 {{! inline comment }}
 {{!-- block comment --}}
 ```
@@ -175,6 +176,11 @@ Rules:
 - `slot` tags are reserved for layout composition.
 - `partial` tags resolve to `partials/<name>.html`.
 - Partials share the current render context.
+- Partial arguments are optional aliases exposed as `partial.*`; the parent context is already shared.
+- Partial argument values may be double-quoted strings, typed literals (`true`, `false`, `null`, numbers), or path aliases resolved from the current render context.
+- Single-segment path aliases must be known render roots or active `for` loop aliases; dotted path aliases are resolved at render time.
+- Missing path aliases render as empty/falsey values. Use `{{#if partial.project}}` before relying on optional aliases.
+- Unquoted values are never string literals. Use `variant="compact"` for text, not `variant=compact`.
 - Variable path segments may contain letters, digits, underscores, and internal hyphens, such as `menus.docs-sidebar.items`.
 - Hyphens cannot start or end a path segment, and consecutive hyphens are invalid.
 - Missing or circular partial references fail validation.

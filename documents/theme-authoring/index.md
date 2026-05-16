@@ -157,9 +157,24 @@ Common helpers:
 {{menu:primary}}
 {{partial:header}}
 {{partial:post-card variant="compact" show_excerpt=true}}
+{{partial:project-card project=post fallback=null}}
 ```
 
 Template syntax supports variables, `if`, `if_eq`, `if_neq`, `if_in`, `if_starts_with`, `else_if` variants, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md) for the full contract.
+
+Partials share the parent render context, so arguments are optional. Use them when a reusable fragment should expose a stable alias, especially when the same markup can render different source objects:
+
+```html
+{{#for item in collections.work.items}}
+  {{partial:project-card project=item variant="featured"}}
+{{/for}}
+
+{{#for post in posts.items}}
+  {{partial:project-card project=post variant="compact"}}
+{{/for}}
+```
+
+Inside `partials/project-card.html`, both callers can read `partial.project`. Quoted values are strings, typed values such as `true`, `false`, `null`, and `3` keep their type, and unquoted non-literals are path aliases. A single-segment alias such as `item` must be a known render root or an active `for` loop alias. Use `variant="compact"` for text; `variant=compact` is not a string literal.
 
 Templates are path-only and do not evaluate JavaScript expressions. Comparison helpers are strict and do not coerce types. `{{#if_eq loop.index 4}}` can match the fifth item, but `{{#if_eq loop.index "4"}}` does not. Use `if` for truthiness checks, `if_eq`/`if_neq` for exact comparisons, `if_in` for small allowed sets, and `if_starts_with` for simple prefix checks.
 
