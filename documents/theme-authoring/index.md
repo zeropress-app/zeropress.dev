@@ -159,9 +159,9 @@ Common helpers:
 {{partial:post-card variant="compact" show_excerpt=true}}
 ```
 
-Template syntax supports variables, `if`, `if_eq`, `else_if`, `else_if_eq`, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md) for the full contract.
+Template syntax supports variables, `if`, `if_eq`, `if_neq`, `if_in`, `if_starts_with`, `else_if` variants, `for`, loop metadata, partial arguments, and template comments. See [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md) for the full contract.
 
-Templates are path-only and do not evaluate JavaScript expressions. `if_eq` is strict and compares against a string literal without type coercion. `loop.index` is a zero-based number, so `{{#if_eq loop.index "4"}}` does not match. Use `loop.first`, `loop.last`, CSS selectors, or build-prepared data for positional layout.
+Templates are path-only and do not evaluate JavaScript expressions. Comparison helpers are strict and do not coerce types. `{{#if_eq loop.index 4}}` can match the fifth item, but `{{#if_eq loop.index "4"}}` does not. Use `if` for truthiness checks, `if_eq`/`if_neq` for exact comparisons, `if_in` for small allowed sets, and `if_starts_with` for simple prefix checks.
 
 If a theme needs to iterate a menu manually, use `menus.<slot>.items` with the same slot id declared in `theme.json`. Both plain ids such as `primary` and hyphenated ids such as `docs-sidebar` are valid:
 
@@ -606,14 +606,12 @@ Cloudflare Web Analytics example:
 ></script>
 ```
 
-For Markdown body enhancement, load the integration only on post and page routes. The v0.6 template syntax does not support `or`, so use `else_if`:
+For Markdown body enhancement, load the integration only on post and page routes. Use `if_in` when multiple route types share the same enhancement:
 
 ```html
-{{#if post}}
+{{#if_in route.type "post" "page"}}
   {{partial:mermaid-loader}}
-{{#else_if page}}
-  {{partial:mermaid-loader}}
-{{/if}}
+{{/if_in}}
 ```
 
 cdnjs Mermaid example:
@@ -674,7 +672,8 @@ Newsletter support currently means the theme may expose static newsletter UI. St
 ## Common Pitfalls For AI And Theme Authors
 
 - Do not duplicate Markdown H1 headings. When `page.html` or `post.html` already contains the rendered Markdown H1, avoid adding another `<h1>{{page.title}}</h1>` or `<h1>{{post.title}}</h1>` in the surrounding template.
-- Do not assume `if_eq` coerces values. `loop.index` is numeric, so checks such as `{{#if_eq loop.index "4"}}` do not match.
+- Do not assume comparison helpers coerce values. `loop.index` is numeric, so use `{{#if_eq loop.index 4}}` rather than `{{#if_eq loop.index "4"}}`.
+- Do not use `if_eq` as a truthiness check. Use `{{#if site.footer.attribution}}`, not `{{#if_eq site.footer.attribution}}`.
 - Use the declared menu slot id directly when manually iterating menu data. For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid.
 - Keep selector names aligned across template, CSS, and JS. If a partial emits `class="docs-sidebar"` and `data-docs-sidebar`, CSS and JS should use the same names.
 - Use `page.toc[]` for page TOC UI and `post.toc[]` for post TOC UI. A shared TOC partial should handle both contexts explicitly.
@@ -703,7 +702,7 @@ See [CLI Tools](../cli/index.md) for package roles and npm references.
 - Render global taxonomy filters from `taxonomies.categories[]` and `taxonomies.tags[]`.
 - Render Markdown TOC from `page.toc[]` or `post.toc[]` when the theme includes TOC UI.
 - Avoid duplicate page headings when `page.html` already contains a Markdown H1.
-- Avoid type-juggling assumptions such as `{{#if_eq loop.index "4"}}`.
+- Avoid type-juggling assumptions such as `{{#if_eq loop.index "4"}}`; use typed literals such as `{{#if_eq loop.index 4}}`.
 - Keep class names, data attributes, CSS selectors, and JS selectors aligned across templates and assets.
 - Keep common analytics and content enhancement scripts in named partials instead of writing them directly in `layout.html`.
 - Put site-owned third-party assets in `public/` and reference them from root paths such as `/vendor/...`.

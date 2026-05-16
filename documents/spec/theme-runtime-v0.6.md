@@ -157,7 +157,11 @@ Missing `site.meta` values, missing collections, and type mismatches between `si
 {{#if path}}...{{#else}}...{{/if}}
 {{#if path}}...{{#else_if other.path}}...{{#else}}...{{/if}}
 {{#if_eq path "literal"}}...{{#else}}...{{/if_eq}}
-{{#if_eq path "literal"}}...{{#else_if_eq other.path "other"}}...{{/if_eq}}
+{{#if_eq loop.index 4}}...{{/if_eq}}
+{{#if_eq route.url item.url}}...{{/if_eq}}
+{{#if_neq loop.last true}}, {{/if_neq}}
+{{#if_in route.type "post" "page" "front_page"}}...{{/if_in}}
+{{#if_starts_with route.url item.url}}...{{/if_starts_with}}
 {{#for item in path}}...{{/for}}
 {{loop.index}}
 {{partial:sidebar-widgets}}
@@ -174,9 +178,10 @@ Rules:
 - Variable path segments may contain letters, digits, underscores, and internal hyphens, such as `menus.docs-sidebar.items`.
 - Hyphens cannot start or end a path segment, and consecutive hyphens are invalid.
 - Missing or circular partial references fail validation.
-- Unsupported tags such as `if_neq`, `unless`, or custom expressions are invalid.
-- `if_eq` compares strictly against a string literal and does not coerce types.
-- `loop.index` is a zero-based number. `{{#if_eq loop.index "4"}}` does not match; use `loop.first`, `loop.last`, CSS `:nth-child()`, or prepared data for positional layout.
+- General expressions such as `and`, `or`, `>`, `<`, arithmetic, and slicing are not supported.
+- `if_eq`, `if_neq`, `if_in`, and `if_starts_with` use strict comparison and never coerce types.
+- Comparison operands may be string, number, boolean, or `null` literals, or path operands. `{{#if_eq loop.index 4}}` is valid, but `{{#if_eq loop.index "4"}}` does not match.
+- `if_eq` and related comparison helpers require an explicit right-hand operand. Use `{{#if site.footer.attribution}}`, not `{{#if_eq site.footer.attribution}}`, for truthiness checks.
 
 ## 5. Rendering Semantics
 
