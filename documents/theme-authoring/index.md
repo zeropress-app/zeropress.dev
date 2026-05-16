@@ -337,6 +337,35 @@ Templates read the values from `site.meta`:
 {{/if}}
 ```
 
+Use `page.data` and `post.data` for page/post-scoped structured content that a theme should iterate. Keep `meta` scalar; put arrays and objects such as facts, timelines, galleries, swatches, and tech stacks in `data`:
+
+```json
+{
+  "data": {
+    "facts": [
+      { "label": "Role", "value": "Design Engineering" },
+      { "label": "Year", "value": "2026" }
+    ],
+    "stack": ["ZeroPress", "Cloudflare"]
+  }
+}
+```
+
+```html
+{{#for fact in page.data.facts}}
+  <dt>{{fact.label}}</dt>
+  <dd>{{fact.value}}</dd>
+{{/for}}
+
+{{#for item in post.data.stack}}
+  <li>{{item}}</li>
+{{/for}}
+```
+
+If a `data` value does not match the structure a theme expects, normal template behavior applies. For example, `{{#for fact in page.data.facts}}` renders empty when `facts` is not an array.
+
+`data` is not a raw HTML channel. Values rendered with `{{page.data.*}}` or `{{post.data.*}}` follow normal template escaping, even when a key is named `html` or ends in `_html`.
+
 Each taxonomy item provides:
 
 - `name`

@@ -276,6 +276,25 @@ CSS, JavaScript, fonts, images, and third-party packages should remain normal pu
 <script defer src="/vendor/app.js"></script>
 ```
 
+## Markdown Front Matter `data`
+
+Markdown files may use front matter `data` for page-scoped structured values. This is not Build Pages config; it is copied into the generated preview-data page.
+
+```md
+---
+title: Case Study
+data:
+  stack:
+    - ZeroPress
+    - Cloudflare
+  facts:
+    - label: Role
+      value: Design Engineering
+---
+```
+
+Use `meta` for scalar flags and small metadata. Use `data` for arrays or objects that a theme should iterate with `{{#for}}`.
+
 ## Markdown Source Copy
 
 Build Pages copies original Markdown files to the generated output by default. The bundled docs theme uses this to show `View this page as Markdown` links.

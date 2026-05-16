@@ -235,6 +235,26 @@ Important v0.6 notes:
 - Post and page bodies use raw `content` plus `document_type`.
 - Taxonomy membership on posts is represented by `category_slugs[]` and `tag_slugs[]`.
 
+Posts and pages may carry optional `data` for structured theme-facing content. Use `meta` for scalar flags and metadata; use `data` for arrays and objects that a theme may iterate:
+
+```json
+{
+  "data": {
+    "eyebrow": "Selected Work",
+    "stack": ["ZeroPress", "Cloudflare"],
+    "facts": [
+      { "label": "Role", "value": "Design Engineering" },
+      { "label": "Year", "value": "2026" }
+    ],
+    "gallery": [
+      { "src": "/images/work-1.jpg", "alt": "Homepage screenshot" }
+    ]
+  }
+}
+```
+
+`data` must be a JSON-safe object with template-safe keys. Values may be strings, finite numbers, booleans, null, arrays, or objects. `data` is not a raw HTML channel; normal template interpolation escapes values. If a theme uses `{{#for fact in page.data.facts}}` and `facts` is not an array, the loop renders empty without a build error.
+
 ### 3.3 `menus`
 
 `menus` is an optional object map keyed by `menu_id`.
@@ -619,6 +639,7 @@ Notes:
 | `site.front_page` | Normative (Optional) | Defines which content owns `/` |
 | `site.post_index` | Normative (Optional) | Defines whether and where the post index is emitted |
 | `content.pages[].path` | Normative (Optional) | Overrides the page permalink pattern when present |
+| `content.posts[].data`, `content.pages[].data` | Normative (Optional) | Structured JSON-safe theme-facing content |
 | `custom_css` | Normative (Optional) | Site-level stylesheet input emitted as a generated CSS asset |
 | `custom_html` | Normative (Optional) | Trusted raw HTML inserted before `</head>` and/or `</body>` |
 | `content.posts[].category_slugs[]`, `content.posts[].tag_slugs[]` | Normative (Required) | Each referenced slug must also be a safe single path segment |
