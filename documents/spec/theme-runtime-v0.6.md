@@ -223,7 +223,9 @@ For `document_type: "markdown"`, build renders common Markdown authoring convent
 - strikethrough as `<s>`
 - task lists as disabled checkbox inputs with `contains-task-list`, `task-list-item`, and `task-list-item-checkbox` classes
 - GitHub alerts for `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION` as `zp-alert` aside blocks
-- fenced code blocks with `language-*` classes
+- fenced code blocks highlighted by build-core with `highlight.js`; `<code>` keeps the `language-*` class and highlighted tokens use `hljs-*` span classes
+
+Themes should style code blocks and `hljs-*` token classes in CSS. A client-side `highlight.js` script is not required for Markdown rendered during the ZeroPress build.
 
 Markdown headings receive stable `id` attributes and generate `page.toc[]` or `post.toc[]` entries for `h2` through `h4`. Build does not add visible heading permalink UI. Mermaid fences remain code blocks such as `pre code.language-mermaid`; rendering diagrams is theme-owned progressive enhancement.
 

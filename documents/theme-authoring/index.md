@@ -604,9 +604,43 @@ Markdown rendering also includes common authoring conventions that themes may st
 - `~~deleted~~` renders as `<s>deleted</s>`.
 - Task lists render disabled checkbox inputs and use `contains-task-list`, `task-list-item`, and `task-list-item-checkbox` classes.
 - GitHub alert blockquotes such as `> [!NOTE]` render as `<aside class="zp-alert zp-alert--note" role="note">` with a `zp-alert__title` title paragraph.
-- Fenced code language info is preserved as `language-*` classes, including `language-mermaid`.
+- Fenced code blocks are highlighted by build-core with `highlight.js`. The `<code>` element keeps the `language-*` class, and highlighted tokens use `hljs-*` span classes.
 
-Supported alert markers are `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`. Mermaid remains a code block at build time; themes can progressively enhance `pre code.language-mermaid` on the client.
+Supported alert markers are `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`.
+
+Themes should style the generated code markup in CSS. A client-side `highlight.js` script is usually not needed for Markdown rendered by ZeroPress:
+
+```css
+.prose pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.prose pre code {
+  display: block;
+}
+
+.prose code[class*="language-"] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.prose .hljs-keyword,
+.prose .hljs-selector-tag {
+  color: var(--code-keyword);
+}
+
+.prose .hljs-string,
+.prose .hljs-attr {
+  color: var(--code-string);
+}
+
+.prose .hljs-comment {
+  color: var(--code-comment);
+}
+```
+
+Mermaid is the exception: ZeroPress preserves Mermaid fences as readable code blocks at build time. Themes can progressively enhance `pre code.language-mermaid` on the client when they want diagrams.
 
 For `document_type: "html"` and `document_type: "plaintext"`, build-generated TOC data is empty. Themes may add client-side progressive enhancement if they want TOC behavior for non-Markdown content.
 
@@ -730,18 +764,18 @@ Third-party files that belong to a site rather than a reusable theme should live
 ```txt
 public/
   vendor/
-    highlight.js-11.11.1/
-      highlight.min.js
+    code-copy/
+      copy.js
 ```
 
 They are referenced from the output root:
 
 ```html
 <!-- partials/content-enhancements.html -->
-<script defer src="/vendor/highlight.js-11.11.1/highlight.min.js"></script>
+<script defer src="/vendor/code-copy/copy.js"></script>
 ```
 
-Use this pattern for analytics, Mermaid, highlight.js, code-copy buttons, heading UI, and other optional integrations. Core document content should still render meaningfully before these scripts run.
+Use this pattern for analytics, Mermaid, code-copy buttons, heading UI, and other optional integrations. Client-side `highlight.js` is only needed when a site injects new code blocks after the ZeroPress build. Core document content should still render meaningfully before these scripts run.
 
 Preview data may also provide `custom_html` for trusted site/admin customization. Use partials when the theme wants a named template integration point; use `custom_html` when trusted preview-data generation should inject final site snippets before `</head>` or `</body>` without editing the theme.
 
