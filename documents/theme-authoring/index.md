@@ -632,6 +632,16 @@ For advanced search quality, a site can run Pagefind after the ZeroPress build a
 
 See [Static Search](/static-search/index.md) for the native adapter contract and Pagefind notes.
 
+## Discoverability
+
+`post.discoverability` and `page.discoverability` are build policy fields, not permission or membership fields.
+
+- `default` leaves automatic discovery unchanged.
+- `noindex` adds HTML robots `noindex`.
+- `delist` removes the document from automatic discovery outputs while still rendering the direct route.
+
+Themes should not treat `discoverability` as access control. A delisted document can still appear through explicit menus, explicit collections, or manual links chosen by the site author.
+
 ## Progressive Enhancement
 
 The initial static document should be useful without JavaScript.

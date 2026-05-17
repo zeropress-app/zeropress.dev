@@ -234,6 +234,7 @@ Important v0.6 notes:
 - Pages may carry optional `path` for nested page URLs.
 - Post and page bodies use raw `content` plus `document_type`.
 - Taxonomy membership on posts is represented by `category_slugs[]` and `tag_slugs[]`.
+- Posts and pages may carry optional `discoverability` for document-level discovery policy.
 
 Posts and pages may carry optional `data` for structured theme-facing content. Use `meta` for scalar flags and metadata; use `data` for arrays and objects that a theme may iterate:
 
@@ -254,6 +255,18 @@ Posts and pages may carry optional `data` for structured theme-facing content. U
 ```
 
 `data` must be a JSON-safe object with template-safe keys. Values may be strings, finite numbers, booleans, null, arrays, or objects. `data` is not a raw HTML channel; normal template interpolation escapes values. If a theme uses `{{#for fact in page.data.facts}}` and `facts` is not an array, the loop renders empty without a build error.
+
+Posts and pages may also carry optional `discoverability`:
+
+| Value | Meaning |
+| --- | --- |
+| `default` | No special handling. This is the default when the field is omitted. |
+| `noindex` | Generate the HTML route and add `<meta name="robots" content="noindex">`. Automatic lists, sitemap, feed, and native search are unchanged. |
+| `delist` | Generate the HTML route, add `noindex`, and remove the document from automatic discovery outputs. |
+
+`delist` excludes posts from generated post index pages, archive pages, category/tag pages, taxonomy counts, recent-post widgets, adjacent post cursors, feed entries, sitemap entries, and the native search index. `delist` excludes pages from sitemap entries and the native search index.
+
+`discoverability` is not a security or permission feature. Direct URL access still works. Explicit menus, explicit collections, and manual body links can still expose the document.
 
 ### 3.3 `menus`
 
@@ -667,6 +680,7 @@ Notes:
 | `site.post_index` | Normative (Optional) | Defines whether and where the post index is emitted |
 | `content.pages[].path` | Normative (Optional) | Overrides the page permalink pattern when present |
 | `content.posts[].data`, `content.pages[].data` | Normative (Optional) | Structured JSON-safe theme-facing content |
+| `content.posts[].discoverability`, `content.pages[].discoverability` | Normative (Optional) | Document-level discovery policy: `default`, `noindex`, or `delist` |
 | `custom_css` | Normative (Optional) | Site-level stylesheet input emitted as a generated CSS asset |
 | `custom_html` | Normative (Optional) | Trusted raw HTML inserted before `</head>` and/or `</body>` |
 | `content.posts[].category_slugs[]`, `content.posts[].tag_slugs[]` | Normative (Required) | Each referenced slug must also be a safe single path segment |

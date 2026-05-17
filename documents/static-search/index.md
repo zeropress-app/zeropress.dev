@@ -63,6 +63,8 @@ Only `options.limit` is supported in the native adapter. The default limit is `2
 
 When the front page is rendered from a page, that page is indexed with the URL `/`.
 
+Posts or pages with `discoverability: "delist"` are excluded from the native search index. `site.indexing: false` does not disable native search; it only changes generated fallback `robots.txt`.
+
 Each search item includes:
 
 ```json
