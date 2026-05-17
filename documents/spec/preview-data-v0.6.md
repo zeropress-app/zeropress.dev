@@ -270,7 +270,34 @@ Each menu item contains:
 - `url`
 - `type`
 - `target`
+- `meta` (optional scalar map)
 - `children`
+
+```json
+{
+  "menus": {
+    "primary": {
+      "name": "Primary Menu",
+      "items": [
+        {
+          "title": "GitHub",
+          "url": "https://github.com/zeropress-app",
+          "type": "custom",
+          "target": "_blank",
+          "meta": {
+            "icon": "github",
+            "badge": "New",
+            "accent": "green"
+          },
+          "children": []
+        }
+      ]
+    }
+  }
+}
+```
+
+Menu item `meta` is intended for small display hints such as icons, badges, accents, or feature flags. Values must be strings, finite numbers, booleans, or null. It is not a raw HTML channel; template interpolation escapes these values normally.
 
 When `menus` is omitted, build tooling provides an empty menu map to theme render contexts.
 

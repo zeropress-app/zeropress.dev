@@ -220,7 +220,14 @@ Standalone HTML is trusted raw HTML and is written directly to `/index.html`.
       "name": "Primary Menu",
       "items": [
         { "title": "Home", "url": "/" },
-        { "title": "Docs", "url": "/docs/" }
+        {
+          "title": "Docs",
+          "url": "/docs/",
+          "meta": {
+            "icon": "book-open",
+            "badge": "New"
+          }
+        }
       ]
     }
   }
@@ -233,7 +240,10 @@ Menu items support:
 - `url`
 - `type`
 - `target`
+- `meta`
 - `children`
+
+`meta` is optional scalar display metadata copied into generated preview-data for themes that manually iterate menus. Use it for values such as `icon`, `badge`, or `accent`.
 
 ## Custom HTML
 

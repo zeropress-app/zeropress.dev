@@ -190,6 +190,20 @@ If a theme needs to iterate a menu manually, use `menus.<slot>.items` with the s
 
 For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid. Hyphens must stay inside a path segment, so `menus.-docs.items`, `menus.docs-.items`, and `menus.docs--sidebar.items` are invalid.
 
+Menu items may provide scalar `meta` values for custom navigation UI. Use manual iteration when a theme needs icons, badges, accents, or other per-link display hints:
+
+```html
+{{#for item in menus.primary.items}}
+  <a href="{{item.url}}" target="{{item.target}}">
+    {{#if item.meta.icon}}<span class="icon icon-{{item.meta.icon}}"></span>{{/if}}
+    <span>{{item.title}}</span>
+    {{#if item.meta.badge}}<span class="badge">{{item.meta.badge}}</span>{{/if}}
+  </a>
+{{/for}}
+```
+
+Menu `meta` is not a raw HTML channel. Values are escaped through normal template rendering.
+
 Named collections work the same way for curated content groups. A theme may declare optional `collection_slots` in `theme.json`, and preview-data may provide matching `collections.<id>.items[]`. Use collection slots for hand-picked editorial areas such as magazine cover stories, hero rails, portfolio highlights, landing page feature groups, and docs quick links. Missing collections should be treated as empty optional data:
 
 ```html
