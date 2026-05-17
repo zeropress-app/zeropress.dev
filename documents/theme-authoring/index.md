@@ -380,6 +380,60 @@ If a `data` value does not match the structure a theme expects, normal template 
 
 `data` is not a raw HTML channel. Values rendered with `{{page.data.*}}` or `{{post.data.*}}` follow normal template escaping, even when a key is named `html` or ends in `_html`.
 
+### Page Layout Variants
+
+ZeroPress does not use dynamic `page.<template>.html` files. Keep `page.html` as the fixed page route template, then branch by scalar metadata and delegate variant markup to named partials.
+
+Use `page.meta` for the layout hint:
+
+```json
+{
+  "meta": {
+    "layout": "case-study"
+  },
+  "data": {
+    "facts": [
+      { "label": "Role", "value": "Design Engineering" },
+      { "label": "Year", "value": "2026" }
+    ]
+  }
+}
+```
+
+Then keep `page.html` small and explicit:
+
+```html
+{{#if_eq page.meta.layout "case-study"}}
+  {{partial:page-case-study page=page}}
+{{#else_if_eq page.meta.layout "landing"}}
+  {{partial:page-landing page=page}}
+{{#else}}
+  {{partial:page-default page=page}}
+{{/if}}
+```
+
+Inside the partial, read `partial.page` or the shared parent `page` context:
+
+```html
+<!-- partials/page-case-study.html -->
+<article class="case-study">
+  {{partial.page.html}}
+
+  {{#if partial.page.data.facts}}
+    <dl class="case-study-facts">
+      {{#for fact in partial.page.data.facts}}
+        <div>
+          <dt>{{fact.label}}</dt>
+          <dd>{{fact.value}}</dd>
+        </div>
+      {{/for}}
+    </dl>
+  {{/if}}
+</article>
+```
+
+This keeps routing and validation predictable while still allowing landing pages, case studies, portfolio pages, or other page variants. Avoid inventing `page.template`, top-level `page-case-study.html` route templates, or content-owned template filenames unless a future ZeroPress contract explicitly adds them.
+
 Each taxonomy item provides:
 
 - `name`
@@ -796,6 +850,7 @@ Newsletter support currently means the theme may expose static newsletter UI. St
 ## Common Pitfalls For AI And Theme Authors
 
 - Do not duplicate Markdown H1 headings. When `page.html` or `post.html` already contains the rendered Markdown H1, avoid adding another `<h1>{{page.title}}</h1>` or `<h1>{{post.title}}</h1>` in the surrounding template.
+- Do not invent dynamic page template filenames. Use `page.meta.layout` in `page.html` and delegate variants to `partials/page-*.html`.
 - Do not assume comparison helpers coerce values. `loop.index` is numeric, so use `{{#if_eq loop.index 4}}` rather than `{{#if_eq loop.index "4"}}`.
 - Do not use `if_eq` as a truthiness check. Use `{{#if site.footer.attribution}}`, not `{{#if_eq site.footer.attribution}}`.
 - Use the declared menu slot id directly when manually iterating menu data. For example, `menus.primary.items` and `menus.docs-sidebar.items` are both valid.
