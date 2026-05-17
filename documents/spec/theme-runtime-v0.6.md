@@ -227,6 +227,8 @@ For `document_type: "markdown"`, build renders common Markdown authoring convent
 
 Themes should style code blocks and `hljs-*` token classes in CSS. A client-side `highlight.js` script is not required for Markdown rendered during the ZeroPress build.
 
+Markdown documents may include a conservative subset of raw HTML. ZeroPress preserves safe semantic media tags such as `figure`, `figcaption`, `picture`, and `source`. Responsive image attributes such as `img srcset`, `sizes`, `loading`, and `decoding` are allowed. Unsupported tags, inline `style`, event handler attributes, scripts, and unsafe URLs are removed by the sanitizer.
+
 Markdown headings receive stable `id` attributes and generate `page.toc[]` or `post.toc[]` entries for `h2` through `h4`. Build does not add visible heading permalink UI. Mermaid fences remain code blocks such as `pre code.language-mermaid`; rendering diagrams is theme-owned progressive enhancement.
 
 ### 5.2 Post Index Capability

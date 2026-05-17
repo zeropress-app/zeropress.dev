@@ -696,6 +696,32 @@ Themes should style the generated code markup in CSS. A client-side `highlight.j
 
 Mermaid is the exception: ZeroPress preserves Mermaid fences as readable code blocks at build time. Themes can progressively enhance `pre code.language-mermaid` on the client when they want diagrams.
 
+Markdown documents may include a conservative subset of raw HTML. ZeroPress preserves safe semantic media markup such as `figure`, `figcaption`, `picture`, and `source`, plus responsive image attributes such as `img srcset`, `sizes`, `loading`, and `decoding`. Unsupported tags, inline `style`, event handler attributes, scripts, and unsafe URLs are removed by the sanitizer.
+
+```html
+<figure class="gallery-item">
+  <picture>
+    <source
+      media="(min-width: 900px)"
+      srcset="/images/work-large.webp 1200w, /images/work.webp 800w"
+      sizes="(min-width: 900px) 720px, 100vw"
+      type="image/webp"
+    >
+    <img
+      src="/images/work.jpg"
+      srcset="/images/work.jpg 800w, /images/work@2x.jpg 1600w"
+      sizes="100vw"
+      width="800"
+      height="450"
+      loading="lazy"
+      decoding="async"
+      alt="Portfolio preview"
+    >
+  </picture>
+  <figcaption>Portfolio preview</figcaption>
+</figure>
+```
+
 For `document_type: "html"` and `document_type: "plaintext"`, build-generated TOC data is empty. Themes may add client-side progressive enhancement if they want TOC behavior for non-Markdown content.
 
 ## Search
