@@ -27,6 +27,10 @@ Current contract highlights:
 
 - [ZeroPress Build Pages Config](/build-pages-config/index.md)
 
+## Static Search
+
+- [Static Search](/static-search/index.md)
+
 ## Licensing
 
 - [ZeroPress Licensing](/license/index.md)

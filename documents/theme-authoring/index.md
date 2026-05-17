@@ -610,6 +610,28 @@ Supported alert markers are `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`
 
 For `document_type: "html"` and `document_type: "plaintext"`, build-generated TOC data is empty. Themes may add client-side progressive enhancement if they want TOC behavior for non-Markdown content.
 
+## Search
+
+Static search remains theme-owned UI on top of build-generated search artifacts.
+
+ZeroPress native builds can emit:
+
+- `/_zeropress/search.json`
+- `/_zeropress/search.js`
+
+The adapter is a dependency-free ESM module:
+
+```js
+const searchApi = await import("/_zeropress/search.js");
+const result = await searchApi.search("query", { limit: 10 });
+```
+
+Themes should provide the form, result list, empty state, keyboard behavior, and dialog behavior. The search adapter provides loading, tokenization, scoring, and a Pagefind-like result shape.
+
+For advanced search quality, a site can run Pagefind after the ZeroPress build and wire the same UI to `/pagefind/pagefind.js`. Do not probe both engines on every page view; choose the provider for the site or theme build.
+
+See [Static Search](/static-search/index.md) for the native adapter contract and Pagefind notes.
+
 ## Progressive Enhancement
 
 The initial static document should be useful without JavaScript.
