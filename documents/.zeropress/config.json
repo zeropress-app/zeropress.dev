@@ -1,16 +1,17 @@
 {
-  "$schema": "https://zeropress.dev/schemas/zeropress-build-pages.config.v0.1.schema.json",
+  "$schema": "https://schemas.zeropress.dev/build-pages-config/v0.1/schema.json",
   "version": "0.1",
   "site": {
     "title": "ZeroPress Public Docs",
-    "description": "Public ZeroPress theme authoring guides, runtime documentation, CLI guides, and JSON schemas.",
+    "description": "ZeroPress theme authoring guides, runtime documentation, and CLI guides.",
     "url": "https://zeropress.dev",
     "footer": {
       "copyright_text": "ZeroPress Public Docs"
+    },
+    "logo": {
+      "src": "/favicon_padding.svg",
+      "alt": "ZeroPress Logo"
     }
-  },
-  "front_page": {
-    "type": "markdown"
   },
   "custom_html": {
     "head_end": {
@@ -24,10 +25,19 @@
     "primary": {
       "name": "Primary Menu",
       "items": [
-        { "title": "Home", "url": "/" },
-        { "title": "Docs", "url": "/docs/" },
+        { "title": "Getting Started", "url": "/getting-started/" },
         { "title": "Theme Authoring", "url": "/theme-authoring/" },
+        { "title": "Reference", "url": "/reference/" },
         { "title": "CLI Tools", "url": "/cli/" }
+      ]
+    },
+    "footer": {
+      "name": "Footer Menu",
+      "items": [
+        { "title": "Schemas", "url": "https://schemas.zeropress.dev/", "target": "_blank" },
+        { "title": "GitHub", "url": "https://github.com/zeropress-app", "target": "_blank" },
+        { "title": "npm", "url": "https://www.npmjs.com/org/zeropress", "target": "_blank" },
+        { "title": "License", "url": "/license/" }
       ]
     }
   }
