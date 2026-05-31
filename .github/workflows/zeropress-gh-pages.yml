@@ -34,7 +34,14 @@ jobs:
         with:
           source: ./documents
           destination: ./_site
-          theme: docs
+          public-dir: ./public
+      - name: Format generated HTML
+        run: npx --yes prettier@3.8.3 --config ./.prettierrc.json --ignore-path /dev/null --write "./_site/**/*.html"
+      - name: Build Pagefind index
+        run: |
+          npx --yes pagefind@latest --site ./_site --output-subdir _zeropress/pagefind
+          cp ./_site/_zeropress/search_pagefind.js ./_site/_zeropress/search.js
+          rm ./_site/_zeropress/search.json
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
