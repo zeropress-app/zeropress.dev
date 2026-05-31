@@ -11,8 +11,16 @@ ZeroPress can emit dependency-free native search artifacts during a normal build
 
 - `/_zeropress/search.json`
 - `/_zeropress/search.js`
+- `/_zeropress/search_pagefind.js`
 
 The theme owns the search UI. The generated adapter owns loading, tokenizing, scoring, and returning search results.
+
+Native search is enabled only when both conditions are true:
+
+- preview-data does not set `site.search: false`
+- the active theme declares `features.search: true`
+
+When native search is disabled, ZeroPress does not emit `/_zeropress/search.json`, `/_zeropress/search.js`, or `/_zeropress/search_pagefind.js`, and templates receive `site.search: false` so search UI can be hidden with `{{#if site.search}}`.
 
 ## Native Search
 
@@ -57,13 +65,33 @@ The result shape intentionally resembles a small subset of Pagefind:
 
 Only `options.limit` is supported in the native adapter. The default limit is `20`.
 
+## Search UI Hooks
+
+Themes own the search UI. Use these hook names when wiring client-side search
+behavior so ZeroPress themes remain easier to compare and adapt:
+
+```html
+{{#if site.search}}
+  <form role="search" data-zp-search>
+    <input type="search" data-zp-search-input>
+    <button type="submit" data-zp-search-submit>Search</button>
+    <p data-zp-search-status></p>
+    <div data-zp-search-results></div>
+  </form>
+{{/if}}
+```
+
+These hooks are conventions for theme JavaScript. ZeroPress does not
+automatically attach UI behavior to them; the theme still imports
+`/_zeropress/search.js` and renders results.
+
 ## Indexed Content
 
 `search.json` indexes published posts and pages. It does not index taxonomy routes, archive routes, `404.html`, feed files, sitemap files, or standalone raw front-page HTML.
 
 When the front page is rendered from a page, that page is indexed with the URL `/`.
 
-Posts or pages with `discoverability: "delist"` are excluded from the native search index. `site.indexing: false` does not disable native search; it only changes generated fallback `robots.txt`.
+Posts or pages with `discoverability: "delist"` are excluded from the native search index. `site.indexing: false` does not disable native search; it only changes generated fallback `robots.txt`. Use `site.search: false` to disable native search artifacts.
 
 Each search item includes:
 
@@ -107,21 +135,35 @@ These values are not preview-data or theme runtime configuration. Treat them as 
 For larger sites or higher search quality, Pagefind is a good post-build option:
 
 ```bash
-npx pagefind --site ./_site --root-selector ".prose"
+npx pagefind@latest \
+  --site ./_site \
+  --output-subdir _zeropress/pagefind
 ```
 
-You can narrow the indexed files if needed:
+Then replace the native adapter with the generated Pagefind adapter:
 
 ```bash
-npx pagefind --site ./_site --root-selector ".prose" --glob "posts/**/*.html"
+cp ./_site/_zeropress/search_pagefind.js ./_site/_zeropress/search.js
+rm ./_site/_zeropress/search.json
 ```
 
-Pagefind writes its own `/pagefind/` assets after the ZeroPress build. A theme can keep its UI code small by isolating the search engine behind an adapter module:
+Removing `search.json` is optional; it only removes the unused native index from a Pagefind deployment.
+
+Pagefind writes its own `/_zeropress/pagefind/` assets after the ZeroPress build. The theme can keep importing the same adapter path:
 
 ```js
 const searchApi = await import("/_zeropress/search.js");
-// or, for a Pagefind-enabled deployment:
-// const searchApi = await import("/pagefind/pagefind.js");
 ```
 
-Avoid probing both paths on every page view. Pick the provider for the site or theme build so browsers do not repeatedly request a missing search engine file.
+Use `data-pagefind-body` on the actual post/page body wrapper instead of relying on a broad `--root-selector` such as `.prose` or `article`:
+
+```html
+<div
+  class="prose"
+  {{#if site.search}}{{#if_neq page.discoverability "delist"}}data-pagefind-body{{/if_neq}}{{/if}}
+>
+  {{page.html}}
+</div>
+```
+
+Do not add `data-pagefind-body` to layout-wide wrappers, archive pages, tag pages, category pages, or 404 pages unless those routes are intentionally searchable.

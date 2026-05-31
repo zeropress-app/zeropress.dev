@@ -1,6 +1,11 @@
+---
+status: published
+discoverability: delist
+---
+
 # ZeroPress Preview Data Spec v0.5
 
-> Status: Active (current preview-data contract)
+> Status: Historical. Use [Preview Data Reference](/reference/preview-data/) for current v0.6 work.
 
 ## 0. Core Philosophy
 
@@ -56,7 +61,7 @@ Key points:
 
 The machine-readable schema is:
 
-- [Preview Data v0.5 Schema](/schemas/preview-data.v0.5.schema.json)
+- [Preview Data v0.5 Schema](https://schemas.zeropress.dev/preview-data/v0.5/schema.json)
 
 ## 3. Content Model
 

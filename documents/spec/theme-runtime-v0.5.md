@@ -1,6 +1,11 @@
+---
+status: published
+discoverability: delist
+---
+
 # ZeroPress Theme Runtime Spec v0.5
 
-> Status: Active (current manifest contract for validation and build)
+> Status: Historical. Use [Theme Runtime Reference](/reference/theme-runtime/) for current v0.6 work.
 
 ## 0. Core Philosophy
 
@@ -258,4 +263,4 @@ These are enhancements, not required core document content.
 
 Machine-readable schema:
 
-- [Theme Manifest Runtime v0.5 Schema](/schemas/theme.v0.5.runtime.schema.json)
+- [Theme Manifest Runtime v0.5 Schema](https://schemas.zeropress.dev/theme-runtime/v0.5/schema.json)

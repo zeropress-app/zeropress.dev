@@ -2,6 +2,8 @@
 
 > Status: Active (current manifest contract for validation and build)
 
+This is the long-form contract document for theme runtime v0.6. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Theme Authoring](/theme-authoring/). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](/reference/theme-runtime/) and the [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json).
+
 ## 0. Core Philosophy
 
 - Themes define markup, styling, and small client enhancements.
@@ -75,6 +77,7 @@ Notable metadata supported in `v0.6`:
 - `features.comments`
 - `features.newsletter`
 - `features.post_index`
+- `features.search`
 - `menu_slots`
 - `widget_areas`
 - `site_meta`
@@ -83,6 +86,15 @@ Notable metadata supported in `v0.6`:
 `runtime` does not have a fallback. Missing or non-`0.6` values fail validation.
 
 The `theme.json` root object is closed in v0.6. Unknown root fields are invalid. The previous placeholder `settings` field is not part of the active runtime contract; site-level custom values should use preview-data `site.meta`, with optional theme hints declared through `site_meta`.
+
+`features` is optional. When omitted, ZeroPress treats it as an empty capability map and applies per-feature defaults:
+
+| Feature | Omitted behavior | Meaning |
+| --- | --- | --- |
+| `comments` | `false` | Comments UI/API mounting is opt-in. |
+| `newsletter` | No core build behavior | Capability metadata only until a stronger newsletter contract exists. |
+| `post_index` | `true` | Themes are assumed to support the post index unless they opt out. |
+| `search` | `false` | Static search UI/artifact support is opt-in. |
 
 `license` describes the terms under which the theme itself is distributed. Open-source themes should use one of the supported SPDX identifiers. Commercial, marketplace, proprietary, or otherwise non-SPDX themes may use a `LicenseRef-*` identifier:
 
@@ -156,12 +168,12 @@ Missing `site.meta` values, missing collections, and type mismatches between `si
 ```html
 {{#if path}}...{{#else}}...{{/if}}
 {{#if path}}...{{#else_if other.path}}...{{#else}}...{{/if}}
-{{#if_eq path "literal"}}...{{#else}}...{{/if_eq}}
-{{#if_eq loop.index 4}}...{{/if_eq}}
-{{#if_eq route.url item.url}}...{{/if_eq}}
-{{#if_neq loop.last true}}, {{/if_neq}}
-{{#if_in route.type "post" "page" "front_page"}}...{{/if_in}}
-{{#if_starts_with route.url item.url}}...{{/if_starts_with}}
+{{#if_eq path "literal"}}...{{#else}}...{{/if}}
+{{#if_eq loop.index 4}}...{{/if}}
+{{#if_eq route.url item.url}}...{{#else_if_starts_with route.url item.url}}...{{/if}}
+{{#if_neq loop.last true}}, {{/if}}
+{{#if_in route.type "post" "page" "front_page"}}...{{/if}}
+{{#if_starts_with route.url item.url}}...{{/if}}
 {{#for item in path}}...{{/for}}
 {{loop.index}}
 {{partial:sidebar-widgets}}
@@ -186,6 +198,8 @@ Rules:
 - Missing or circular partial references fail validation.
 - General expressions such as `and`, `or`, `>`, `<`, arithmetic, and slicing are not supported.
 - `if_eq`, `if_neq`, `if_in`, and `if_starts_with` use strict comparison and never coerce types.
+- Comparison helper branches may be mixed inside one conditional block. For example, an `if_eq` block may use `else_if_starts_with`.
+- Close comparison helper blocks with `{{/if}}`. Concrete close tags such as `{{/if_eq}}` remain accepted in v0.6, but are planned for removal in v0.7.
 - Comparison operands may be string, number, boolean, or `null` literals, or path operands. `{{#if_eq loop.index 4}}` is valid, but `{{#if_eq loop.index "4"}}` does not match.
 - `if_eq` and related comparison helpers require an explicit right-hand operand. Use `{{#if site.footer.attribution}}`, not `{{#if_eq site.footer.attribution}}`, for truthiness checks.
 
@@ -298,4 +312,4 @@ These are enhancements, not required core document content.
 
 Machine-readable schema:
 
-- [Theme Manifest Runtime v0.6 Schema](/schemas/theme.v0.6.runtime.schema.json)
+- [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json)

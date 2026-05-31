@@ -1,59 +1,69 @@
 # ZeroPress CLI Tools
 
-ZeroPress provides a small set of command line tools for creating themes, checking theme packages, previewing local work, building static site output, and turning GitHub Pages style Markdown trees into ZeroPress sites.
+ZeroPress provides a small set of command line tools for creating themes, checking theme packages, previewing local work, and building static site output.
 
 These tools support the v0.6 publishing workflow. They are not runtime contracts themselves, but they are the recommended way to work with the v0.6 theme runtime and preview-data contracts.
 
-## Recommended Flow
+## Choose The Tool
 
-1. Create a starter theme with `create-zeropress-theme`.
-2. Preview, validate, and package the theme with `@zeropress/theme`.
-3. Build a static site from a theme and preview-data with `@zeropress/build`.
-4. For GitHub Pages style Markdown repositories, use `@zeropress/build-pages` to discover Markdown, generate preview-data, stage public files, and run the build.
+| Goal | Tool |
+| --- | --- |
+| Create a starter theme and fixture preview-data | `@zeropress/create-theme` |
+| Preview, validate, or package a theme | `@zeropress/theme` |
+| Build directly from `preview-data.json` and `theme/` | `@zeropress/build` |
+| Build a Markdown source tree for static hosting | `@zeropress/build-pages` |
 
-## Tools
+## Markdown Sites
 
-### `create-zeropress-theme`
+Use `@zeropress/build-pages` when a repository contains Markdown files, public assets, and optional `.zeropress/config.json`. Build Pages is documented separately at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/).
 
-Use this when starting a new theme from one of the official starter templates.
+## Theme Development
 
-- Creates one of the five starter themes: `minimal`, `blog`, `docs`, `portfolio`, or `magazine`.
-- Writes a theme directory with v0.6-compatible template files.
-- Runs validation after generation.
+Create a starter theme:
 
-### `@zeropress/theme`
+```bash
+npx @zeropress/create-theme --name my-docs-theme --template docs
+```
 
-Use this while developing and preparing a theme package.
+Preview the generated theme:
 
-- `dev` starts a local preview server.
-- `validate` checks a theme directory or packaged zip.
-- `pack` creates an upload-ready theme zip.
+```bash
+npx @zeropress/theme dev ./my-docs-theme/theme --data ./my-docs-theme/preview-data.json
+```
 
-### `@zeropress/build`
+Validate and package the theme:
 
-Use this when turning a theme and preview-data into a static site output directory.
+```bash
+npx @zeropress/theme validate ./my-docs-theme/theme
+npx @zeropress/theme pack ./my-docs-theme/theme
+```
 
-- Reads a local theme directory.
-- Reads a preview-data v0.6 JSON file.
-- Writes static output such as HTML routes, assets, and special files.
+The old unscoped `create-zeropress-theme` package is deprecated. Use `@zeropress/create-theme` for new projects.
 
-### `@zeropress/build-pages`
+## Direct Preview Data Builds
 
-Use this when a repository is mostly Markdown files and public passthrough assets, similar to a Jekyll Pages source tree.
+Use `@zeropress/build` when you already have a v0.6 `preview-data.json` file and a ZeroPress theme:
 
-- Discovers Markdown under a source directory.
-- Reads optional `.zeropress/config.json`.
-- Preserves original Markdown and public files as passthrough output.
-- Generates preview-data v0.6 and delegates the static build to `@zeropress/build`.
+```bash
+npx @zeropress/build ./theme --data ./preview-data.json --out ./dist
+```
+
+This path is useful for AI-generated sites, admin-generated preview-data, importers, and custom pipelines.
 
 ## Package References
 
-The npm package pages are the canonical source for command options and package release metadata. Use them for installation commands, badges, and the latest CLI README content.
+For copy-paste command snippets, see [Package Quick Starts](/packages/).
+
+The package READMEs are the source of truth for command options and release metadata:
+
+- [`@zeropress/build-pages`](https://build-pages.zeropress.dev/)
+- [`@zeropress/create-theme`](https://www.npmjs.com/package/@zeropress/create-theme)
+- [`@zeropress/theme`](https://www.npmjs.com/package/@zeropress/theme)
+- [`@zeropress/build`](https://www.npmjs.com/package/@zeropress/build)
 
 ## Related Contracts
 
-- [ZeroPress Build Pages Config](../build-pages-config/index.md)
-- [Theme Runtime v0.6](../spec/theme-runtime-v0.6.md)
-- [Preview Data v0.6](../spec/preview-data-v0.6.md)
-- [Theme Manifest Runtime v0.6 Schema](/schemas/theme.v0.6.runtime.schema.json)
-- [Preview Data v0.6 Schema](/schemas/preview-data.v0.6.schema.json)
+- [Theme Runtime Reference](../reference/theme-runtime/index.md)
+- [Preview Data Reference](../reference/preview-data/index.md)
+- [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json)
+- [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json)

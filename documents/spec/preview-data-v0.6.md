@@ -2,6 +2,8 @@
 
 > Status: Active (current preview-data contract)
 
+This is the long-form contract document for preview-data v0.6. For day-to-day schema review, generated output QA, and quick field lookup, start with the [Preview Data Reference](/reference/preview-data/) and the [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json).
+
 ## 0. Core Philosophy
 
 - Preview-data is the canonical theme-facing content payload.
@@ -56,7 +58,7 @@ Key points:
 
 The machine-readable schema is:
 
-- [Preview Data v0.6 Schema](/schemas/preview-data.v0.6.schema.json)
+- [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json)
 
 ## 3. Content Model
 
@@ -70,7 +72,9 @@ The machine-readable schema is:
 - `media_base_url`
 - `media_delivery_mode`
 - `favicon`
+- `logo`
 - `expose_generator`
+- `search`
 - `locale`
 - `posts_per_page`
 - `datetime_display`
@@ -94,7 +98,7 @@ The machine-readable schema is:
 | `none` | Preserve media URLs and do not derive responsive variant URLs |
 | `media_domain` | Treat `site.media_base_url` as a ZeroPress media host and allow build tooling to derive variant URLs for managed raster media |
 
-`site.favicon` is optional site-level HTML head metadata. It does not replace public file passthrough. Values are emitted as favicon link tags exactly as provided, so R2/media-host favicons should use absolute URLs:
+`site.favicon` is optional site-level HTML head metadata. It does not replace public file passthrough. Favicon values use the same media URL normalization as other media fields: absolute URLs are preserved, relative/root-relative values are resolved against `site.media_base_url` when it is non-empty, and relative/root-relative values are preserved when `site.media_base_url` is empty:
 
 ```json
 {
@@ -107,7 +111,20 @@ The machine-readable schema is:
 }
 ```
 
-Build wrappers may auto-discover root-level public files such as `favicon.ico`, `favicon.svg`, `favicon.png`, and `apple-touch-icon.png` when `site.favicon` is omitted. Explicit `site.favicon` values take priority over auto-discovered public files.
+Build wrappers may auto-discover root-level public files such as `favicon.ico`, `favicon.svg`, `favicon.png`, and `apple-touch-icon.png` when `site.favicon` is omitted. Explicit `site.favicon` values take priority over auto-discovered public files. Auto-discovered public favicon fallback values remain public-root paths.
+
+`site.logo` is optional site identity data for theme rendering. Logo `src` uses the same media URL normalization as other media fields:
+
+```json
+{
+  "logo": {
+    "src": "/logo.svg",
+    "alt": "Example Docs"
+  }
+}
+```
+
+Use a root-relative public path for site-owned logo files, or a media-host-relative path when `site.media_base_url` points at a media host. Themes may fall back to `site.title` when `alt` is omitted. Prefer this first-class field over ad hoc keys such as `site.meta.logo_url`.
 
 `site.expose_generator` is optional site-level HTML metadata policy. Missing or `true` means generated HTML pages include:
 
@@ -116,6 +133,18 @@ Build wrappers may auto-discover root-level public files such as `favicon.ico`, 
 ```
 
 Set `site.expose_generator` to `false` for white-label sites or when the site owner does not want to expose the generator in page metadata. This field is separate from footer attribution, which is visible theme UI.
+
+`site.search` is an optional native static search preference. Missing or `true` allows ZeroPress native search when the active theme declares `features.search: true`. `false` disables native search artifacts and exposes `site.search: false` to templates so themes can hide search UI:
+
+```json
+{
+  "site": {
+    "search": false
+  }
+}
+```
+
+This field does not affect sitemap, feed, robots.txt, or route generation.
 
 `site.datetime_display` is a required theme-facing datetime display preference:
 
@@ -232,6 +261,7 @@ Important v0.6 notes:
 - Post `public_id` values are positive unique integers.
 - Pages, categories, and tags do not carry internal ids in the public contract.
 - Pages may carry optional `path` for nested page URLs.
+- Pages may carry optional `updated_at_iso` for page update metadata. When present, ZeroPress exposes `page.updated_at_iso`, formats `page.updated_at`, and uses the ISO timestamp for page sitemap `lastmod`.
 - Post and page bodies use raw `content` plus `document_type`.
 - Taxonomy membership on posts is represented by `category_slugs[]` and `tag_slugs[]`.
 - Posts and pages may carry optional `discoverability` for document-level discovery policy.
@@ -312,6 +342,13 @@ Each menu item contains:
 
 Menu item `meta` is intended for small display hints such as icons, badges, accents, or feature flags. Values must be strings, finite numbers, booleans, or null. It is not a raw HTML channel; template interpolation escapes these values normally.
 
+Menu item `url` values should be real navigation targets. Do not use dummy
+placeholder links such as `"#"` or same-page placeholder hashes such as
+`"#section"` for pages that do not exist yet. A hash is valid only when it is
+attached to a real path, such as `"/deployment/#github-pages"`, and the target
+page exists. Leave future pages out of menus until they exist, or publish a real
+stub page at the planned URL.
+
 When `menus` is omitted, build tooling provides an empty menu map to theme render contexts.
 
 ### 3.4 `widgets`
@@ -356,6 +393,15 @@ post.collection_cursors.cover-story.next
 page.collection_cursors.cover-story.prev
 page.collection_cursors.cover-story.next
 ```
+
+Build tooling also provides a default cursor alias on detail routes:
+
+```txt
+post.collection_cursor
+page.collection_cursor
+```
+
+The alias points to the first matching cursor in preview-data `collections` object order. If the current post or page belongs to multiple collections, use `post.collection_cursors.<id>` or `page.collection_cursors.<id>` to select a specific collection explicitly.
 
 These cursor fields are render-context data only. They are not preview-data input fields.
 

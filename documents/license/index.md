@@ -4,6 +4,8 @@ description: Repository-level open source licensing for the ZeroPress project fa
 status: published
 ---
 
+# ZeroPress Licensing
+
 ZeroPress uses repository-level open source licenses.
 
 Runtime-facing components are generally licensed under Apache-2.0. Developer tooling and CLI packages are generally licensed under MIT.
@@ -17,9 +19,9 @@ These repositories contain runtime-facing software for the ZeroPress product and
 | Repository | License |
 | --- | --- |
 | [`zeropress`](https://github.com/zeropress-app/zeropress) | Apache-2.0 |
-| [`zeropress-core`](https://github.com/zeropress-app/zeropress-core) | Apache-2.0 |
 | [`zeropress-studio`](https://github.com/zeropress-app/zeropress-studio) | Apache-2.0 |
-| [`zeropress-pages`](https://github.com/zeropress-app/zeropress-pages) | Apache-2.0 |
+| [`zeropress-studio-api`](https://github.com/zeropress-app/zeropress-studio-api) | Apache-2.0 |
+| [`zeropress-edge`](https://github.com/zeropress-app/zeropress-edge) | Apache-2.0 |
 
 ## CLI And Tooling
 
@@ -32,8 +34,17 @@ These repositories contain developer tools, build utilities, validators, and sca
 | [`zeropress-build-core`](https://github.com/zeropress-app/zeropress-build-core) | MIT |
 | [`zeropress-preview-data-validator`](https://github.com/zeropress-app/zeropress-preview-data-validator) | MIT |
 | [`zeropress-theme`](https://github.com/zeropress-app/zeropress-theme) | MIT |
-| [`create-zeropress-theme`](https://github.com/zeropress-app/create-zeropress-theme) | MIT |
+| [`zeropress-create-theme`](https://github.com/zeropress-app/zeropress-create-theme) | MIT |
 | [`zeropress-theme-validator`](https://github.com/zeropress-app/zeropress-theme-validator) | MIT |
+
+## Documentation And Schemas
+
+These repositories contain public documentation and canonical schema hosting.
+
+| Repository | License |
+| --- | --- |
+| [`zeropress.dev`](https://github.com/zeropress-app/zeropress.dev) | MIT |
+| [`schemas.zeropress.dev`](https://github.com/zeropress-app/schemas.zeropress.dev) | MIT |
 
 ## Summary
 

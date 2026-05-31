@@ -1,23 +1,34 @@
-# Theme Authoring, Runtime Contracts, and CLI Guides
+# ZeroPress Documentation
 
-ZeroPress public documentation collects the current v0.6 contracts, theme authoring guidance, CLI usage notes, and JSON schemas in one static site.
+ZeroPress is a static-first document publishing platform built around reusable themes, explicit build contracts, Markdown-friendly workflows, and CMS-grade authoring.
 
-## Start Here
+This site is the public documentation hub for the current v0.6 contracts, CLI tools, and theme authoring guidance.
 
-- [Docs](docs/index.md)
-- [Theme Authoring](theme-authoring/index.md)
-- [CLI Tools](cli/index.md)
-- [Build Pages Config](build-pages-config/index.md)
+There are three common ways to enter the ZeroPress workflow:
+
+- `@zeropress/build-pages`: turn Markdown source and public files into preview data, then build a static ZeroPress site.
+- `@zeropress/build`: build directly from `preview-data.json` and a theme, including data and themes produced by AI-assisted tools.
+- ZeroPress Studio: manage content, media, imports, and publishing workflows, then publish preview data that can trigger a ZeroPress build.
+
+## Start With The Workflow
+
+Choose the entry point that matches how you want to build:
+
+- [Getting Started](getting-started/index.md): choose between theme development, direct preview-data builds, and Markdown site publishing.
+- [Theme Authoring](theme-authoring/index.md): build reusable v0.6 themes.
+- [CLI Tools](cli/index.md): understand how `@zeropress/create-theme`, `@zeropress/theme`, and `@zeropress/build` fit together.
+- [Package Quick Starts](packages/index.md): copy the shortest useful command for each public package.
+
+Markdown-source site documentation for `@zeropress/build-pages` now lives at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/).
+
+## Current Reference
+
+The active contracts are v0.6. Historical specs remain available for compatibility review, but new work should target v0.6.
+
+- [Reference Hub](reference/index.md)
+- [Preview Data Reference](reference/preview-data/index.md)
+- [Theme Runtime Reference](reference/theme-runtime/index.md)
+- [Static Search](static-search/index.md)
 - [Licensing](license/index.md)
-- [Theme Runtime v0.6](spec/theme-runtime-v0.6.md)
-- [Preview Data v0.6](spec/preview-data-v0.6.md)
 
-## Contracts
-
-The active contracts are intentionally small and file-oriented. Theme authors should start with the theme runtime contract, while preview-data generators should start with the preview-data contract and schema.
-
-## Schemas
-
-- [Theme Manifest Runtime v0.6](/schemas/theme.v0.6.runtime.schema.json)
-- [Preview Data v0.6](/schemas/preview-data.v0.6.schema.json)
-- [ZeroPress Build Pages Config v0.1](/schemas/zeropress-build-pages.config.v0.1.schema.json)
+Machine-readable JSON Schema files are published separately at [schemas.zeropress.dev](https://schemas.zeropress.dev/).
