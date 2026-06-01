@@ -159,7 +159,7 @@ ZeroPress core does not interpret `site.meta` keys. Values are passed to templat
 
 `copyright_text` is plain footer text. ZeroPress does not add a copyright symbol automatically.
 
-`attribution.enabled` controls theme support for `Published with ZeroPress.` style attribution. Missing or `true` means a supporting theme may show attribution. `false` means a supporting theme should hide it.
+`attribution.enabled` controls theme support for `Published with ZeroPress` style attribution. Missing or `true` means a supporting theme may show attribution. `false` means a supporting theme should hide it.
 
 ### 3.2 `content`
 

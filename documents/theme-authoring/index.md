@@ -636,7 +636,7 @@ Footer example:
   {{/if}}
 
   {{#if site.footer.attribution}}
-    <p>Published with <a href="https://zeropress.app" target="_blank" rel="noreferrer noopener">ZeroPress</a>.</p>
+    <p>Published with <a href="https://zeropress.app" target="_blank" rel="noreferrer noopener">ZeroPress</a></p>
   {{/if}}
 </footer>
 ```
