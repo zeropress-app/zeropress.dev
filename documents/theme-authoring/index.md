@@ -499,7 +499,7 @@ Hyphenated ids such as `docs-sidebar` are valid path segments:
 
 Named collections are curated page/post groups. Use them for hero rails, featured work, quick links, docs series, portfolio highlights, and magazine sections.
 
-Declare expected collection ids in `theme.json`:
+Declare `collection_slots` in `theme.json` only when the theme directly references named collection paths such as `collections.featured.items`:
 
 ```json
 {
@@ -511,6 +511,8 @@ Declare expected collection ids in `theme.json`:
   }
 }
 ```
+
+Do not declare site-specific collection slots when the theme only uses generic route cursors such as `page.collection_cursor` or `post.collection_cursor`. In that case, the site may choose any collection ids, and the theme stays reusable across different documentation structures.
 
 Render matching collection data defensively:
 
@@ -568,7 +570,7 @@ If a page or post belongs to multiple collections, every matching cursor remains
 
 Use `collection_cursor` for the default route-level reading order. Use `collection_cursors.<id>` when the template must render a specific collection's previous/next links.
 
-`collection_slots` is authoring metadata only. It does not require preview-data to provide those collections and it does not change build behavior.
+`collection_slots` is authoring metadata only. It does not require preview-data to provide those collections and it does not change build behavior. Missing `collection_slots` is not a problem for themes that do not read `collections.<id>` directly.
 
 ## Site Metadata
 

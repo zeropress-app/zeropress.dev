@@ -136,7 +136,7 @@ The `theme.json` root object is closed in v0.6. Unknown root fields are invalid.
 }
 ```
 
-`collection_slots` documents recommended named collection ids for curated content areas:
+`collection_slots` documents recommended named collection ids for curated content areas when a theme directly reads named collection paths such as `collections.cover-story.items`:
 
 ```json
 {
@@ -158,6 +158,8 @@ The `theme.json` root object is closed in v0.6. Unknown root fields are invalid.
 ```
 
 `collection_slots` is informational helper metadata. It does not require preview-data to provide those collections and it does not change build behavior. Themes can read matching resolved collection items through `collections.<id>.items[]`.
+
+Do not declare site-specific collection slots when a theme only uses generic route cursors such as `page.collection_cursor` or `post.collection_cursor`. Generic cursor themes let each site choose its own collection ids.
 
 Missing `site.meta` values, missing collections, and type mismatches between `site_meta` hints and preview-data values do not fail validation or build.
 
