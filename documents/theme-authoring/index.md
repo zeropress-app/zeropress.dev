@@ -527,6 +527,10 @@ Render matching collection data defensively:
 Detail routes can use collection cursors:
 
 ```html
+{{#if page.collection_cursor.collection_title}}
+  <p class="eyebrow">{{page.collection_cursor.collection_title}}</p>
+{{/if}}
+
 {{#if page.collection_cursor.next}}
   <a href="{{page.collection_cursor.next.url}}">
     Next: {{page.collection_cursor.next.title}}
@@ -535,6 +539,22 @@ Detail routes can use collection cursors:
 ```
 
 `page.collection_cursor` and `post.collection_cursor` are convenience aliases for the first matching collection cursor in preview-data collection order. They are useful for generic docs-style previous/next pagination where the theme does not need to know the collection id.
+
+Cursor objects expose collection metadata and route position:
+
+```txt
+collection_cursor.collection_id
+collection_cursor.collection_title
+collection_cursor.index
+collection_cursor.position
+collection_cursor.count
+collection_cursor.first
+collection_cursor.last
+collection_cursor.prev
+collection_cursor.next
+```
+
+Use `collection_title` for docs-style eyebrow or group labels when the page title itself should remain the document H1.
 
 If a page or post belongs to multiple collections, every matching cursor remains available under `collection_cursors.<id>`:
 

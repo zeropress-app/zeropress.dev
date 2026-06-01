@@ -403,6 +403,22 @@ page.collection_cursor
 
 The alias points to the first matching cursor in preview-data `collections` object order. If the current post or page belongs to multiple collections, use `post.collection_cursors.<id>` or `page.collection_cursors.<id>` to select a specific collection explicitly.
 
+Each cursor object has this render-context shape:
+
+```txt
+collection_id
+collection_title
+index
+position
+count
+first
+last
+prev
+next
+```
+
+`collection_title` is the resolved `collections.<id>.title` value. Themes may use it for group labels, breadcrumbs, or docs-style eyebrow text. `prev` and `next` are item summaries for neighboring items in the same collection, or `null` at collection boundaries.
+
 These cursor fields are render-context data only. They are not preview-data input fields.
 
 ### 3.6 Site Customization Fields
