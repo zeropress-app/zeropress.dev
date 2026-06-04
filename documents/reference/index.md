@@ -2,20 +2,20 @@
 
 This is the reference hub for the current ZeroPress v0.6 contracts. Start here when validating generated output, reviewing a theme manifest, or checking contract behavior.
 
-For workflow guidance, use [Getting Started](/getting-started/) first. Markdown-source Build Pages documentation lives at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/).
+For workflow guidance, use [Getting Started](../getting-started/index.md) first. Markdown-source Build Pages documentation lives at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/).
 
 ## Current Contract References
 
-- [Preview Data Reference](/reference/preview-data/)
-- [Theme Runtime Reference](/reference/theme-runtime/)
-- [Static Search](/static-search)
+- [Preview Data Reference](preview-data/index.md)
+- [Theme Runtime Reference](theme-runtime/index.md)
+- [Static Search](../static-search/index.md)
 
 ## Archived Contract Pages
 
 The immediately previous public contract remains available for direct review. These pages are delisted from automatic discovery outputs, but linked here for compatibility checks:
 
-- [Preview Data Spec v0.5](/spec/preview-data-v0.5)
-- [Theme Runtime Spec v0.5](/spec/theme-runtime-v0.5)
+- [Preview Data Spec v0.5](../spec/preview-data-v0.5.md)
+- [Theme Runtime Spec v0.5](../spec/theme-runtime-v0.5.md)
 
 ## Notes
 

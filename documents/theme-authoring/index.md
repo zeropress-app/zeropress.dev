@@ -2,7 +2,7 @@
 
 ZeroPress themes are static template packages for `runtime: "0.6"`. A theme owns markup, CSS, reusable theme assets, and optional client-side progressive enhancement. Build tooling owns preview-data validation, Markdown rendering, route generation, asset emission, sitemap/feed/search artifacts, and public file passthrough.
 
-Use this guide when you want to build or review a real theme. Use [Theme Runtime Reference](/reference/theme-runtime/) for quick lookup, [Theme Runtime v0.6 Long-Form Spec](/spec/theme-runtime-v0.6.md) for exact contract details, and [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json) for machine-readable validation.
+Use this guide when you want to build or review a real theme. Use [Theme Runtime Reference](../reference/theme-runtime/index.md) for quick lookup, [Theme Runtime v0.6 Long-Form Spec](../spec/theme-runtime-v0.6.md) for exact contract details, and [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json) for machine-readable validation.
 
 ## Start From A Starter
 
@@ -812,7 +812,7 @@ Mark the actual searchable post/page body with `data-pagefind-body` so Pagefind 
 
 For advanced search quality, a site can run Pagefind after the ZeroPress build and replace `/_zeropress/search.js` with `/_zeropress/search_pagefind.js`. Do not probe both engines on every page view; choose the provider for the site or theme build.
 
-See [Static Search](/static-search) for details.
+See [Static Search](../static-search/index.md) for details.
 
 ## Integrations
 
@@ -864,8 +864,8 @@ Themes should not treat `discoverability` as access control. A delisted document
 
 ## Reference
 
-- [Theme Runtime Reference](/reference/theme-runtime/)
-- [Theme Runtime v0.6 Long-Form Spec](/spec/theme-runtime-v0.6.md)
+- [Theme Runtime Reference](../reference/theme-runtime/index.md)
+- [Theme Runtime v0.6 Long-Form Spec](../spec/theme-runtime-v0.6.md)
 - [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json)
-- [Static Search](/static-search)
-- [Package Quick Starts](/packages/)
+- [Static Search](../static-search/index.md)
+- [Package Quick Starts](../packages/index.md)

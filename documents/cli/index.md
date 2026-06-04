@@ -52,7 +52,7 @@ This path is useful for AI-generated sites, admin-generated preview-data, import
 
 ## Package References
 
-For copy-paste command snippets, see [Package Quick Starts](/packages/).
+For copy-paste command snippets, see [Package Quick Starts](../packages/index.md).
 
 The package READMEs are the source of truth for command options and release metadata:
 

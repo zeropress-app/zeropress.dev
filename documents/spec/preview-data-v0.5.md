@@ -5,7 +5,7 @@ discoverability: delist
 
 # ZeroPress Preview Data Spec v0.5
 
-> Status: Historical. Use [Preview Data Reference](/reference/preview-data/) for current v0.6 work.
+> Status: Historical. Use [Preview Data Reference](../reference/preview-data/index.md) for current v0.6 work.
 
 ## 0. Core Philosophy
 

@@ -2,12 +2,12 @@
 
 The theme runtime contract defines valid `theme.json` manifests, template files, template syntax, and render-context expectations for ZeroPress themes.
 
-Use this page for quick lookup while validating a theme package or reviewing generated starter themes. To learn how to build a full theme, start with [Theme Authoring](/theme-authoring/).
+Use this page for quick lookup while validating a theme package or reviewing generated starter themes. To learn how to build a full theme, start with [Theme Authoring](../../theme-authoring/index.md).
 
 ## Choose The Right Document
 
-- [Theme Authoring](/theme-authoring/): practical guide for building a complete theme.
-- [Theme Runtime v0.6 Long-Form Spec](/spec/theme-runtime-v0.6.md): normative contract details for validators and build behavior.
+- [Theme Authoring](../../theme-authoring/index.md): practical guide for building a complete theme.
+- [Theme Runtime v0.6 Long-Form Spec](../../spec/theme-runtime-v0.6.md): normative contract details for validators and build behavior.
 - [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json): machine-readable schema for `theme.json`.
 
 ## Current Schema
@@ -93,4 +93,4 @@ Post routes receive `post`; page routes receive `page`; listing routes receive s
 
 ## Full Spec
 
-The long-form spec remains available at [Theme Runtime v0.6](/spec/theme-runtime-v0.6.md).
+The long-form spec remains available at [Theme Runtime v0.6](../../spec/theme-runtime-v0.6.md).

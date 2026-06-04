@@ -2,7 +2,7 @@
 
 > Status: Active (current manifest contract for validation and build)
 
-This is the long-form contract document for theme runtime v0.6. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Theme Authoring](/theme-authoring/). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](/reference/theme-runtime/) and the [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json).
+This is the long-form contract document for theme runtime v0.6. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Theme Authoring](../theme-authoring/index.md). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](../reference/theme-runtime/index.md) and the [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json).
 
 ## 0. Core Philosophy
 

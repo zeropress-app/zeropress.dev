@@ -90,4 +90,4 @@ Explicit menus, explicit collections, and manual links can still expose a delist
 
 ## Full Spec
 
-The long-form spec remains available at [Preview Data v0.6](/spec/preview-data-v0.6.md).
+The long-form spec remains available at [Preview Data v0.6](../../spec/preview-data-v0.6.md).

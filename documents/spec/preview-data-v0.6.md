@@ -2,7 +2,7 @@
 
 > Status: Active (current preview-data contract)
 
-This is the long-form contract document for preview-data v0.6. For day-to-day schema review, generated output QA, and quick field lookup, start with the [Preview Data Reference](/reference/preview-data/) and the [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json).
+This is the long-form contract document for preview-data v0.6. For day-to-day schema review, generated output QA, and quick field lookup, start with the [Preview Data Reference](../reference/preview-data/index.md) and the [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json).
 
 ## 0. Core Philosophy
 
