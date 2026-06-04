@@ -1,3 +1,4 @@
 /.zeropress-build-page/
 /_site/
-localbuild.sh
+/localbuild.sh
+/.vscode/

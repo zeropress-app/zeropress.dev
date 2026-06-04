@@ -13,14 +13,6 @@
       "alt": "ZeroPress Logo"
     }
   },
-  "custom_html": {
-    "head_end": {
-      "file": ".zeropress/head-end.html"
-    },
-    "body_end": {
-      "file": ".zeropress/body-end.html"
-    }
-  },
   "menus": {
     "primary": {
       "name": "Primary Menu",
@@ -38,6 +30,26 @@
         { "title": "GitHub", "url": "https://github.com/zeropress-app", "target": "_blank" },
         { "title": "npm", "url": "https://www.npmjs.com/org/zeropress", "target": "_blank" },
         { "title": "License", "url": "/license/" }
+      ]
+    }
+  },
+  "collections": {
+    "guides": {
+      "title": "Guides",
+      "items": [
+        "getting-started/index.md",
+        "theme-authoring/index.md",
+        "cli/index.md",
+        "packages/index.md"
+      ]
+    },
+    "reference": {
+      "title": "Reference",
+      "items": [
+        "reference/index.md",
+        "reference/preview-data/index.md",
+        "reference/theme-runtime/index.md",
+        "static-search/index.md"
       ]
     }
   }
