@@ -1,4 +1,4 @@
-name: Build and Deploy ZeroPress Docs to GitHub Pages
+name: GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
