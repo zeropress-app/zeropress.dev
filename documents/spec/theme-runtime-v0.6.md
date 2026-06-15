@@ -245,6 +245,8 @@ Themes should style code blocks and `hljs-*` token classes in CSS. A client-side
 
 Markdown documents may include a conservative subset of raw HTML. ZeroPress preserves safe semantic media tags such as `figure`, `figcaption`, `picture`, `source`, `video`, `audio`, and `track`. Responsive image attributes such as `img srcset`, `sizes`, `loading`, and `decoding` are allowed. Native media attributes such as `controls`, `poster`, `preload`, `playsinline`, and caption `track` metadata are allowed. Unsupported tags, inline `style`, event handler attributes, scripts, and unsafe URLs are removed by the sanitizer.
 
+Raw HTML links may use `target="_blank"`. Other `target` values are removed. When `_blank` is preserved, ZeroPress forces `rel` to include `noopener noreferrer`. Existing safe `rel` tokens are preserved, and unknown tokens are removed. The allowed `rel` tokens are `noopener`, `noreferrer`, `nofollow`, `ugc`, `sponsored`, and `external`.
+
 Markdown headings receive stable `id` attributes and generate `page.toc[]` or `post.toc[]` entries for `h2` through `h4`. Build does not add visible heading permalink UI. Mermaid fences remain code blocks such as `pre code.language-mermaid`; rendering diagrams is theme-owned progressive enhancement.
 
 ### 5.2 Post Index Capability

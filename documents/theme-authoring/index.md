@@ -709,6 +709,8 @@ ZeroPress renders common Markdown conventions. Themes should style:
 
 Build-core highlights fenced code blocks with `highlight.js`. The `<code>` element keeps the `language-*` class and highlighted tokens use `hljs-*` span classes. A client-side `highlight.js` script is usually not needed for Markdown rendered by ZeroPress.
 
+Raw HTML links in Markdown may preserve `target="_blank"`. ZeroPress removes other `target` values and forces `_blank` links to include `rel="noopener noreferrer"`. Themes can style `a[target="_blank"]` when they want a visible new-window marker.
+
 ```css
 .prose pre {
   overflow-x: auto;
