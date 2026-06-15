@@ -705,7 +705,7 @@ ZeroPress renders common Markdown conventions. Themes should style:
 - task lists
 - GitHub alert blocks with `zp-alert`
 - fenced code blocks with `language-*` and `hljs-*` classes
-- raw HTML media blocks such as `figure`, `figcaption`, `picture`, `source`, and `img`
+- raw HTML media blocks such as `figure`, `figcaption`, `picture`, `source`, `img`, `video`, and `audio`
 
 Build-core highlights fenced code blocks with `highlight.js`. The `<code>` element keeps the `language-*` class and highlighted tokens use `hljs-*` span classes. A client-side `highlight.js` script is usually not needed for Markdown rendered by ZeroPress.
 
