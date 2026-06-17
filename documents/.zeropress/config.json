@@ -13,6 +13,11 @@
       "alt": "ZeroPress Logo"
     }
   },
+  "custom_html": {
+    "head_end": {
+      "file": ".zeropress/head_end.html"
+    }
+  },
   "menus": {
     "primary": {
       "name": "Primary Menu",
