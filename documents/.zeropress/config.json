@@ -17,10 +17,42 @@
     "primary": {
       "name": "Primary Menu",
       "items": [
-        { "title": "Getting Started", "url": "/getting-started/" },
-        { "title": "Theme Authoring", "url": "/theme-authoring/" },
-        { "title": "Reference", "url": "/reference/" },
-        { "title": "CLI Tools", "url": "/cli/" }
+        {
+          "title": "GET STARTED",
+          "url": "/",
+          "children": [
+            { "title": "Overview", "url": "/" },
+            { "title": "Getting Started", "url": "/getting-started/" },
+            { "title": "Package Quick Starts", "url": "/packages/" }
+          ]
+        },
+        {
+          "title": "GUIDES",
+          "url": "/cli/",
+          "children": [
+            { "title": "CLI Tools", "url": "/cli/" },
+            { "title": "Static Search", "url": "/static-search" }
+          ]
+        },
+        {
+          "title": "THEME DEVELOPMENT",
+          "url": "/theme-authoring/",
+          "children": [
+            { "title": "Theme Authoring", "url": "/theme-authoring/" },
+            { "title": "Theme Runtime Reference", "url": "/reference/theme-runtime/" },
+            { "title": "Theme Runtime Spec v0.6", "url": "/spec/theme-runtime-v0.6" }
+          ]
+        },
+        {
+          "title": "REFERENCE",
+          "url": "/reference/",
+          "children": [
+            { "title": "Reference Hub", "url": "/reference/" },
+            { "title": "Preview Data Reference", "url": "/reference/preview-data/" },
+            { "title": "Preview Data Spec v0.6", "url": "/spec/preview-data-v0.6" },
+            { "title": "Licensing", "url": "/license/" }
+          ]
+        }
       ]
     },
     "footer": {
@@ -34,13 +66,27 @@
     }
   },
   "collections": {
+    "get_started": {
+      "title": "Get Started",
+      "items": [
+        "index.md",
+        "getting-started/index.md",
+        "packages/index.md"
+      ]
+    },
     "guides": {
       "title": "Guides",
       "items": [
-        "getting-started/index.md",
-        "theme-authoring/index.md",
         "cli/index.md",
-        "packages/index.md"
+        "static-search/index.md"
+      ]
+    },
+    "theme_development": {
+      "title": "Theme Development",
+      "items": [
+        "theme-authoring/index.md",
+        "reference/theme-runtime/index.md",
+        "spec/theme-runtime-v0.6.md"
       ]
     },
     "reference": {
@@ -48,8 +94,8 @@
       "items": [
         "reference/index.md",
         "reference/preview-data/index.md",
-        "reference/theme-runtime/index.md",
-        "static-search/index.md"
+        "spec/preview-data-v0.6.md",
+        "license/index.md"
       ]
     }
   }
