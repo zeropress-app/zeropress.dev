@@ -2,11 +2,11 @@
   "$schema": "https://schemas.zeropress.dev/build-pages-config/v0.1/schema.json",
   "version": "0.1",
   "site": {
-    "title": "ZeroPress Public Docs",
+    "title": "ZeroPress Docs",
     "description": "ZeroPress theme authoring guides, runtime documentation, and CLI guides.",
     "url": "https://zeropress.dev",
     "footer": {
-      "copyright_text": "ZeroPress Public Docs"
+      "copyright_text": "© 2026 ZeroPress"
     },
     "logo": {
       "src": "/favicon_padding.svg",
