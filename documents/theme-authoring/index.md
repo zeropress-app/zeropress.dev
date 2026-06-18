@@ -703,11 +703,13 @@ ZeroPress renders common Markdown conventions. Themes should style:
 - tables
 - strikethrough
 - task lists
-- GitHub alert blocks with `zp-alert`
+- GitHub alert blocks and Docusaurus-style admonition containers with `zp-alert`
 - fenced code blocks with `language-*` and `hljs-*` classes
 - raw HTML media blocks such as `figure`, `figcaption`, `picture`, `source`, `img`, `video`, and `audio`
 
 Build-core highlights fenced code blocks with `highlight.js`. The `<code>` element keeps the `language-*` class and highlighted tokens use `hljs-*` span classes. A client-side `highlight.js` script is usually not needed for Markdown rendered by ZeroPress.
+
+For GitHub and IDE Markdown compatibility, prefer GitHub-style alert blockquotes such as `> [!TIP]`. ZeroPress also accepts Docusaurus/VitePress-style containers such as `:::tip` when porting existing documentation. Supported container types are `note`, `info`, `tip`, `important`, `warning`, `caution`, and `danger`. `info` uses the `zp-alert--note` style, and `danger` uses the `zp-alert--caution` style. Custom container titles and attributes are ignored.
 
 Raw HTML links in Markdown may preserve `target="_blank"`. ZeroPress removes other `target` values and forces `_blank` links to include `rel="noopener noreferrer"`. Themes can style `a[target="_blank"]` when they want a visible new-window marker.
 

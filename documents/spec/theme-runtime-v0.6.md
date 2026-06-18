@@ -239,9 +239,12 @@ For `document_type: "markdown"`, build renders common Markdown authoring convent
 - strikethrough as `<s>`
 - task lists as disabled checkbox inputs with `contains-task-list`, `task-list-item`, and `task-list-item-checkbox` classes
 - GitHub alerts for `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, and `CAUTION` as `zp-alert` aside blocks
+- Docusaurus-style admonition containers for `note`, `info`, `tip`, `important`, `warning`, `caution`, and `danger` as `zp-alert` aside blocks
 - fenced code blocks highlighted by build-core with `highlight.js`; `<code>` keeps the `language-*` class and highlighted tokens use `hljs-*` span classes
 
 Themes should style code blocks and `hljs-*` token classes in CSS. A client-side `highlight.js` script is not required for Markdown rendered during the ZeroPress build.
+
+For GitHub and IDE source previews, GitHub-style alert blockquotes are the most portable form. Docusaurus-style containers such as `:::tip` are supported for documentation ports. Custom container titles and attributes are ignored. `info` renders with the `zp-alert--note` class, and `danger` renders with the `zp-alert--caution` class. Markdown inside a container is parsed normally, including paragraphs, lists, code fences, nested supported containers, and safe raw HTML.
 
 Markdown documents may include a conservative subset of raw HTML. ZeroPress preserves safe semantic media tags such as `figure`, `figcaption`, `picture`, `source`, `video`, `audio`, and `track`. Responsive image attributes such as `img srcset`, `sizes`, `loading`, and `decoding` are allowed. Native media attributes such as `controls`, `poster`, `preload`, `playsinline`, and caption `track` metadata are allowed. Unsupported tags, inline `style`, event handler attributes, scripts, and unsafe URLs are removed by the sanitizer.
 
