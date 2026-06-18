@@ -711,6 +711,8 @@ Build-core highlights fenced code blocks with `highlight.js`. The `<code>` eleme
 
 For GitHub and IDE Markdown compatibility, prefer GitHub-style alert blockquotes such as `> [!TIP]`. ZeroPress also accepts Docusaurus/VitePress-style containers such as `:::tip` when porting existing documentation. Supported container types are `note`, `info`, `tip`, `important`, `warning`, `caution`, and `danger`. `info` uses the `zp-alert--note` style, and `danger` uses the `zp-alert--caution` style. Custom container titles and attributes are ignored.
 
+Raw HTML tables may include positive integer `rowspan` and `colspan` attributes on `th` and `td`. Cell `align` attributes are converted to `zp-align-*` classes, so table styling should cover `zp-align-left`, `zp-align-center`, and `zp-align-right`.
+
 Raw HTML links in Markdown may preserve `target="_blank"`. ZeroPress removes other `target` values and forces `_blank` links to include `rel="noopener noreferrer"`. Themes can style `a[target="_blank"]` when they want a visible new-window marker.
 
 ```css

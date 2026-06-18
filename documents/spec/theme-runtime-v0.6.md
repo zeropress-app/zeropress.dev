@@ -246,6 +246,8 @@ Themes should style code blocks and `hljs-*` token classes in CSS. A client-side
 
 For GitHub and IDE source previews, GitHub-style alert blockquotes are the most portable form. Docusaurus-style containers such as `:::tip` are supported for documentation ports. Custom container titles and attributes are ignored. `info` renders with the `zp-alert--note` class, and `danger` renders with the `zp-alert--caution` class. Markdown inside a container is parsed normally, including paragraphs, lists, code fences, nested supported containers, and safe raw HTML.
 
+Raw HTML tables may use positive integer `rowspan` and `colspan` attributes on `th` and `td`. `align="left"`, `align="center"`, and `align="right"` are converted to `zp-align-left`, `zp-align-center`, and `zp-align-right` classes. Inline `b`, `sup`, and `sub` tags are preserved for compatibility with existing documentation tables.
+
 Markdown documents may include a conservative subset of raw HTML. ZeroPress preserves safe semantic media tags such as `figure`, `figcaption`, `picture`, `source`, `video`, `audio`, and `track`. Responsive image attributes such as `img srcset`, `sizes`, `loading`, and `decoding` are allowed. Native media attributes such as `controls`, `poster`, `preload`, `playsinline`, and caption `track` metadata are allowed. Unsupported tags, inline `style`, event handler attributes, scripts, and unsafe URLs are removed by the sanitizer.
 
 Raw HTML links may use `target="_blank"`. Other `target` values are removed. When `_blank` is preserved, ZeroPress forces `rel` to include `noopener noreferrer`. Existing safe `rel` tokens are preserved, and unknown tokens are removed. The allowed `rel` tokens are `noopener`, `noreferrer`, `nofollow`, `ugc`, `sponsored`, and `external`.
