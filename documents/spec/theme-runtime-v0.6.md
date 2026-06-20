@@ -92,7 +92,7 @@ The `theme.json` root object is closed in v0.6. Unknown root fields are invalid.
 | Feature | Omitted behavior | Meaning |
 | --- | --- | --- |
 | `comments` | `false` | Comments UI/API mounting is opt-in. |
-| `newsletter` | No core build behavior | Capability metadata only until a stronger newsletter contract exists. |
+| `newsletter` | `false` | Newsletter CTA/island UI support is opt-in. ZeroPress does not implement provider submit behavior. |
 | `post_index` | `true` | Themes are assumed to support the post index unless they opt out. |
 | `search` | `false` | Static search UI/artifact support is opt-in. |
 

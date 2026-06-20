@@ -60,7 +60,7 @@ Common fields:
 
 The root manifest object is closed. Unknown root fields are invalid.
 
-`features` is optional. Omitted feature flags use ZeroPress runtime defaults: `comments: false`, `post_index: true`, `search: false`, and `newsletter` remains capability metadata without core build behavior.
+`features` is optional. Omitted feature flags use ZeroPress runtime defaults: `comments: false`, `newsletter: false`, `post_index: true`, and `search: false`. `features.newsletter: true` means the theme supports newsletter CTA/island UI; ZeroPress does not implement provider submit behavior.
 
 ## Template Syntax
 

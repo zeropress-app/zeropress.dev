@@ -37,6 +37,7 @@ Common `site` fields include:
 - `media_delivery_mode`
 - `favicon`
 - `logo`
+- `newsletter`
 - `expose_generator`
 - `search`
 - `locale`
@@ -51,6 +52,8 @@ Common `site` fields include:
 - `meta`
 
 `site.logo` is optional theme-facing site identity data. `site.logo.src` is normalized like other media fields: relative/root-relative values resolve against `site.media_base_url` when it is non-empty, and remain same-host paths when `site.media_base_url` is empty. Use `site.logo.alt` for optional logo alternative text.
+
+`site.newsletter` is optional theme-facing data for newsletter CTA/island UI. It requires `enabled`; when enabled is `true`, include `signup_url`, `embed_url`, or both. URLs must be root-relative paths or absolute `http`/`https` URLs. ZeroPress does not submit provider forms or generate newsletter provider JavaScript.
 
 `site.meta` is the site-level scalar extension area. Build does not type-check it against theme hints.
 

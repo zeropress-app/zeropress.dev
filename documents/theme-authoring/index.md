@@ -180,7 +180,7 @@ Use SPDX identifiers such as `MIT` for open-source themes. Use `LicenseRef-*` fo
 | Feature | Omitted behavior | Theme author meaning |
 | --- | --- | --- |
 | `comments` | `false` | Add `true` only when the theme includes comments UI. |
-| `newsletter` | No core build behavior | Use as capability metadata for markup-only newsletter UI. |
+| `newsletter` | `false` | Add `true` only when the theme includes newsletter CTA/island UI. |
 | `post_index` | `true` | Set `false` when the theme should not render post index routes. |
 | `search` | `false` | Add `true` only when the theme includes static search UI. |
 
@@ -853,6 +853,21 @@ Generator metadata is a site/build concern. Themes should not hard-code `<meta n
 - `delist` removes the document from automatic discovery outputs while still rendering the direct route.
 
 Themes should not treat `discoverability` as access control. A delisted document can still appear through explicit menus, explicit collections, or manual links chosen by the site author.
+
+## Newsletter Islands
+
+`features.newsletter: true` means the theme can render a newsletter CTA or island when preview data provides `site.newsletter`.
+
+ZeroPress does not submit provider forms, store subscriber state, or add newsletter JavaScript artifacts. Recommended theme behavior is:
+
+- `signup_url` and `embed_url`: use JavaScript to open an iframe modal, and fall back to the signup link when JavaScript is unavailable.
+- `signup_url` only: render a normal link or CTA.
+- `embed_url` only: render the iframe/modal only when JavaScript is available; hide the UI without JavaScript.
+- missing, disabled, or `enabled: false`: hide the newsletter UI.
+
+Markdown body sanitization does not open form/input fields for newsletter providers. Use a trusted public HTML iframe, an external signup link, a custom HTML slot, or a theme-owned progressive enhancement island.
+
+Build Pages config does not expose `site.newsletter`; Build Pages sites should handle newsletter UI through public HTML, custom HTML, or theme-specific markup instead of config.
 
 ## Validation Checklist
 

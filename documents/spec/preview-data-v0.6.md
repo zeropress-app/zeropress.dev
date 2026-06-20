@@ -73,6 +73,7 @@ The machine-readable schema is:
 - `media_delivery_mode`
 - `favicon`
 - `logo`
+- `newsletter`
 - `expose_generator`
 - `search`
 - `locale`
@@ -125,6 +126,40 @@ Build wrappers may auto-discover root-level public files such as `favicon.ico`, 
 ```
 
 Use a root-relative public path for site-owned logo files, or a media-host-relative path when `site.media_base_url` points at a media host. Themes may fall back to `site.title` when `alt` is omitted. Prefer this first-class field over ad hoc keys such as `site.meta.logo_url`.
+
+`site.newsletter` is optional theme-facing data for newsletter CTA/island UI:
+
+```json
+{
+  "newsletter": {
+    "enabled": true,
+    "title": "Subscribe",
+    "description": "Get updates by email.",
+    "button_label": "Subscribe",
+    "signup_url": "https://example.com/newsletter",
+    "embed_url": "/newsletter.html"
+  }
+}
+```
+
+`enabled` is required. When `enabled` is `true`, at least one of `signup_url` or `embed_url` is required. When `enabled` is `false`, URL fields may be omitted.
+
+`title`, `description`, and `button_label` are optional display strings. Themes own fallback copy.
+
+`signup_url` and `embed_url` may be root-relative same-host paths or absolute `http`/`https` URLs. Empty strings, protocol-relative URLs, and unsafe protocols such as `javascript:` are invalid. These fields are not normalized with `site.media_base_url`.
+
+ZeroPress does not implement provider submit behavior, subscribe state, or provider-specific JavaScript. Recommended theme behavior is:
+
+| Data shape | Theme behavior |
+| --- | --- |
+| `signup_url` and `embed_url` | JavaScript may open a modal iframe; no-JS fallback links to `signup_url` |
+| `signup_url` only | Render a normal link or CTA |
+| `embed_url` only | Show iframe/modal only when JavaScript is available; hide without JavaScript |
+| missing, disabled, or `enabled: false` | Hide newsletter UI |
+
+Markdown body sanitization does not allow arbitrary newsletter `<form>` or `<input>` handling. Use trusted iframe HTML, external signup links, custom HTML slots, or theme-owned progressive enhancement islands.
+
+Build Pages config does not expose `site.newsletter`; this field is for direct preview-data generators and Studio-like pipelines.
 
 `site.expose_generator` is optional site-level HTML metadata policy. Missing or `true` means generated HTML pages include:
 
