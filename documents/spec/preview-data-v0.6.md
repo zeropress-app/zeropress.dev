@@ -346,7 +346,6 @@ Each menu item contains:
 
 - `title`
 - `url`
-- `type`
 - `target`
 - `meta` (optional scalar map)
 - `children`
@@ -360,7 +359,6 @@ Each menu item contains:
         {
           "title": "GitHub",
           "url": "https://github.com/zeropress-app",
-          "type": "custom",
           "target": "_blank",
           "meta": {
             "icon": "github",
