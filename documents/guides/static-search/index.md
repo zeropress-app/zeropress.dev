@@ -1,8 +1,5 @@
 ---
-title: Static Search
 description: Use ZeroPress native search artifacts or swap to Pagefind for advanced static search.
-path: static-search
-status: published
 ---
 
 # Static Search
@@ -17,10 +14,10 @@ The theme owns the search UI. The generated adapter owns loading, tokenizing, sc
 
 Native search is enabled only when both conditions are true:
 
-- preview-data does not set `site.search: false`
+- preview-data omits `site.search` or sets `site.search.enabled: true`
 - the active theme declares `features.search: true`
 
-When native search is disabled, ZeroPress does not emit `/_zeropress/search.json`, `/_zeropress/search.js`, or `/_zeropress/search_pagefind.js`, and templates receive `site.search: false` so search UI can be hidden with `{{#if site.search}}`.
+When native search is disabled, ZeroPress does not emit `/_zeropress/search.json`, `/_zeropress/search.js`, or `/_zeropress/search_pagefind.js`. Templates always receive the effective object `site.search`, so search UI can be hidden with `{{#if site.search.enabled}}`.
 
 ## Native Search
 
@@ -71,7 +68,7 @@ Themes own the search UI. Use these hook names when wiring client-side search
 behavior so ZeroPress themes remain easier to compare and adapt:
 
 ```html
-{{#if site.search}}
+{{#if site.search.enabled}}
   <form role="search" data-zp-search>
     <input type="search" data-zp-search-input>
     <button type="submit" data-zp-search-submit>Search</button>
@@ -91,7 +88,7 @@ automatically attach UI behavior to them; the theme still imports
 
 When the front page is rendered from a page, that page is indexed with the URL `/`.
 
-Posts or pages with `discoverability: "delist"` are excluded from the native search index. `site.indexing: false` does not disable native search; it only changes generated fallback `robots.txt`. Use `site.search: false` to disable native search artifacts.
+Posts or pages with `discoverability: "delist"` are excluded from the native search index. `site.robots: { "allow_indexing": false }` does not disable native search; it only changes generated fallback `robots.txt`. Use preview-data `site.search: { "enabled": false }` to disable native search artifacts.
 
 Each search item includes:
 
@@ -160,7 +157,7 @@ Use `data-pagefind-body` on the actual post/page body wrapper instead of relying
 ```html
 <div
   class="prose"
-  {{#if site.search}}{{#if_neq page.discoverability "delist"}}data-pagefind-body{{/if_neq}}{{/if}}
+  {{#if site.search.enabled}}{{#if_neq page.discoverability "delist"}}data-pagefind-body{{/if}}{{/if}}
 >
   {{page.html}}
 </div>

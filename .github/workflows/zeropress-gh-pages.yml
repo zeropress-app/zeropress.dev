@@ -27,10 +27,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Build ZeroPress Pages
-        uses: zeropress-app/zeropress-build-pages@v0
+        uses: zeropress-app/zeropress-build-pages@v1
         with:
           source: ./documents
           destination: ./_site

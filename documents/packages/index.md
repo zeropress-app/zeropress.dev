@@ -41,11 +41,7 @@ Validate a theme:
 npx @zeropress/theme validate ./my-theme/theme
 ```
 
-Package a theme:
-
-```bash
-npx @zeropress/theme pack ./my-theme/theme
-```
+Theme directories must satisfy the fixed [Theme Package Limits](../reference/theme-runtime/package-limits/index.md).
 
 ## `@zeropress/build`
 
@@ -66,5 +62,5 @@ Direct packages:
 
 Use the current schemas when reviewing generated files:
 
-- [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json)
-- [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json)
+- [Preview Data v0.7 Schema](https://schemas.zeropress.dev/preview-data/v0.7/schema.json)
+- [Theme Manifest Runtime v0.7 Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json)

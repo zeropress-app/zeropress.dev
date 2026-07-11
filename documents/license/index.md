@@ -1,7 +1,5 @@
 ---
-title: ZeroPress Licensing
 description: Repository-level open source licensing for the ZeroPress project family.
-status: published
 ---
 
 # ZeroPress Licensing

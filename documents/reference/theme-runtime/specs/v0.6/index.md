@@ -1,8 +1,12 @@
+---
+discoverability: delist
+---
+
 # ZeroPress Theme Runtime Spec v0.6
 
-> Status: Active (current manifest contract for validation and build)
+> Status: Historical. Use the [Theme Runtime Reference](../../index.md) for current v0.7 work.
 
-This is the long-form contract document for theme runtime v0.6. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Theme Authoring](../theme-authoring/index.md). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](../reference/theme-runtime/index.md) and the [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json).
+This document preserves the theme runtime v0.6 contract for historical review. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical current authoring guidance, start with [Theme Authoring](../../../../guides/theme-authoring/index.md). For v0.6 manifest checks, use the [Theme Manifest Runtime v0.6 Schema](https://schemas.zeropress.dev/theme-runtime/v0.6/schema.json).
 
 ## 0. Core Philosophy
 
@@ -201,7 +205,7 @@ Rules:
 - General expressions such as `and`, `or`, `>`, `<`, arithmetic, and slicing are not supported.
 - `if_eq`, `if_neq`, `if_in`, and `if_starts_with` use strict comparison and never coerce types.
 - Comparison helper branches may be mixed inside one conditional block. For example, an `if_eq` block may use `else_if_starts_with`.
-- Close comparison helper blocks with `{{/if}}`. Concrete close tags such as `{{/if_eq}}` remain accepted in v0.6, but are planned for removal in v0.7.
+- Comparison helper blocks must close with `{{/if}}`. Named comparison close tags are invalid in v0.6 and fail theme validation and build.
 - Comparison operands may be string, number, boolean, or `null` literals, or path operands. `{{#if_eq loop.index 4}}` is valid, but `{{#if_eq loop.index "4"}}` does not match.
 - `if_eq` and related comparison helpers require an explicit right-hand operand. Use `{{#if site.footer.attribution}}`, not `{{#if_eq site.footer.attribution}}`, for truthiness checks.
 

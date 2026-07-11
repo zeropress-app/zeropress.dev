@@ -1,8 +1,12 @@
+---
+discoverability: delist
+---
+
 # ZeroPress Preview Data Spec v0.6
 
-> Status: Active (current preview-data contract)
+> Status: Historical. Use the [Preview Data Reference](../../index.md) for current v0.7 work.
 
-This is the long-form contract document for preview-data v0.6. For day-to-day schema review, generated output QA, and quick field lookup, start with the [Preview Data Reference](../reference/preview-data/index.md) and the [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json).
+This document preserves the published preview-data v0.6 contract. For v0.6 payload review, use this document together with the [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json).
 
 ## 0. Core Philosophy
 
@@ -146,7 +150,7 @@ Use a root-relative public path for site-owned logo files, or a media-host-relat
 
 `title`, `description`, and `button_label` are optional display strings. Themes own fallback copy.
 
-`signup_url` and `embed_url` may be root-relative same-host paths or absolute `http`/`https` URLs. Empty strings, protocol-relative URLs, and unsafe protocols such as `javascript:` are invalid. These fields are not normalized with `site.media_base_url`.
+`signup_url` and `embed_url` may be a root-relative same-host path other than bare `/`, such as `/newsletter`, or an absolute `http`/`https` URL. Bare `/`, empty strings, protocol-relative URLs, and unsafe protocols such as `javascript:` are invalid. These fields are not normalized with `site.media_base_url`.
 
 ZeroPress does not implement provider submit behavior, subscribe state, or provider-specific JavaScript. Recommended theme behavior is:
 
@@ -292,7 +296,7 @@ Exact duplicate `src` values are invalid.
 
 Important v0.6 notes:
 
-- Posts keep both `id` and `public_id`.
+- Posts may carry optional `id`; `public_id` is required.
 - Post `public_id` values are positive unique integers.
 - Pages, categories, and tags do not carry internal ids in the public contract.
 - Pages may carry optional `path` for nested page URLs.
@@ -758,9 +762,9 @@ Notes:
 
 ## 10. Compatibility Notes
 
-- `v0.6` is the current preview-data contract.
-- Earlier preview-data versions are historical and may differ in content shape and route-related fields.
-- Tooling may evolve, but public `v0.6` payloads must continue to satisfy the published schema and slug safety contract.
+- `v0.6` is a historical preview-data contract. Current work targets v0.7.
+- Earlier and later preview-data versions may differ in content shape and route-related fields.
+- Historical `v0.6` payloads are defined by the published v0.6 schema and slug safety contract.
 
 ## 11. Normative vs Informative Summary
 

@@ -1,6 +1,6 @@
 {
-  "$schema": "https://schemas.zeropress.dev/build-pages-config/v0.1/schema.json",
-  "version": "0.1",
+  "$schema": "https://schemas.zeropress.dev/build-pages-config/v1.0/schema.json",
+  "version": "1.0",
   "site": {
     "title": "ZeroPress Docs",
     "description": "ZeroPress theme authoring guides, runtime documentation, and CLI guides.",
@@ -13,9 +13,15 @@
       "alt": "ZeroPress Logo"
     }
   },
+  "markdown": {
+    "updated_at": "git"
+  },
   "custom_html": {
     "head_end": {
       "file": ".zeropress/head_end.html"
+    },
+    "body_end": {
+      "file": ".zeropress/body_end.html"
     }
   },
   "menus": {
@@ -33,19 +39,12 @@
         },
         {
           "title": "GUIDES",
-          "url": "/cli/",
+          "url": "/guides/",
           "children": [
-            { "title": "CLI Tools", "url": "/cli/" },
-            { "title": "Static Search", "url": "/static-search" }
-          ]
-        },
-        {
-          "title": "THEME DEVELOPMENT",
-          "url": "/theme-authoring/",
-          "children": [
-            { "title": "Theme Authoring", "url": "/theme-authoring/" },
-            { "title": "Theme Runtime Reference", "url": "/reference/theme-runtime/" },
-            { "title": "Theme Runtime Spec v0.6", "url": "/spec/theme-runtime-v0.6" }
+            { "title": "Guides Overview", "url": "/guides/" },
+            { "title": "Theme Authoring", "url": "/guides/theme-authoring/" },
+            { "title": "CLI Tools", "url": "/guides/cli/" },
+            { "title": "Static Search", "url": "/guides/static-search/" }
           ]
         },
         {
@@ -54,8 +53,36 @@
           "children": [
             { "title": "Reference Hub", "url": "/reference/" },
             { "title": "Preview Data Reference", "url": "/reference/preview-data/" },
-            { "title": "Preview Data Spec v0.6", "url": "/spec/preview-data-v0.6" },
-            { "title": "Licensing", "url": "/license/" }
+            {
+              "title": "Preview Data Specs",
+              "url": "/reference/preview-data/specs/",
+              "children": [
+                {
+                  "title": "Preview Data v0.7",
+                  "url": "/reference/preview-data/specs/v0.7/"
+                },
+                {
+                  "title": "Preview Data v0.6",
+                  "url": "/reference/preview-data/specs/v0.6/"
+                }
+              ]
+            },
+            { "title": "Theme Runtime Reference", "url": "/reference/theme-runtime/" },
+            { "title": "Theme Package Limits", "url": "/reference/theme-runtime/package-limits/" },
+            {
+              "title": "Theme Runtime Specs",
+              "url": "/reference/theme-runtime/specs/",
+              "children": [
+                {
+                  "title": "Theme Runtime v0.7",
+                  "url": "/reference/theme-runtime/specs/v0.7/"
+                },
+                {
+                  "title": "Theme Runtime v0.6",
+                  "url": "/reference/theme-runtime/specs/v0.6/"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -82,16 +109,10 @@
     "guides": {
       "title": "Guides",
       "items": [
-        "cli/index.md",
-        "static-search/index.md"
-      ]
-    },
-    "theme_development": {
-      "title": "Theme Development",
-      "items": [
-        "theme-authoring/index.md",
-        "reference/theme-runtime/index.md",
-        "spec/theme-runtime-v0.6.md"
+        "guides/index.md",
+        "guides/theme-authoring/index.md",
+        "guides/cli/index.md",
+        "guides/static-search/index.md"
       ]
     },
     "reference": {
@@ -99,8 +120,14 @@
       "items": [
         "reference/index.md",
         "reference/preview-data/index.md",
-        "spec/preview-data-v0.6.md",
-        "license/index.md"
+        "reference/preview-data/specs/index.md",
+        "reference/preview-data/specs/v0.7/index.md",
+        "reference/preview-data/specs/v0.6/index.md",
+        "reference/theme-runtime/index.md",
+        "reference/theme-runtime/package-limits/index.md",
+        "reference/theme-runtime/specs/index.md",
+        "reference/theme-runtime/specs/v0.7/index.md",
+        "reference/theme-runtime/specs/v0.6/index.md"
       ]
     }
   }

@@ -6,7 +6,7 @@ Use this reference when you directly generate `preview-data.json`, review admin-
 
 ## Current Schema
 
-- [Preview Data v0.6 Schema](https://schemas.zeropress.dev/preview-data/v0.6/schema.json)
+- [Preview Data v0.7 Schema](https://schemas.zeropress.dev/preview-data/v0.7/schema.json)
 
 ## Required Top-Level Fields
 
@@ -16,7 +16,7 @@ Use this reference when you directly generate `preview-data.json`, review admin-
 - `site`
 - `content`
 
-`version` must be `"0.6"`.
+`version` must be `"0.7"`.
 
 Optional top-level maps include:
 
@@ -33,27 +33,37 @@ Common `site` fields include:
 - `title`
 - `description`
 - `url`
-- `media_base_url`
+- `media_origin`
 - `media_delivery_mode`
 - `favicon`
 - `logo`
 - `newsletter`
+- `comments`
 - `expose_generator`
 - `search`
+- `feed`
+- `archive`
 - `locale`
-- `datetime_display`
 - `date_style`
 - `time_style`
 - `timezone`
 - `front_page`
 - `post_index`
 - `footer`
-- `indexing`
+- `robots`
 - `meta`
 
-`site.logo` is optional theme-facing site identity data. `site.logo.src` is normalized like other media fields: relative/root-relative values resolve against `site.media_base_url` when it is non-empty, and remain same-host paths when `site.media_base_url` is empty. Use `site.logo.alt` for optional logo alternative text.
+`site.url` and `site.media_origin` are required. Each must be `""` or an absolute HTTP(S) origin without credentials, path, query, or fragment; a trailing root slash is accepted, and canonical producers emit `URL.origin`. `site.media_delivery_mode: "media_domain"` requires a non-empty `site.media_origin`. `site.logo` is optional theme-facing site identity data. Its `src` follows the media URL policy: use a root-relative URL with a real path, or a credential-free absolute HTTP(S) URL with a real path. Use `site.logo.alt` for optional logo alternative text.
+
+`site.robots` is an optional closed object with the required field `allow_indexing`. Omission means `{ "allow_indexing": true }`; `{}`, booleans, and the removed `site.indexing` field are invalid. This global fallback `robots.txt` policy is independent from each document's `discoverability` value.
+
+`site.locale` must be a canonical BCP 47 locale. `site.timezone` accepts `UTC`, a canonical IANA time-zone identifier, or a canonical fixed offset within `-14:00` through `+14:00`; use `UTC`, not a zero fixed offset.
 
 `site.newsletter` is optional theme-facing data for newsletter CTA/island UI. It requires `enabled`; when enabled is `true`, include `signup_url`, `embed_url`, or both. URLs must be root-relative paths or absolute `http`/`https` URLs. ZeroPress does not submit provider forms or generate newsletter provider JavaScript.
+
+`site.search`, `site.feed`, and `site.archive` are optional closed `{ "enabled": boolean }` request objects. Omission means requested enabled `true`; `{}`, booleans, `null`, and unknown fields are invalid. Build Core combines each request with the relevant runtime conditions before exposing effective state to themes.
+
+`site.comments` is optional. Its absence means no comment provider is configured. When present it requires `enabled` plus a safe absolute HTTP(S) or single-slash root-relative `api_base_url`; optional defaults are `provider: "zeropress"`, `per_page: 50`, `order: "desc"`, and `threading: { "enabled": true, "max_depth": 2 }`.
 
 `site.meta` is the site-level scalar extension area. Build does not type-check it against theme hints.
 
@@ -77,13 +87,27 @@ Posts and pages may include:
 - `meta`
 - `data`
 
-Pages may also include optional `updated_at_iso` for page update metadata. Build tooling can use it for `page.updated_at`, sitemap `lastmod`, native search metadata, and theme display.
+Pages may also include optional `updated_at_iso` for page update metadata. Build tooling can use it for `page.updated_at`, sitemap `lastmod`, native search metadata, and theme display. Build Core always provides site-localized fallback text with canonical ISO timestamps; browser-local formatting is an optional theme-owned progressive enhancement for explicitly marked `<time>` elements.
+
+Posts require a positive, post-unique `public_id`. Post and Page
+`allow_comments` are optional; omission means `false`, and canonical producers
+emit `true` only for items that opt in to comments. A Page with
+`allow_comments: true` also requires a Page ID. Page IDs are unique within
+pages, while the same numeric ID may appear once in posts and once in pages.
+
+Posts, pages, categories, and tags do not expose generator or database-internal `id` fields. Use `public_id` only where the contract explicitly defines a public identity.
+
+`page.path` is optional. When omitted, Build Core derives the route from `site.permalinks.pages` and `page.slug`. Generators should emit `path` only when it changes the final public URL or output path, such as for nested pages, collision-resolved routes, custom overrides, or the `html-extension` terminal `index` convention.
+
+Page identity outside the Page object is its effective relative route path, normalized to NFC and written without leading or trailing slashes. A Page front page uses `{ "type": "page", "page_path": "docs/about" }`; a Page collection reference uses `{ "type": "page", "path": "docs/about" }`. Post collection references continue to use `{ "type": "post", "slug": "hello" }`. Duplicate Page leaf slugs are valid when the effective paths differ; duplicate effective Page paths are invalid.
+
+When `site.comments.enabled` is `true`, the effective provider is ZeroPress, and an item has `allow_comments: true`, that item must include `comments: { "request_token": "..." }`. The opaque token is nonblank and at most 512 Unicode code points. In other states the metadata remains optional and, when present, must still be structurally valid. Build Core omits unused request tokens from WordPress and inactive theme contexts.
 
 Use `meta` for scalar flags and metadata. Use `data` for structured page/post values such as facts, galleries, timelines, swatches, and stack lists.
 
 ## Discovery Policy
 
-`discoverability` is not access control.
+`discoverability` is optional and is not access control. Missing means `default`; canonical generators omit the field for that value.
 
 - `default`: normal automatic discovery.
 - `noindex`: render the route and add HTML robots `noindex`.
@@ -91,6 +115,25 @@ Use `meta` for scalar flags and metadata. Use `data` for structured page/post va
 
 Explicit menus, explicit collections, and manual links can still expose a delisted page.
 
-## Full Spec
+## Custom HTML
 
-The long-form spec remains available at [Preview Data v0.6](../../spec/preview-data-v0.6.md).
+`custom_html` is an optional trusted build directive kept outside `site` and theme runtime data:
+
+```json
+{
+  "custom_html": {
+    "head_end": "<meta name=\"site-verification\" content=\"...\">",
+    "body_end": "<script defer src=\"/vendor/app.js\"></script>"
+  }
+}
+```
+
+At least one slot is required, each value must be a nonblank string, and each slot is limited to 65,536 Unicode code points. Larger code should be emitted as a public asset and referenced by URL.
+
+ZeroPress does not sanitize, escape, deduplicate, or rewrite asset references inside these strings. `head_end` is inserted before `</head>` and `body_end` before `</body>` on theme-rendered HTML routes. A configured target missing from a rendered document is a build error. Standalone HTML front pages remain untouched.
+
+`custom_css.content` is also trusted and nonblank. Build Core emits its original UTF-8 content without trimming, minification, comment removal, or syntax rewriting; an enabled asset hash is calculated from the emitted bytes.
+
+## Versioned Long-Form Specs
+
+Use the [Preview Data v0.7 long-form spec](specs/v0.7/index.md) for the current normative contract. The previous [Preview Data v0.6 spec](specs/v0.6/index.md) remains available for historical review.

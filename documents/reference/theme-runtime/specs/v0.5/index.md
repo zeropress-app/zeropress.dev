@@ -1,11 +1,10 @@
 ---
-status: published
 discoverability: delist
 ---
 
 # ZeroPress Theme Runtime Spec v0.5
 
-> Status: Historical. Use [Theme Runtime Reference](../reference/theme-runtime/index.md) for current v0.6 work.
+> Status: Historical. Use [Theme Runtime Reference](../../index.md) for current v0.6 work.
 
 ## 0. Core Philosophy
 

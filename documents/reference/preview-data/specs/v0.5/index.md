@@ -1,11 +1,10 @@
 ---
-status: published
 discoverability: delist
 ---
 
 # ZeroPress Preview Data Spec v0.5
 
-> Status: Historical. Use [Preview Data Reference](../reference/preview-data/index.md) for current v0.6 work.
+> Status: Historical. Use [Preview Data Reference](../../index.md) for current v0.7 work.
 
 ## 0. Core Philosophy
 
@@ -400,11 +399,11 @@ Pages may override the page permalink pattern with `path`:
 {
   "title": "Preview Data v0.5",
   "slug": "preview-data-v0.5",
-  "path": "spec/preview-data-v0.5"
+  "path": "reference/preview-data/specs/v0.5/index"
 }
 ```
 
-With `html-extension`, this page has public URL `/spec/preview-data-v0.5` and output file `spec/preview-data-v0.5.html`.
+With `html-extension`, this page has public URL `/reference/preview-data/specs/v0.5/` and output file `reference/preview-data/specs/v0.5/index.html`.
 
 For source-tree style docs, `index` can be used in the page path:
 
@@ -412,11 +411,11 @@ For source-tree style docs, `index` can be used in the page path:
 {
   "title": "CLI Tools",
   "slug": "cli",
-  "path": "cli/index"
+  "path": "guides/cli/index"
 }
 ```
 
-With `html-extension`, this page has public URL `/cli/` and output file `cli/index.html`. A sibling page such as `path: "cli/zeropress-theme"` has public URL `/cli/zeropress-theme` and output file `cli/zeropress-theme.html`.
+With `html-extension`, this page has public URL `/guides/cli/` and output file `guides/cli/index.html`. A sibling page such as `path: "guides/cli/zeropress-theme/index"` has public URL `/guides/cli/zeropress-theme/` and output file `guides/cli/zeropress-theme/index.html`.
 
 `path` is relative, has no leading or trailing slash, has no empty segment, and each segment follows the slug segment safety policy.
 
@@ -557,7 +556,7 @@ Notes:
 
 ## 10. Compatibility Notes
 
-- `v0.5` is the current preview-data contract.
+- `v0.5` is a historical preview-data contract retained for compatibility review.
 - Earlier preview-data versions are historical and may differ in content shape and route-related fields.
 - Tooling may evolve, but public `v0.5` payloads must continue to satisfy the published schema and slug safety contract.
 
