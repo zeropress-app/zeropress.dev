@@ -331,7 +331,7 @@ For the WordPress provider or an otherwise inactive comment state, item-level `c
 
 `copyright_text`, when present, is nonblank. Missing or `true` attribution allows a supporting theme to show ZeroPress attribution; `false` asks it to hide that UI.
 
-`site.meta` is an optional generator-defined scalar extension object. Values may be strings, finite numbers, booleans, or `null`. ZeroPress core does not interpret its keys.
+`site.meta` is an optional generator-defined scalar extension object. Values may be strings, finite numbers, booleans, or `null`. ZeroPress core does not interpret its keys. Post/Page `meta` is likewise generator/theme extension data; a key such as `meta.description` has no first-class SEO or Build Core meaning.
 
 ## 5. Content Contract
 
@@ -388,6 +388,8 @@ The global `content.tags` array has no semantic display order. Deterministic pro
 
 Post `public_id` is public identity, not a Studio or database-internal id. There is no Post `id` field in v0.7.
 
+Post `excerpt` is explicitly authored introduction text and may be `""`. Producers must preserve an empty authored value rather than storing a fallback extracted from `content`. Consumers such as Build Core may derive a separate runtime summary without mutating Preview Data.
+
 ### 5.3 Pages
 
 Every Page requires:
@@ -416,6 +418,8 @@ Missing Page `allow_comments` means `false`. Canonical producers emit
 `true` requires a positive `public_id`. Page ids must be unique within Pages. A
 Post and a Page may use the same numeric public id because they are different
 target types.
+
+Page `excerpt`, when present, has the same authored-only meaning as Post `excerpt`. Omission or `""` means that no Page excerpt was authored; producers must not fill it from the Page body or site description. Build Core normalizes omission to `""` in Theme Runtime and derives a separate summary when presentation or metadata needs one.
 
 `path` is a relative route override without leading or trailing slashes, for example `company/about`. Each component follows the slug policy. When omitted, Build Core derives the effective path from `site.permalinks.pages` and the Page slug. A producer that knows a Page hierarchy materializes it in `path`. Page leaf slugs are not identities: two Pages may both use `about` when their NFC-normalized effective paths differ. Effective Page paths must be unique after NFC normalization.
 

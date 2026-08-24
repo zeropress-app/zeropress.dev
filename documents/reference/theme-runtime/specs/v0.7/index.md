@@ -259,7 +259,25 @@ Examples of structured contract patterns:
 - `post.prev`
 - `post.next`
 
-### 5.1 Effective site feature state
+### 5.1 Authored excerpts and effective summaries
+
+Build Core keeps authored excerpts separate from derived presentation summaries:
+
+```ts
+post.excerpt: string; // authored Preview Data value
+post.summary: string; // effective list and metadata summary
+
+page.excerpt: string; // authored value, or "" when omitted in Preview Data
+page.summary: string;
+```
+
+Build Core never replaces `excerpt` with body text. A trim-nonempty excerpt becomes `summary` after trimming only its outer whitespace and is not shortened. Otherwise, Build Core derives `summary` from rendered document text: it removes comments and `script`, `style`, `template`, and `noscript` content, removes a leading H1 whose text matches the document title, decodes entities, collapses whitespace, and limits the result to 160 Unicode code points. A truncated result includes `…` within that limit. If no visible text remains, `summary` is `""`.
+
+The same precomputed value is exposed on Post/Page detail objects and every structured item that exposes an excerpt: `posts.items[]`, archive/taxonomy items, Post/Page collection items, collection cursor `prev`/`next`, and `post.prev`/`post.next`. Listing and card templates should guard and render `summary`; a detail lede should guard and render authored `excerpt`.
+
+Post/Page metadata descriptions use `summary`. An ordinary detail route does not substitute `site.description`; a Page used as the front page uses the site description only when its summary is empty. RSS item descriptions use Post summaries. Native and Pagefind search keep authored excerpts distinct and continue to produce query-specific body snippets rather than substituting the general summary. Arbitrary `meta.description` keys are generator/theme metadata and have no special Runtime meaning.
+
+### 5.2 Effective site feature state
 
 Build Core materializes effective state on `site` for every route. Themes must read the nested `enabled` field rather than testing whether the object exists:
 
@@ -307,7 +325,7 @@ When archive is ineffective, no archive route or output-path claim exists, so an
 
 The native search adapter embeds the canonical `site.locale`. It tokenizes non-CJK text with `Intl.Segmenter(site.locale)` and uses Unicode word matching only when Segmenter is unavailable or fails. Each CJK run contributes its full token and unique bigrams, while repeated runs continue to increase term frequency.
 
-### 5.2 Markdown Rendering
+### 5.3 Markdown Rendering
 
 For `document_type: "markdown"`, build renders common Markdown authoring conventions as part of the v0.7 presentation contract:
 

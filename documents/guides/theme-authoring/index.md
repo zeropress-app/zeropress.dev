@@ -284,7 +284,7 @@ Inside `partials/project-card.html`, read `partial.project`:
 ```html
 <article class="project-card project-card--{{partial.variant}}">
   <h2><a href="{{partial.project.url}}">{{partial.project.title}}</a></h2>
-  {{#if partial.project.excerpt}}<p>{{partial.project.excerpt}}</p>{{/if}}
+  {{#if partial.project.summary}}<p>{{partial.project.summary}}</p>{{/if}}
 </article>
 ```
 
@@ -344,7 +344,7 @@ Post index, category, and tag routes commonly use:
 {{#for post in posts.items}}
   <article class="post-list-item">
     <h2><a href="{{post.url}}">{{post.title}}</a></h2>
-    <p>{{post.excerpt}}</p>
+    {{#if post.summary}}<p>{{post.summary}}</p>{{/if}}
     <p>{{post.published_at}} · {{post.reading_time}}</p>
   </article>
 {{/for}}
@@ -372,6 +372,7 @@ Common post fields:
 - `post.slug`
 - `post.url`
 - `post.excerpt`
+- `post.summary`
 - `post.featured_image`
 - `post.featured_media`
 - `post.html`
@@ -396,6 +397,7 @@ Common page fields:
 - `page.slug`
 - `page.url`
 - `page.excerpt`
+- `page.summary`
 - `page.featured_image`
 - `page.featured_media`
 - `page.html`
@@ -405,6 +407,16 @@ Common page fields:
 - `page.data`
 - `page.collection_cursors`
 - `page.toc[]`
+
+`excerpt` is authored copy. Build Core does not fill an empty excerpt from the body; an omitted Page excerpt becomes `""` at runtime. `summary` is the effective listing and metadata value: a nonblank authored excerpt trimmed at its outer edges, or a derived visible-text summary of at most 160 Unicode code points. The same summary is propagated to listing, archive, taxonomy, collection, cursor, and adjacent-Post items.
+
+Use `summary` for optional cards and listings, and keep authored `excerpt` for a deliberate detail lede:
+
+```html
+{{#if post.excerpt}}<p class="lede">{{post.excerpt}}</p>{{/if}}
+```
+
+Both values may be empty, so do not emit an unconditional empty paragraph. Metadata and RSS use `summary`; native/Pagefind search keeps authored excerpts and query-specific body snippets separate. A `meta.description` key is an ordinary theme/generator convention and is not interpreted by Build Core.
 
 Every route has both site-wide `site.comments` state and a route-root `comments` context. Check `{{#if comments.enabled}}` before rendering a theme-owned island. `site.comments.enabled` covers configured provider, Preview Data `site.comments.enabled`, and theme capability; route-root `comments.enabled` additionally requires an eligible Post/Page detail route, item `allow_comments`, a positive public ID, and a valid request token for ZeroPress. Eligible contexts expose `target_type`, `target_public_id`, explicit `provider`, normalized `api_base_url`, `per_page`, `order`, and `threading`; ZeroPress contexts additionally expose `request_token`. Inactive, list, archive, taxonomy, and standalone routes expose only `{ "enabled": false }`.
 
