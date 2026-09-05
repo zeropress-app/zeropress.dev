@@ -1,9 +1,0 @@
-img.top-bar__brand-mark {
-  filter: brightness(0) saturate(100%) invert(9%) sepia(25%) saturate(322%) hue-rotate(332deg) brightness(95%) contrast(85%);
-}
-
-:root[data-theme="dark"] {
-  img.top-bar__brand-mark {
-    filter: brightness(0) saturate(100%) invert(91%) sepia(2%) saturate(775%) hue-rotate(343deg) brightness(107%) contrast(84%);
-  }
-}

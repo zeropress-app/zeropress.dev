@@ -17,9 +17,6 @@
     "updated_at": "git"
   },
   "custom_html": {
-    "head_end": {
-      "file": ".zeropress/head_end.html"
-    },
     "body_end": {
       "file": ".zeropress/body_end.html"
     }
