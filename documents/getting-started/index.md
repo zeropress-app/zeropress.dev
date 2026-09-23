@@ -84,5 +84,5 @@ and publish to a separate Studio Starter repository.
 ## Customize Or Build Locally
 
 Each starter README covers local preview and theme changes. To create your own
-theme, use [Theme Authoring](../guides/theme-authoring/index.md). If you already
+theme, use [Customize a Theme](../guides/theme-authoring/index.md). If you already
 generate Preview Data, see [CLI Tools](../guides/cli/index.md) for direct builds.

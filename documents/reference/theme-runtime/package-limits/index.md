@@ -53,5 +53,5 @@ If a local thumbnail would make the package unnecessarily large, `theme.json.thu
 
 - [Theme Runtime Reference](../index.md)
 - [Theme Runtime v0.7 Long-Form Spec](../specs/v0.7/index.md)
-- [Theme Authoring Guide](../../../guides/theme-authoring/index.md)
+- [Customize a Theme](../../../guides/theme-authoring/index.md)
 - [CLI Tools](../../../guides/cli/index.md)

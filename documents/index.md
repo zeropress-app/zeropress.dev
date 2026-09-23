@@ -30,7 +30,7 @@ comments, forms, and newsletters.
 
 ## Themes And Tools
 
-- [Theme Authoring](guides/theme-authoring/index.md): customize templates, styles, and navigation.
+- [Customize a Theme](guides/theme-authoring/index.md): customize templates, styles, and navigation.
 - [CLI Tools](guides/cli/index.md): create themes, preview changes, and build sites locally.
 - [Static Search](guides/static-search/index.md): add search to a theme.
 - [Reference](reference/index.md): look up Preview Data and Theme Runtime contracts.

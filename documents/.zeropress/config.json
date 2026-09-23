@@ -40,7 +40,15 @@
           "url": "/guides/",
           "children": [
             { "title": "Themes And Tools", "url": "/guides/" },
-            { "title": "Theme Authoring", "url": "/guides/theme-authoring/" },
+            {
+              "title": "Customize a Theme",
+              "url": "/guides/theme-authoring/",
+              "children": [
+                { "title": "Templates and Data", "url": "/guides/theme-authoring/templates-and-data/" },
+                { "title": "Navigation and Collections", "url": "/guides/theme-authoring/navigation-and-collections/" },
+                { "title": "Media and Integrations", "url": "/guides/theme-authoring/media-and-integrations/" }
+              ]
+            },
             { "title": "CLI Tools", "url": "/guides/cli/" },
             { "title": "Static Search", "url": "/guides/static-search/" }
           ]
@@ -92,6 +100,9 @@
       "items": [
         "guides/index.md",
         "guides/theme-authoring/index.md",
+        "guides/theme-authoring/templates-and-data/index.md",
+        "guides/theme-authoring/navigation-and-collections/index.md",
+        "guides/theme-authoring/media-and-integrations/index.md",
         "guides/cli/index.md",
         "guides/static-search/index.md"
       ]

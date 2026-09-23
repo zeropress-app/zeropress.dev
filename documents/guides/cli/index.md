@@ -42,7 +42,7 @@ Validate it:
 npx @zeropress/theme validate ./my-theme/theme
 ```
 
-See [Theme Authoring](../theme-authoring/index.md) for templates and customization,
+See [Customize a Theme](../theme-authoring/index.md) for templates and customization,
 and [Theme Package Limits](../../reference/theme-runtime/package-limits/index.md)
 for file and size requirements.
 
