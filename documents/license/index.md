@@ -16,9 +16,7 @@ These repositories contain runtime-facing software for the ZeroPress product and
 
 | Repository | License |
 | --- | --- |
-| [`zeropress`](https://github.com/zeropress-app/zeropress) | Apache-2.0 |
 | [`zeropress-studio`](https://github.com/zeropress-app/zeropress-studio) | Apache-2.0 |
-| [`zeropress-studio-api`](https://github.com/zeropress-app/zeropress-studio-api) | Apache-2.0 |
 | [`zeropress-edge`](https://github.com/zeropress-app/zeropress-edge) | Apache-2.0 |
 
 ## CLI And Tooling
