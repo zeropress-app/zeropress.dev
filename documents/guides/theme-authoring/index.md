@@ -62,15 +62,11 @@ theme/
 
 ## Keep The Theme Package Small
 
-ZeroPress theme tooling enforces fixed package limits: 4 MiB in total, 1 MiB for any one file, and 128 entries. These are hard safety limits and do not have environment or CLI overrides. Equivalent final-root spellings such as `theme`, `theme/`, and `theme/.` are normalized before checking; the final theme input entry and entries inside the package cannot be symbolic links. Symbolic links in ancestor path components are allowed, and an accepted input root is pinned to its canonical path before use. Literal backslashes and exact empty, `.` and `..` path segments are invalid, but `..` inside an ordinary filename such as `name..txt` is allowed. Paths that collide after NFC and case normalization are rejected consistently for directory input and in-memory theme packages.
-
 Keep reusable templates, CSS, small JavaScript, and small decorative assets in `theme/`. Put site-specific downloads, content media, videos, large font collections, and other large files in the site's public directory or media origin. Do not package `node_modules`, generated output, or source maps.
 
-See [Theme Package Limits](../../reference/theme-runtime/package-limits/index.md) for exact counting rules and enforcement behavior.
+See [Theme Package Limits](../../reference/theme-runtime/package-limits/index.md) for size and path requirements.
 
-Human diagnostics display unsafe terminal controls as visible `\uXXXX` sequences.
-
-During local preview, accepted theme and public input roots are resolved once to canonical paths. One recursive watcher observes the pinned theme root, including hidden asset directories such as `assets/.icons`. A separate recursive public-root watcher applies a stricter ignore policy for hidden/private entries. Transient and immediately asynchronous watcher failures and deleted/recreated roots recover automatically with capped retry backoff. If the optional public root disappears, theme changes continue to rebuild while public recovery runs in the background. A root recreated as a symbolic link is not followed, and a public directory that did not exist when dev started is not introduced until restart. Live reload is appended at the end of HTML instead of matching authored `</body>` text.
+## Shared Layout
 
 `layout.html` is the shared page shell. It must contain exactly one content slot:
 
@@ -812,7 +808,7 @@ Mermaid fences remain readable code blocks by default. Add client-side progressi
 
 ## Search
 
-Static search UI is theme-owned. ZeroPress native builds can emit:
+The theme provides the search UI.
 
 Set `features.search: true` when the theme includes static search UI. Omitted `features.search` behaves like `false`, so themes without search UI do not need to declare anything.
 
@@ -829,6 +825,8 @@ Wrap visible search UI with `site.search.enabled`; Build Core exposes this as th
 {{/if}}
 ```
 
+Enabled native search emits:
+
 - `/_zeropress/search.json`
 - `/_zeropress/search.js`
 - `/_zeropress/search_pagefind.js`
@@ -840,7 +838,7 @@ const searchApi = await import("/_zeropress/search.js");
 const result = await searchApi.search("query", { limit: 10 });
 ```
 
-Themes should provide the form, result list, empty state, keyboard behavior, and dialog behavior. The search adapter provides loading, tokenization, scoring, and a Pagefind-like result shape. It uses `Intl.Segmenter(site.locale)` for non-CJK text and falls back to Unicode word matching only when Segmenter is unavailable or fails. CJK runs contribute a full token and unique bigrams; repeated occurrences still affect term frequency.
+Themes provide the form, results, empty state, and keyboard behavior. The search adapter loads the index and returns ranked results in a Pagefind-like shape.
 
 Use the following hook names when wiring theme-owned search UI. These are
 conventions for theme JavaScript, not automatic ZeroPress UI behavior:
@@ -933,25 +931,10 @@ Markdown body sanitization does not open form/input fields for newsletter provid
 
 Build Pages config does not expose `site.newsletter`; Build Pages sites should handle newsletter UI through public HTML, custom HTML, or theme-specific markup instead of config.
 
-## Validation Checklist
-
-- Use `runtime: "0.7"`.
-- Validate against [Theme Manifest Runtime v0.7 Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json).
-- Keep `layout.html` script-free and include scripts through partials.
-- Keep class names, data attributes, CSS selectors, and JS selectors aligned.
-- Avoid duplicate Markdown H1 output.
-- Use typed comparison literals, such as `{{#if_eq loop.index 4}}`, not string guesses such as `"4"`.
-- Use `route.type`, not invented flags.
-- Treat menus, widgets, collections, `site.meta`, `page.data`, and `post.data` as optional.
-- Keep reusable theme files in `theme/assets/`.
-- Keep site-owned files in public passthrough.
-- Keep the package within the documented [Theme Package Limits](../../reference/theme-runtime/package-limits/index.md).
-- Do not use footer attribution or generator meta as hard-coded theme branding.
-
 ## Reference
 
 - [Theme Runtime Reference](../../reference/theme-runtime/index.md)
 - [Theme Runtime v0.7 Long-Form Spec](../../reference/theme-runtime/specs/v0.7/index.md)
 - [Theme Manifest Runtime v0.7 Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json)
 - [Static Search](../static-search/index.md)
-- [Package Quick Starts](../../packages/index.md)
+- [CLI Tools](../cli/index.md)

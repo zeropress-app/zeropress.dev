@@ -1,35 +1,38 @@
+---
+description: Start a ZeroPress site with Studio, Markdown, or a WordPress export, and learn how to customize its theme.
+---
+
 # ZeroPress Documentation
 
-ZeroPress is a static-first document publishing platform built around reusable themes, explicit build contracts, Markdown-friendly workflows, and CMS-grade authoring.
+Publish a website with ZeroPress. Manage content in your browser, write Markdown,
+or try your WordPress content on a static site.
 
-This site is the public documentation hub for Preview Data v0.7, Theme Runtime v0.7, CLI tools, and theme authoring guidance.
+## Choose How To Publish
 
-There are three common ways to enter the ZeroPress workflow:
+| Start with | Use it to | Starter repository |
+| --- | --- | --- |
+| [Studio](getting-started/index.md#publish-with-studio) | Write, manage media, and publish from your browser | [Studio Starter](https://github.com/zeropress-app/zeropress-starter-studio) |
+| [Markdown](getting-started/index.md#publish-markdown) | Maintain a documentation site in Git | [Markdown Starter](https://github.com/zeropress-app/zeropress-starter-markdown) |
+| [WordPress WXR](getting-started/index.md#try-wordpress-content) | Try a static site using your existing WordPress content | [WXR Starter](https://github.com/zeropress-app/zeropress-starter-wxr) |
 
-- `@zeropress/build-pages`: turn Markdown source and public files into preview data, then build a static ZeroPress site.
-- `@zeropress/build`: build directly from `preview-data.json` and a theme, including data and themes produced by AI-assisted tools.
-- ZeroPress Studio: manage content, media, imports, and publishing workflows, then publish preview data that can trigger a ZeroPress build.
+Follow [Getting Started](getting-started/index.md) to deploy a starter and publish
+your first changes.
 
-## Start With The Workflow
+Studio and the public site are separate deployments. Studio commits your content
+to a GitHub repository; the repository's build produces the public site.
+[ZeroPress Edge](https://github.com/zeropress-app/zeropress-edge) optionally adds
+comments, forms, and newsletters.
 
-Choose the entry point that matches how you want to build:
+## Product Guides
 
-- [Getting Started](getting-started/index.md): choose between theme development, direct preview-data builds, and Markdown site publishing.
-- [Theme Authoring](guides/theme-authoring/index.md): build reusable v0.7 themes.
-- [CLI Tools](guides/cli/index.md): understand how `@zeropress/create-theme`, `@zeropress/theme`, and `@zeropress/build` fit together.
-- [Package Quick Starts](packages/index.md): copy the shortest useful command for each public package.
+- [Studio Guide](https://studio.zeropress.dev/): install and operate Studio.
+- [Markdown Guide](https://build-pages.zeropress.dev/): write Markdown and configure Build Pages.
 
-Markdown-source site documentation for `@zeropress/build-pages` now lives at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/).
+## Themes And Tools
 
-## Current Reference
+- [Theme Authoring](guides/theme-authoring/index.md): customize templates, styles, and navigation.
+- [CLI Tools](guides/cli/index.md): create themes, preview changes, and build sites locally.
+- [Static Search](guides/static-search/index.md): add search to a theme.
+- [Reference](reference/index.md): look up Preview Data and Theme Runtime contracts.
 
-New work should target Preview Data `version: "0.7"`, Theme Runtime `runtime: "0.7"`, and Build Pages Config `version: "1.0"`. Historical specs remain available for compatibility review.
-
-- [Reference Hub](reference/index.md)
-- [Preview Data Reference](reference/preview-data/index.md)
-- [Preview Data Spec v0.7](reference/preview-data/specs/v0.7/index.md)
-- [Theme Runtime Reference](reference/theme-runtime/index.md)
-- [Static Search](guides/static-search/index.md)
-- [Licensing](license/index.md)
-
-Machine-readable JSON Schema files are published separately at [schemas.zeropress.dev](https://schemas.zeropress.dev/).
+JSON Schemas are available at [schemas.zeropress.dev](https://schemas.zeropress.dev/).

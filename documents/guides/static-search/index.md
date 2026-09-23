@@ -110,23 +110,6 @@ Each search item includes:
 
 `content_text` is derived from rendered HTML after removing scripts, styles, tags, entities, and extra whitespace.
 
-## Scoring
-
-The native adapter uses a small BM25-like and TF-IDF-like scorer.
-
-Current field weights are internal defaults:
-
-- `title`: `5`
-- `headings`: `3`
-- `tags`: `2.5`
-- `categories`: `2`
-- `excerpt`: `1.5`
-- `content_text`: `1`
-
-Posts can receive a small recency boost. The maximum recency boost is `0.15`, so it should not overpower a clearly better text match.
-
-These values are not preview-data or theme runtime configuration. Treat them as ZeroPress-owned defaults for the native adapter.
-
 ## Pagefind
 
 For larger sites or higher search quality, Pagefind is a good post-build option:

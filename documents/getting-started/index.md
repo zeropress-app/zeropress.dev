@@ -1,74 +1,88 @@
+---
+description: Deploy a ZeroPress starter and publish from Studio, Markdown, or a WordPress WXR export.
+---
+
 # Getting Started With ZeroPress
 
-ZeroPress supports several practical authoring workflows. This site focuses on the theme runtime, preview-data contract, and CLI tools. Markdown-source publishing guidance for Build Pages lives on its own product site.
+Choose how you want to manage your content:
 
-## Choose A Workflow
+- [Studio](#publish-with-studio) for writing and publishing in your browser.
+- [Markdown](#publish-markdown) for a site maintained in Git.
+- [WordPress WXR](#try-wordpress-content) for a quick trial with your existing content.
 
-| Goal | Use | Best For |
-| --- | --- | --- |
-| Create or test a reusable theme | `@zeropress/create-theme` and `@zeropress/theme` | Theme authors and custom site design |
-| Build directly from preview-data and a theme | `@zeropress/build` | AI-generated sites, admin-generated preview-data, advanced integrations |
-| Build a static site from Markdown files | `@zeropress/build-pages` | Documentation, GitHub Pages style repositories, simple public sites |
+Each site starter includes a Deploy to Cloudflare button that creates a GitHub
+repository and deploys a sample site. You will need GitHub and Cloudflare accounts.
+Keep the default build command `npm run build` and deploy command `npm run deploy`.
+Cloudflare rebuilds the site when changes are pushed to the connected branch.
 
-Need command snippets first? See [Package Quick Starts](../packages/index.md) for the shortest useful command for each public package.
+## Publish With Studio
 
-## Markdown Site
+Use [Studio Starter](https://github.com/zeropress-app/zeropress-starter-studio)
+for the public site. Studio itself runs as a separate application.
 
-Use `@zeropress/build-pages` when your source tree is mostly Markdown and public assets. Its documentation is now separated from the contract reference:
+[![Deploy Studio Starter to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/zeropress-app/zeropress-starter-studio/tree/latest)
 
-- [Build Pages Documentation](https://build-pages.zeropress.dev/)
-- [Build Pages on GitHub Marketplace](https://github.com/marketplace/actions/build-zeropress-pages)
+1. If you do not have Studio yet, follow the
+   [Studio Quick Start](https://studio.zeropress.dev/getting-started/).
+2. Deploy Studio Starter using the button above.
+3. Open `zeropress-preview-data.json` on your new repository's `main` branch and
+   copy its GitHub file URL.
+4. In Studio, open **Site Settings → Publishing**, paste the URL, and use
+   **Create GitHub token** to create a token for that repository with
+   **Contents: write** permission. Enter the token, enable publishing, check the
+   connection, and save. Set your public site URL in Studio's site settings.
+5. Create and publish a post in Studio. Open **Publish**, select
+   **Publish to GitHub**, and confirm to replace the starter's sample content.
 
-## Custom Theme
+Studio confirms the GitHub update. Check the Cloudflare build result to see when
+the public site has been updated. For local preview and theme changes, see the
+[starter README](https://github.com/zeropress-app/zeropress-starter-studio#readme).
 
-Use `@zeropress/create-theme` to scaffold a starter theme and preview-data fixture.
+## Publish Markdown
 
-```bash
-npx @zeropress/create-theme --name my-docs-theme --template docs
-```
+[Markdown Starter](https://github.com/zeropress-app/zeropress-starter-markdown)
+includes a documentation theme with navigation, search, and page outlines.
 
-Preview the generated theme locally:
+[![Deploy Markdown Starter to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/zeropress-app/zeropress-starter-markdown/tree/latest)
 
-```bash
-npx @zeropress/theme dev ./my-docs-theme/theme --data ./my-docs-theme/preview-data.json
-```
+1. Deploy the starter using the button above.
+2. Edit `documents/index.md` in your repository to change the home page.
+3. Set your site title and public URL in `documents/.zeropress/config.json`.
+4. Commit and push your changes to update the site.
 
-When the theme is ready, use it from Build Pages with `theme-path`, or use it directly with `@zeropress/build`.
+The sample documents include navigation, frontmatter, and formatting examples.
+See the [Build Pages guide](https://build-pages.zeropress.dev/) for Markdown and
+configuration options, or the
+[starter README](https://github.com/zeropress-app/zeropress-starter-markdown#readme)
+for local preview commands.
 
-```yaml
-with:
-  source: ./docs
-  destination: ./_site
-  theme-path: ./my-docs-theme/theme
-```
+## Try WordPress Content
 
-Next:
+[WXR Starter](https://github.com/zeropress-app/zeropress-starter-wxr) builds a
+static site from a WordPress export while continuing to use your WordPress media
+and comment API.
 
-- [Theme Authoring](../guides/theme-authoring/index.md)
-- [Theme Runtime Reference](../reference/theme-runtime/index.md)
+[![Deploy WXR Starter to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/zeropress-app/zeropress-starter-wxr/tree/latest)
 
-## Direct Build Contract
+1. Deploy the starter using the button above. Choose a private repository if your
+   export contains private information, such as commenters' email addresses.
+2. In WordPress, open **Tools → Export**, select **All content**, and download
+   the WXR `.xml` file.
+3. Replace `wordpress-export.xml` in your repository with that file, keeping the
+   filename, then commit and push.
 
-Use `@zeropress/build` when you already have a `preview-data.json` file and a ZeroPress theme.
+Images and links in post and page content keep their original URLs. Comments use
+the original WordPress REST API, so keep WordPress available and check the
+[comment requirements](https://github.com/zeropress-app/zeropress-starter-wxr#what-stays-on-wordpress).
+The XML export itself is not served by the public site.
 
-```bash
-npx @zeropress/build ./theme --data ./preview-data.json --out ./dist
-```
+Replace the export and push whenever you want to refresh the site. To move your
+content and media into Studio, follow
+[WordPress Migration](https://studio.zeropress.dev/getting-started/wordpress-migration/)
+and publish to a separate Studio Starter repository.
 
-This path is useful when preview-data is generated by an admin dashboard, importer, AI tool, or custom pipeline.
+## Customize Or Build Locally
 
-Next:
-
-- [Preview Data Reference](../reference/preview-data/index.md)
-- [Preview Data Schema](https://schemas.zeropress.dev/preview-data/v0.7/schema.json)
-- [Theme Runtime Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json)
-
-## Current Contracts
-
-New projects should target:
-
-- `preview-data` version `0.7`
-- `theme.json` runtime `0.7`
-- Build Pages Config version `1.0`, documented at [build-pages.zeropress.dev](https://build-pages.zeropress.dev/) and defined by the [v1.0 schema](https://schemas.zeropress.dev/build-pages-config/v1.0/schema.json)
-
-Machine-readable JSON Schema files live at [schemas.zeropress.dev](https://schemas.zeropress.dev/).
+Each starter README covers local preview and theme changes. To create your own
+theme, use [Theme Authoring](../guides/theme-authoring/index.md). If you already
+generate Preview Data, see [CLI Tools](../guides/cli/index.md) for direct builds.

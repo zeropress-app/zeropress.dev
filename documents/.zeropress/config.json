@@ -3,7 +3,7 @@
   "version": "1.0",
   "site": {
     "title": "ZeroPress Docs",
-    "description": "ZeroPress theme authoring guides, runtime documentation, and CLI guides.",
+    "description": "Start a ZeroPress site with Studio, Markdown, or WordPress, and customize its theme.",
     "url": "https://zeropress.dev",
     "footer": {
       "copyright_text": "© 2026 ZeroPress"
@@ -31,14 +31,15 @@
           "children": [
             { "title": "Overview", "url": "/" },
             { "title": "Getting Started", "url": "/getting-started/" },
-            { "title": "Package Quick Starts", "url": "/packages/" }
+            { "title": "Studio Guide", "url": "https://studio.zeropress.dev/", "target": "_blank" },
+            { "title": "Markdown Guide", "url": "https://build-pages.zeropress.dev/", "target": "_blank" }
           ]
         },
         {
-          "title": "GUIDES",
+          "title": "THEMES & TOOLS",
           "url": "/guides/",
           "children": [
-            { "title": "Guides Overview", "url": "/guides/" },
+            { "title": "Themes And Tools", "url": "/guides/" },
             { "title": "Theme Authoring", "url": "/guides/theme-authoring/" },
             { "title": "CLI Tools", "url": "/guides/cli/" },
             { "title": "Static Search", "url": "/guides/static-search/" }
@@ -49,35 +50,19 @@
           "url": "/reference/",
           "children": [
             { "title": "Reference Hub", "url": "/reference/" },
-            { "title": "Preview Data Reference", "url": "/reference/preview-data/" },
             {
-              "title": "Preview Data Specs",
-              "url": "/reference/preview-data/specs/",
+              "title": "Preview Data",
+              "url": "/reference/preview-data/",
               "children": [
-                {
-                  "title": "Preview Data v0.7",
-                  "url": "/reference/preview-data/specs/v0.7/"
-                },
-                {
-                  "title": "Preview Data v0.6",
-                  "url": "/reference/preview-data/specs/v0.6/"
-                }
+                { "title": "Specification", "url": "/reference/preview-data/specs/v0.7/" }
               ]
             },
-            { "title": "Theme Runtime Reference", "url": "/reference/theme-runtime/" },
-            { "title": "Theme Package Limits", "url": "/reference/theme-runtime/package-limits/" },
             {
-              "title": "Theme Runtime Specs",
-              "url": "/reference/theme-runtime/specs/",
+              "title": "Theme Runtime",
+              "url": "/reference/theme-runtime/",
               "children": [
-                {
-                  "title": "Theme Runtime v0.7",
-                  "url": "/reference/theme-runtime/specs/v0.7/"
-                },
-                {
-                  "title": "Theme Runtime v0.6",
-                  "url": "/reference/theme-runtime/specs/v0.6/"
-                }
+                { "title": "Specification", "url": "/reference/theme-runtime/specs/v0.7/" },
+                { "title": "Package Limits", "url": "/reference/theme-runtime/package-limits/" }
               ]
             }
           ]
@@ -99,12 +84,11 @@
       "title": "Get Started",
       "items": [
         "index.md",
-        "getting-started/index.md",
-        "packages/index.md"
+        "getting-started/index.md"
       ]
     },
     "guides": {
-      "title": "Guides",
+      "title": "Themes And Tools",
       "items": [
         "guides/index.md",
         "guides/theme-authoring/index.md",
@@ -119,12 +103,10 @@
         "reference/preview-data/index.md",
         "reference/preview-data/specs/index.md",
         "reference/preview-data/specs/v0.7/index.md",
-        "reference/preview-data/specs/v0.6/index.md",
         "reference/theme-runtime/index.md",
         "reference/theme-runtime/package-limits/index.md",
         "reference/theme-runtime/specs/index.md",
-        "reference/theme-runtime/specs/v0.7/index.md",
-        "reference/theme-runtime/specs/v0.6/index.md"
+        "reference/theme-runtime/specs/v0.7/index.md"
       ]
     }
   }
