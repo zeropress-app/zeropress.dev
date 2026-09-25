@@ -1,11 +1,12 @@
 ---
-description: Start a ZeroPress site with Studio, Markdown, or a WordPress export, and learn how to customize its theme.
+description: ZeroPress is open-source software for creating and publishing static websites. Write in Studio, use Markdown, or import WordPress content, then publish to your chosen host.
 ---
 
 # ZeroPress Documentation
 
-Publish a website with ZeroPress. Manage content in your browser, write Markdown,
-or try your WordPress content on a static site.
+ZeroPress is open-source software for creating and publishing static websites.
+Write in Studio, use Markdown, or import WordPress content, then publish to your
+chosen host.
 
 ## Choose How To Publish
 

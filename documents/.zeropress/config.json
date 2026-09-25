@@ -3,7 +3,7 @@
   "version": "1.0",
   "site": {
     "title": "ZeroPress Docs",
-    "description": "Start a ZeroPress site with Studio, Markdown, or WordPress, and customize its theme.",
+    "description": "Documentation for ZeroPress, open-source software for creating and publishing static websites.",
     "url": "https://zeropress.dev",
     "footer": {
       "copyright_text": "© 2026 ZeroPress"
