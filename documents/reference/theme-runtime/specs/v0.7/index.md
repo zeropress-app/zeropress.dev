@@ -2,7 +2,7 @@
 
 > Status: Active (current manifest contract for validation and build)
 
-This is the long-form contract document for theme runtime v0.7. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Customize a Theme](../../../../guides/theme-authoring/index.md). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](../../index.md) and the [Theme Manifest Runtime v0.7 Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json).
+This is the long-form contract document for theme runtime v0.7. It is intended for contract decisions, validator behavior, and build behavior. It is not a theme-building tutorial. For practical authoring guidance, start with [Customize a Theme](../../../../guides/theme-authoring/index.md). For day-to-day lookup and schema checks, use the [Theme Runtime Reference](../../index.md) and the [Theme Manifest Runtime v0.7 Schema](https://www.schemastore.org/zeropress-theme-runtime-0.7.json).
 
 Runtime v0.7 establishes a breaking manifest and renderer boundary. Validators and Build Core accept only `runtime: "0.7"`; they do not reinterpret a v0.6 manifest. The independent theme package `version` remains author-managed, uses SemVer 2.0, and does not need to match the runtime version.
 
@@ -668,4 +668,4 @@ These are enhancements, not required core document content.
 
 Machine-readable schema:
 
-- [Theme Manifest Runtime v0.7 Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json)
+- [Theme Manifest Runtime v0.7 Schema](https://www.schemastore.org/zeropress-theme-runtime-0.7.json)

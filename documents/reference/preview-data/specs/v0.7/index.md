@@ -2,7 +2,7 @@
 
 > Status: Active (current preview-data contract)
 
-This document is the long-form contract for Preview Data v0.7. Use the [Preview Data Reference](../../index.md) for quick field lookup and the [Preview Data v0.7 Schema](https://schemas.zeropress.dev/preview-data/v0.7/schema.json) for machine-readable structural validation.
+This document is the long-form contract for Preview Data v0.7. Use the [Preview Data Reference](../../index.md) for quick field lookup and the [Preview Data v0.7 Schema](https://www.schemastore.org/zeropress-preview-data-0.7.json) for machine-readable structural validation.
 
 Preview Data and Theme Runtime have independent versions. A v0.7 Preview Data payload is currently consumed by themes using Theme Runtime v0.7. A theme's `theme.json` therefore declares runtime `0.7`; it does not declare the Preview Data version.
 
@@ -61,7 +61,7 @@ All five top-level fields and all required `site` and `content` fields remain re
 
 ```json
 {
-  "$schema": "https://schemas.zeropress.dev/preview-data/v0.7/schema.json",
+  "$schema": "https://www.schemastore.org/zeropress-preview-data-0.7.json",
   "version": "0.7",
   "generator": "example-generator",
   "generated_at": "2026-07-18T00:00:00Z",

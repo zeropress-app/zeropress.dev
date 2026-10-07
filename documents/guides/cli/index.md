@@ -26,14 +26,14 @@ npx @zeropress/create-theme --name my-theme --template docs
 ```
 
 Choose `minimal`, `blog`, `docs`, `portfolio`, or `magazine`. The generated project
-includes `theme/` and sample `preview-data.json`.
+includes `theme/` and sample `zeropress-preview-data.json`.
 
 ## Preview And Validate
 
 Preview the generated theme locally:
 
 ```bash
-npx @zeropress/theme dev ./my-theme/theme --data ./my-theme/preview-data.json
+npx @zeropress/theme dev ./my-theme/theme --data ./my-theme/zeropress-preview-data.json
 ```
 
 Validate it:
@@ -51,7 +51,7 @@ for file and size requirements.
 When you already have a theme and a Preview Data file:
 
 ```bash
-npx @zeropress/build ./theme --data ./preview-data.json --out ./dist
+npx @zeropress/build ./theme --data ./zeropress-preview-data.json --out ./dist
 ```
 
 Serve `dist/` with a static host. See the
@@ -66,7 +66,7 @@ For Markdown commands, configuration, and GitHub Action usage, follow the
 ## Convert A WordPress Export
 
 ```bash
-npx @zeropress/wxr-import --input ./wordpress-export.xml --output ./preview-data.json
+npx @zeropress/wxr-import --input ./wordpress-export.xml --output ./zeropress-preview-data.json
 ```
 
 Build the resulting file with `@zeropress/build` and a theme. For a ready-made

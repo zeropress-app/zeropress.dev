@@ -5,7 +5,7 @@ when writing a generator or importer, or validating exported site data.
 
 The current contract is **v0.7**:
 [specification](specs/v0.7/index.md) ·
-[JSON Schema](https://schemas.zeropress.dev/preview-data/v0.7/schema.json).
+[JSON Schema](https://www.schemastore.org/zeropress-preview-data-0.7.json).
 
 ## Find A Topic
 
