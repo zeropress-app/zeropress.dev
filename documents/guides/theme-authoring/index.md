@@ -83,11 +83,11 @@ Start with the [official Minimal example](https://github.com/zeropress-app/zerop
 ```bash
 npx @zeropress/create-theme --name my-theme --template minimal
 cd my-theme
-npx @zeropress/theme dev ./theme --data ./preview-data.json
+npx @zeropress/theme dev ./theme --data ./zeropress-preview-data.json
 ```
 
 1. Move the site's shared HTML shell into `theme/layout.html` and reusable components into `theme/partials/`. Convert JSX to HTML and template helpers; ZeroPress does not execute React components or client-side routes.
-2. Put page and post content in `preview-data.json`, using `meta` for scalar layout choices and `data` for structured sections. Supply menus and collections there, then render their resolved values through the [template contexts](../../reference/theme-runtime/specs/v0.7/index.md#55-common-render-context).
+2. Put page and post content in `zeropress-preview-data.json`, using `meta` for scalar layout choices and `data` for structured sections. Supply menus and collections there, then render their resolved values through the [template contexts](../../reference/theme-runtime/specs/v0.7/index.md#55-common-render-context).
 3. Move reusable CSS and browser JavaScript into `theme/assets/`. Keep site media and downloads in `public/` or on a media host. Use generated document URLs for internal links so configured permalinks remain valid.
 4. Keep document content in build-rendered HTML. Convert interactive controls to optional browser enhancements; forms, authentication, and other server behavior still need a service.
 
@@ -95,7 +95,7 @@ Validate and build the result with the generated data:
 
 ```bash
 npx @zeropress/theme validate ./theme
-npx @zeropress/build ./theme --data ./preview-data.json --out ./dist
+npx @zeropress/build ./theme --data ./zeropress-preview-data.json --out ./dist
 ```
 
 When the port is ready, use the theme in the starter matching your content source.

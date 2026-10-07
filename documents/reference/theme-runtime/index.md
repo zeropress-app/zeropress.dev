@@ -5,7 +5,7 @@ For practical examples, start with [Customize a Theme](../../guides/theme-author
 
 The current contract is **v0.7**:
 [specification](specs/v0.7/index.md) ·
-[manifest JSON Schema](https://schemas.zeropress.dev/theme-runtime/v0.7/schema.json).
+[manifest JSON Schema](https://www.schemastore.org/zeropress-theme-runtime-0.7.json).
 
 ## Find A Topic
 
