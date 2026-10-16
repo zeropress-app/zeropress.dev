@@ -6,7 +6,7 @@ description: Repository-level open source licensing for the ZeroPress project fa
 
 ZeroPress uses repository-level open source licenses.
 
-Runtime-facing components are generally licensed under Apache-2.0. Developer tooling and CLI packages are generally licensed under MIT.
+Runtime-facing components are generally licensed under Apache-2.0. Developer tooling and CLI packages are generally licensed under MIT. The ZeroPress Static WordPress plugin is licensed under GPL-2.0-or-later.
 
 Each repository contains its own `LICENSE` file. If there is any difference between this page and a repository `LICENSE` file, the repository `LICENSE` file is authoritative.
 
@@ -18,6 +18,7 @@ These repositories contain runtime-facing software for the ZeroPress product and
 | --- | --- |
 | [`zeropress-studio`](https://github.com/zeropress-app/zeropress-studio) | Apache-2.0 |
 | [`zeropress-edge`](https://github.com/zeropress-app/zeropress-edge) | Apache-2.0 |
+| [`zeropress-static`](https://github.com/zeropress-app/zeropress-static) | GPL-2.0-or-later |
 
 ## CLI And Tooling
 
@@ -44,6 +45,6 @@ These repositories contain public documentation and canonical schema hosting.
 
 ## Summary
 
-ZeroPress is open source under Apache-2.0 and MIT.
+ZeroPress uses Apache-2.0, MIT, and GPL-2.0-or-later across its repositories.
 
 Use the repository `LICENSE` file as the source of truth when evaluating a specific package or component.

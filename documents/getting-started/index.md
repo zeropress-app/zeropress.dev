@@ -1,19 +1,47 @@
 ---
-description: Deploy a ZeroPress starter and publish from Studio, Markdown, or a WordPress WXR export.
+description: Deploy a ZeroPress starter and publish from WordPress with ZeroPress Static, from Studio, or from Markdown.
 ---
 
 # Getting Started With ZeroPress
 
 Choose how you want to manage your content:
 
+- [WordPress](#publish-from-wordpress) to keep your editor and publish with ZeroPress Static.
 - [Studio](#publish-with-studio) for writing and publishing in your browser.
 - [Markdown](#publish-markdown) for a site maintained in Git.
-- [WordPress WXR](#try-wordpress-content) for a quick trial with your existing content.
+
+You can also [try a manual WordPress WXR export](#try-wordpress-content).
 
 Each site starter includes a Deploy to Cloudflare button that creates a GitHub
 repository and deploys a sample site. You will need GitHub and Cloudflare accounts.
 Keep the default build command `npm run build` and deploy command `npm run deploy`.
 Cloudflare rebuilds the site when changes are pushed to the connected branch.
+
+## Publish From WordPress
+
+[ZeroPress Static](https://github.com/zeropress-app/zeropress-static) keeps WordPress
+as your editor and prepares the files consumed by
+[WXR Starter](https://github.com/zeropress-app/zeropress-starter-wxr). Start at a
+separate site address while your existing WordPress site stays in place.
+
+[![Deploy WXR Starter to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/zeropress-app/zeropress-starter-wxr/tree/latest)
+
+1. Deploy WXR Starter using the button above. Keep `wordpress-export.xml` and
+   `wxr-import-base.json` in the root of your new repository's publishing branch.
+2. Download `zeropress-static-v<version>.zip` from
+   [GitHub Releases](https://github.com/zeropress-app/zeropress-static/releases/latest).
+   In WordPress, open **Plugins → Add New Plugin → Upload Plugin**, install it,
+   and activate it.
+3. Open **ZeroPress → Settings**. Save your site settings and GitHub publishing
+   target, register a token for that repository with **Contents: Read and write**,
+   and test the connection.
+4. Open **ZeroPress → Publish**, prepare the data, review it, and confirm
+   **Publish to GitHub**. The plugin replaces both files in one commit, and the
+   starter's connected build service builds and deploys the static site.
+
+Continue editing in WordPress, then use the plugin to publish each update.
+See [WordPress Publishing](../guides/wordpress/index.md) for setup details,
+download-based builds, media, and optional WordPress comments.
 
 ## Publish With Studio
 
@@ -59,8 +87,9 @@ for local preview commands.
 ## Try WordPress Content
 
 [WXR Starter](https://github.com/zeropress-app/zeropress-starter-wxr) builds a
-static site from a WordPress export while continuing to use your WordPress media
-and comment API.
+static site from a WordPress export. Use this route for a trial with WordPress's
+built-in export; for ongoing publishing from the admin, use
+[ZeroPress Static](#publish-from-wordpress).
 
 [![Deploy WXR Starter to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/zeropress-app/zeropress-starter-wxr/tree/latest)
 
@@ -71,8 +100,8 @@ and comment API.
 3. Replace `wordpress-export.xml` in your repository with that file, keeping the
    filename, then commit and push.
 
-Images and links in post and page content keep their original URLs. Comments use
-the original WordPress REST API, so keep WordPress available and check the
+Images and links in post and page content keep their original URLs. When enabled,
+comments use the original WordPress REST API, so keep those resources available and check the
 [comment requirements](https://github.com/zeropress-app/zeropress-starter-wxr#what-stays-on-wordpress).
 The XML export itself is not served by the public site.
 

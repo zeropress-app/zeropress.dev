@@ -34,6 +34,7 @@
           "children": [
             { "title": "Overview", "url": "/" },
             { "title": "Getting Started", "url": "/getting-started/" },
+            { "title": "WordPress Publishing", "url": "/guides/wordpress/" },
             { "title": "Studio Guide", "url": "https://studio.zeropress.dev/", "target": "_blank" },
             { "title": "Markdown Guide", "url": "https://build-pages.zeropress.dev/", "target": "_blank" }
           ]
@@ -95,7 +96,8 @@
       "title": "Get Started",
       "items": [
         "index.md",
-        "getting-started/index.md"
+        "getting-started/index.md",
+        "guides/wordpress/index.md"
       ]
     },
     "guides": {
