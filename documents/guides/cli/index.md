@@ -65,6 +65,10 @@ For Markdown commands, configuration, and GitHub Action usage, follow the
 
 ## Convert A WordPress Export
 
+For ongoing publishing from the WordPress admin, use
+[ZeroPress Static](../wordpress/index.md). The WXR starter runs the importer and
+builder for the files prepared by the plugin. For a manual export, run:
+
 ```bash
 npx @zeropress/wxr-import --input ./wordpress-export.xml --output ./zeropress-preview-data.json
 ```
