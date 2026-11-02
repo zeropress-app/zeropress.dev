@@ -315,6 +315,14 @@ The effective values combine Preview Data requests with runtime availability:
 - archive also requires `archive.html`; its URL is `/archive/` for `directory` output and `/archive` for `html-extension`
 - comments also require configured Preview Data `site.comments`, `site.comments.enabled: true`, and `features.comments: true`
 
+`site.search.enabled` describes search availability, not whether the native
+index contains searchable records. `--skip-search-index`, the build API's
+`generateSearchIndex: false`, and automatic index limits leave that effective
+value and search widgets unchanged. Native results may therefore be empty
+while the theme still shows its search UI. If Preview Data or the theme
+disables search, no search artifacts are emitted even with the skip option. See [Static Search](../../../../guides/static-search/index.md#index-generation-and-limits)
+for limits and the distinction between empty and omitted indexes.
+
 `site.comments.enabled` describes site-wide provider availability. Use the [route comments context](#59-route-comments) to decide whether to display comments on the current Post or Page.
 
 `site.post_index.enabled` is likewise effective: it is true only when Preview Data requests the route, the theme supports `features.post_index`, and Build Core actually generates a post-index route. Other post-index fields retain their existing meanings. Newsletter CTA/island data is provided directly through Preview Data `site.newsletter`; there is no newsletter theme capability flag.

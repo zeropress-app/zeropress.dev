@@ -153,6 +153,14 @@ Only some of these values appear as JSON Schema `default` annotations. The table
 
 These objects express requested state, not guaranteed output. Search is effective only when the active theme declares `features.search: true`. Feed is effective only when `site.url` is a canonical absolute URL and the build wrapper has not applied its `generateFeed: false` hard override. Archive is effective only when the active theme contains `archive.html`. Build Core exposes the resulting effective objects to themes.
 
+Native index generation is a separate build policy. `--skip-search-index`
+(or `generateSearchIndex: false` in the build API) and automatic index limits
+do not change the Preview Data contract or effective `site.search.enabled`.
+Search disabled by Preview Data or the theme still produces no search
+artifacts, regardless of the indexing option. See
+[Static Search](../../../../guides/static-search/index.md#index-generation-and-limits)
+for output and warning rules; do not add `generateSearchIndex` to Preview Data.
+
 When search or archive is ineffective, Build Core removes only corresponding `search` or `archive` widget items. It retains the widget area and all other items. Menus are authored data and are never rewritten or filtered based on these feature states.
 
 `robots` is an optional closed object. When present, `allow_indexing` is required; `{}`, a boolean, `null`, or the removed `site.indexing` field is invalid. `{ "allow_indexing": false }` controls the fallback `robots.txt` policy and remains distinct from per-document `discoverability`.

@@ -101,6 +101,11 @@ TOC with its generated fragment links:
 Use the [Static Search guide](../../static-search/index.md) to connect a search
 form to native search or Pagefind. A theme with search UI declares
 `features.search: true` and checks `site.search.enabled` before showing it.
+That value controls search availability; it does not guarantee a populated
+native index. Explicit indexing skips and automatic size or record limits
+keep it enabled and leave the UI intact, while the native adapter returns no
+results. An external search step can replace that adapter. See
+[index generation and limits](../../static-search/index.md#index-generation-and-limits).
 
 For comments, declare `features.comments: true` and show the theme's comments
 partial only on eligible routes:

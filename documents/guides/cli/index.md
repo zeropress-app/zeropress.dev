@@ -58,6 +58,38 @@ Serve `dist/` with a static host. See the
 [Preview Data Reference](../../reference/preview-data/index.md) when generating
 your own data.
 
+### Native Search Indexing
+
+Build Core warns when the native search JSON reaches 2 MiB. At 5 MiB or more,
+or above 5,000 searchable records, it replaces the index with a non-searchable
+placeholder. The build still succeeds; the native adapter returns no results.
+Use an external search step such as Pagefind for larger sites.
+
+If an external index will supply search, skip native indexing work explicitly:
+
+```bash
+npx @zeropress/build ./theme \
+  --data ./zeropress-preview-data.json \
+  --out ./dist \
+  --skip-search-index
+```
+
+`--skip-search-index` takes no value. Its JavaScript equivalent is
+`generateSearchIndex: false` in `runBuild()` options. It does not run Pagefind
+or disable the search UI. When search is enabled, `search.json`, `search.js`,
+and `search_pagefind.js` remain available; a genuinely empty site keeps `[]`.
+
+Preview Data `site.search.enabled: false` or a theme without
+`features.search: true` takes precedence: no search artifacts are emitted,
+even with `--skip-search-index`. See
+[Static Search](../static-search/index.md#index-generation-and-limits) for the
+complete priority rules, warnings, and Pagefind replacement steps.
+
+To replace an existing build output, also pass `--empty-out-dir`. Replacement
+happens only after a successful build, and the output must remain inside the
+project directory without overlapping build inputs. Preview Data path aliases
+are resolved when checking whether replacement would remove the input file.
+
 ## Build From Markdown
 
 For Markdown commands, configuration, and GitHub Action usage, follow the
